@@ -1,12 +1,38 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Search, ShoppingBag, Menu, X, User } from "lucide-react";
+import { Search, ShoppingBag, Menu, X, User, LogOut, Plus, Minus, Trash2 } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const items = useCart((state) => state.items);
   const getTotalPrice = useCart((state) => state.getTotalPrice);
+  const updateQuantity = useCart((state) => state.updateQuantity);
+  const removeItem = useCart((state) => state.removeItem);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    if (!isAuthenticated) {
+      // Redirect to sign in page
+      navigate('/signin');
+      onClose();
+      return;
+    }
+    
+    // Navigate to checkout page
+    navigate('/checkout');
+    onClose();
+  };
 
   if (!open) return null;
 
@@ -22,27 +48,72 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
             <X className="h-5 w-5" />
           </Button>
         </div>
+        
         {items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground">
             <ShoppingBag className="h-12 w-12 mb-2" />
             <p>Your cart is empty.</p>
           </div>
         ) : (
-          <div className="flex-1 overflow-y-auto">
-            {items.map((item) => (
-              <div key={item.id} className="flex items-center justify-between py-3 border-b last:border-b-0">
-                <div>
-                  <div className="font-medium">{item.name}</div>
-                  <div className="text-sm text-muted-foreground">x{item.quantity}</div>
+          <>
+            <div className="flex-1 overflow-y-auto">
+              {items.map((item) => (
+                <div key={item.id} className="flex items-center justify-between py-3 border-b last:border-b-0">
+                  <div className="flex-1">
+                    <div className="font-medium">{item.name}</div>
+                    <div className="text-sm text-muted-foreground">€{item.price.toFixed(2)}</div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-6 w-6"
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    >
+                      <Minus className="h-3 w-3" />
+                    </Button>
+                    
+                    <span className="w-8 text-center text-sm">{item.quantity}</span>
+                    
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-6 w-6"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      <Plus className="h-3 w-3" />
+                    </Button>
+                    
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 text-red-500 hover:text-red-700"
+                      onClick={() => removeItem(item.id)}
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  
+                  <div className="font-semibold ml-4">€{(item.price * item.quantity).toFixed(2)}</div>
                 </div>
-                <div className="font-semibold">€{(item.price * item.quantity).toFixed(2)}</div>
-              </div>
-            ))}
-            <div className="mt-6 flex justify-between font-bold text-lg">
-              <span>Total:</span>
-              <span>€{getTotalPrice().toFixed(2)}</span>
+              ))}
             </div>
-          </div>
+            
+            <div className="border-t pt-4">
+              <div className="flex justify-between font-bold text-lg mb-4">
+                <span>Total:</span>
+                <span>€{getTotalPrice().toFixed(2)}</span>
+              </div>
+              
+              <Button 
+                className="w-full" 
+                onClick={handleCheckout}
+              >
+                {isAuthenticated ? 'Proceed to Checkout' : 'Sign in to Checkout'}
+              </Button>
+            </div>
+          </>
         )}
       </div>
     </div>
@@ -54,6 +125,8 @@ const Navbar = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const location = useLocation();
   const totalItems = useCart((state) => state.getTotalItems());
+  const { user, isAuthenticated, logout } = useAuth();
+  const { toast } = useToast();
 
   const navItems = [
     { name: "SHOP", href: "/shop" },
@@ -99,11 +172,51 @@ const Navbar = () => {
                 <Search className="h-5 w-5" />
               </Button>
               
-              <Link to="/signin">
-                <Button variant="ghost" size="icon">
-                  <User className="h-5 w-5" />
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <User className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <div className="flex flex-col space-y-1 leading-none">
+                        <p className="font-medium">{user?.firstName} {user?.lastName}</p>
+                        <p className="w-[200px] truncate text-sm text-muted-foreground">
+                          {user?.email}
+                        </p>
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile">Profile</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/orders">Orders</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={async () => {
+                        await logout();
+                        toast({
+                          title: "Logged out",
+                          description: "You have been successfully logged out.",
+                        });
+                      }}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link to="/signin">
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </Link>
+              )}
               
               <Button variant="ghost" size="icon" className="relative" onClick={() => setCartOpen(true)}>
                 <ShoppingBag className="h-5 w-5" />
