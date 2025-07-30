@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2 } from 'lucide-react';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Lock } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { apiClient } from '@/lib/api';
@@ -240,7 +240,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6">
+    <div className="bg-gray-50 py-6">
       <div className="max-w-6xl mx-auto px-4">
         <div className="mb-6">
           <Button 
@@ -260,8 +260,8 @@ const Checkout = () => {
             {/* Account Information */}
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="flex items-center text-base">
-                  <User className="mr-2 h-4 w-4 text-blue-600" />
+                <CardTitle className="flex items-center text-xl">
+                  <User className="mr-2 h-6 w-6 text-blue-600" />
                   Account Information
                 </CardTitle>
               </CardHeader>
@@ -288,8 +288,8 @@ const Checkout = () => {
             {/* Payment Information */}
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="flex items-center text-base">
-                  <CreditCard className="mr-2 h-4 w-4 text-blue-600" />
+                <CardTitle className="flex items-center text-xl">
+                  <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
                   Payment Information
                 </CardTitle>
               </CardHeader>
@@ -311,20 +311,6 @@ const Checkout = () => {
                   </div>
                 </div>
                 
-                {/* Debug button - remove in production */}
-                <div className="mt-4">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => {
-                      console.log('Testing navigation...');
-                      navigate('/payment-success');
-                    }}
-                    className="w-full"
-                  >
-                    Test Navigation to Payment Success
-                  </Button>
-                </div>
               </CardContent>
             </Card>
           </div>
@@ -332,8 +318,11 @@ const Checkout = () => {
           {/* Right Section: Order Summary */}
           <div>
             <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">Order Summary</CardTitle>
+              <CardHeader className="pb-3 mb-2">
+                <CardTitle className="flex items-center text-xl">
+                  <ShoppingBag className="mr-2 h-6 w-6 text-blue-600" />
+                  Order Summary
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {items.map((item) => (
@@ -379,10 +368,77 @@ const Checkout = () => {
                     </div>
                   </div>
                 ))}
-                <Separator />
-                <div className="flex justify-between items-center text-lg font-bold text-gray-900">
-                  <span>Total</span>
-                  <span className="text-blue-600">€{getTotalPrice().toFixed(2)}</span>
+                                 {/* <Separator /> */}
+                 <div className="flex justify-between items-center text-2xl font-bold text-gray-900">
+                   <span>Order Total</span>
+                   <span className="text-blue-600">€{getTotalPrice().toFixed(2)}</span>
+                 </div>
+                 
+                 {/* Security Message */}
+                 <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                   <div className="flex items-center text-xs text-green-700">
+                     <Lock className="mr-2 h-4 w-4" />
+                     <span>100% secure checkout. Your information is always protected, and every crystal is chosen and packed with care.</span>
+                   </div>
+                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Crystal Benefits & Guarantees */}
+            <Card className="mt-6">
+              <CardContent className="pt-6">
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-purple-600 text-lg">✨</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900 text-sm">Authentic Crystals</h3>
+                      <p className="text-xs text-gray-600 mt-1">
+                        Each crystal is carefully selected and verified for authenticity. 
+                        Our expert gemologists ensure you receive genuine, high-quality crystals.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-green-600 text-lg">🛡️</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900 text-sm">100% Quality Guarantee</h3>
+                      <p className="text-xs text-gray-600 mt-1">
+                        We guarantee the quality of every crystal. If you're not completely satisfied, 
+                        we offer a 30-day return policy with full refund.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-blue-600 text-lg">🌍</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900 text-sm">Ethically Sourced</h3>
+                      <p className="text-xs text-gray-600 mt-1">
+                        All our crystals are ethically sourced from responsible suppliers. 
+                        We support sustainable mining practices and fair trade principles.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-orange-600 text-lg">🚚</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900 text-sm">Secure & Fast Shipping</h3>
+                      <p className="text-xs text-gray-600 mt-1">
+                        Your crystals are carefully packaged and shipped with tracking. 
+                        Orders typically arrive within 3-5 business days.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
