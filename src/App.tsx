@@ -11,8 +11,9 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
-import Layout from "@/components/Layout";
 import Checkout from "./pages/Checkout";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import Layout from "@/components/Layout";
 
 const queryClient = new QueryClient();
 
@@ -28,27 +29,21 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/shop" element={<Collections />} />
               <Route path="/about" element={<About />} />
-              <Route 
-                path="/signin" 
-                element={
-                  <ProtectedRoute requireAuth={false}>
-                    <SignIn />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/signup" 
-                element={
-                  <ProtectedRoute requireAuth={false}>
-                    <SignUp />
-                  </ProtectedRoute>
-                } 
-              />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
               <Route 
                 path="/checkout" 
                 element={
                   <ProtectedRoute requireAuth={true}>
                     <Checkout />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/payment-success" 
+                element={
+                  <ProtectedRoute requireAuth={true}>
+                    <PaymentSuccess />
                   </ProtectedRoute>
                 } 
               />
