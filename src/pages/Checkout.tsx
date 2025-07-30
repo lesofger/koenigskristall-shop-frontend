@@ -90,6 +90,7 @@ const CheckoutForm = ({ clientSecret, onSuccess, onError }: CheckoutFormProps) =
                   },
                 },
                 hidePostalCode: false,
+                // disableLink: true,
               }}
             />
           </div>
@@ -134,7 +135,6 @@ const Checkout = () => {
 
     if (items.length === 0) {
       console.log('No items in cart===========>');
-      navigate('/shop');
       return;
     }
 
@@ -172,18 +172,9 @@ const Checkout = () => {
       title: "Payment Successful!",
       description: "Your order has been placed successfully.",
     });
-    // navigate('/payment-success', { replace: true });
     
-    // Force navigation with a small delay to ensure toast is shown
-    setTimeout(() => {
-      try {
-        navigate('/payment-success', { replace: true });
-      } catch (navError) {
-        console.error('Navigation error:', navError);
-        // Fallback: use window.location if navigate fails
-        window.location.href = '/payment-success';
-      }
-    }, 100);
+    // Use navigate with replace to prevent going back to checkout
+    navigate('/payment-success', { replace: true });
   };
 
   const handlePaymentError = (error: string) => {
