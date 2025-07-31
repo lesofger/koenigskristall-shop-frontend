@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Home, ShoppingBag } from 'lucide-react';
+import { CheckCircle, Home, ShoppingBag, Package } from 'lucide-react';
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -32,6 +32,15 @@ const PaymentSuccess = () => {
           <div className="space-y-3">
             <Button 
               className="w-full" 
+              onClick={() => navigate('/orders')}
+            >
+              <Package className="mr-2 h-4 w-4" />
+              View My Orders
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="w-full"
               onClick={() => navigate('/')}
             >
               <Home className="mr-2 h-4 w-4" />
