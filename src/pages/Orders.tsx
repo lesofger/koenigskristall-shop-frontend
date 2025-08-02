@@ -33,7 +33,7 @@ interface OrderItem {
 interface Order {
   id: number;
   totalAmount: number;
-  status: 'pending' | 'processing' | 'shipped' | 'delivered';
+  status: 'Bestellung erhalten' | 'In Bearbeitung' | 'Versendet' | 'Zugestellt';
   paymentIntentId: string;
   shippingAddress: {
     street: string;
@@ -114,7 +114,66 @@ const Orders = () => {
   }
 
   return (
-    <></>
+    <>
+      
+  <div className="min-h-screen bg-gray-50 py-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 className="text-2xl font-bold mb-6">Meine Bestellungen</h1>
+
+      {orders.length === 0 ? (
+        <p className="text-gray-600">Du hast noch keine Bestellungen.</p>
+      ) : (
+        <div className="space-y-6">
+          {orders.map((order) => (
+            <Card key={order.id}>
+              <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <CardTitle>Bestellung #{order.id}</CardTitle>
+                <Badge variant="secondary">{order.status}</Badge>
+              </CardHeader>
+
+              <CardContent>
+                <div className="text-sm text-gray-700 mb-2">
+                  <Calendar className="inline w-4 h-4 mr-1" />
+                  {new Date(order.createdAt).toLocaleDateString()}
+                </div>
+
+                <div className="text-sm text-gray-700 mb-2">
+                  <Euro className="inline w-4 h-4 mr-1" />
+                  Gesamtbetrag: {order.totalAmount} €
+                </div>
+
+                <div className="text-sm text-gray-700 mb-4">
+                  <MapPin className="inline w-4 h-4 mr-1" />
+                  {order.shippingAddress.street}, {order.shippingAddress.zipCode} {order.shippingAddress.city}, {order.shippingAddress.country}
+                </div>
+
+                <Separator className="my-4" />
+
+                <div className="space-y-3">
+                  {order.OrderItems.map((item) => (
+                    <div key={item.id} className="flex items-center space-x-4">
+                      <div className="flex-1">
+                        <div className="font-medium">{item.Product.name}</div>
+                        <div className="text-sm text-gray-600">
+                          Menge: {item.quantity}
+                        </div>
+                      </div>
+                      <div className="text-sm font-medium">
+                        {item.price} €
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+
+
+    </>
   );
 };
 
