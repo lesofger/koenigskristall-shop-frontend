@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import Orders from "./pages/Orders";
 import Layout from "@/components/Layout";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,14 @@ const App = () => (
                 element={
                   <ProtectedRoute requireAuth={true}>
                     <PaymentSuccess />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/orders" 
+                element={
+                  <ProtectedRoute requireAuth={true}>
+                    <Orders />
                   </ProtectedRoute>
                 } 
               />
