@@ -110,6 +110,7 @@ export interface PaymentIntent {
   clientSecret: string;
   paymentIntentId: string;
   amount: number;
+  paymentMethod?: string;
 }
 
 export interface CreatePaymentIntentRequest {
@@ -118,6 +119,16 @@ export interface CreatePaymentIntentRequest {
     quantity: number;
     price: number;
   }>;
+  paymentMethod?: 'card' | 'bank_transfer';
+}
+
+export interface BankTransferDetails {
+  accountNumber: string;
+  routingNumber: string;
+  bankName: string;
+  reference: string;
+  amount: number;
+  dueDate: string;
 }
 
 // Order types

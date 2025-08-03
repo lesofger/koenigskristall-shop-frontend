@@ -9,10 +9,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Lock } from 'lucide-react';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Lock, Building2 } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { apiClient } from '@/lib/api';
+import BankTransferPayment from '@/components/BankTransferPayment';
 
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -126,6 +127,8 @@ const Checkout = () => {
   const [clientSecret, setClientSecret] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank_transfer'>('card');
+  const [bankTransferClientSecret, setBankTransferClientSecret] = useState<string>('');
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -138,19 +141,37 @@ const Checkout = () => {
       return;
     }
 
-    // Create payment intent using centralized API client
+    // Create payment intent based on selected payment method
     const createPaymentIntent = async () => {
       try {
-        const response = await apiClient.payments.createPaymentIntent({
-          items: items.map(item => ({
-            id: parseInt(item.id),
-            quantity: item.quantity,
-            price: item.price
-          }))
-        });
+        let response;
+        
+        if (paymentMethod === 'bank_transfer') {
+          response = await apiClient.payments.createPaymentIntent({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            })),
+            paymentMethod: 'bank_transfer'
+          });
+        } else {
+          response = await apiClient.payments.createPaymentIntent({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            })),
+            paymentMethod: 'card'
+          });
+        }
 
         if (response.status === 'success' && response.data) {
-          setClientSecret(response.data.clientSecret);
+          if (paymentMethod === 'bank_transfer') {
+            setBankTransferClientSecret(response.data.clientSecret);
+          } else {
+            setClientSecret(response.data.clientSecret);
+          }
         } else {
           setError(response.message || 'Failed to create payment intent');
         }
@@ -163,7 +184,7 @@ const Checkout = () => {
     };
 
     createPaymentIntent();
-  }, [isAuthenticated, items, navigate]);
+  }, [isAuthenticated, items, navigate, paymentMethod]);
 
   const handlePaymentSuccess = () => {
     console.log('Payment successful2===========>');
@@ -191,6 +212,14 @@ const Checkout = () => {
     } else {
       updateQuantity(itemId, newQuantity);
     }
+  };
+
+  const handlePaymentMethodChange = (method: 'card' | 'bank_transfer') => {
+    setPaymentMethod(method);
+    setIsLoading(true);
+    setError('');
+    setClientSecret('');
+    setBankTransferClientSecret('');
   };
 
   if (!isAuthenticated) {
@@ -276,16 +305,50 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            {/* Payment Information */}
+            {/* Payment Method Selection */}
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center text-xl">
                   <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
-                  Payment Information
+                  Payment Method
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <Button
+                    variant={paymentMethod === 'card' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('card')}
+                    className="h-12"
+                  >
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Credit Card
+                  </Button>
+                  <Button
+                    variant={paymentMethod === 'bank_transfer' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('bank_transfer')}
+                    className="h-12"
+                  >
+                    <Building2 className="mr-2 h-4 w-4" />
+                    Bank Transfer
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Payment Information */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center text-xl">
+                  {paymentMethod === 'card' ? (
+                    <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
+                  ) : (
+                    <Building2 className="mr-2 h-6 w-6 text-green-600" />
+                  )}
+                  {paymentMethod === 'card' ? 'Card Payment' : 'Bank Transfer Payment'}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {clientSecret && (
+                {paymentMethod === 'card' && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
                     <CheckoutForm
                       clientSecret={clientSecret}
@@ -293,6 +356,15 @@ const Checkout = () => {
                       onError={handlePaymentError}
                     />
                   </Elements>
+                )}
+                
+                {paymentMethod === 'bank_transfer' && bankTransferClientSecret && (
+                  <BankTransferPayment
+                    clientSecret={bankTransferClientSecret}
+                    amount={getTotalPrice()}
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                  />
                 )}
                 
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
