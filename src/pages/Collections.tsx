@@ -11,13 +11,52 @@ const Collections = () => {
 
   const categories = [
     { value: "all", label: "All Categories" },
-    { value: "love", label: "Love & Compassion" },
-    { value: "spiritual", label: "Spiritual Growth" },
-    { value: "healing", label: "Healing" },
-    { value: "abundance", label: "Abundance" },
-    { value: "protection", label: "Protection" },
-    { value: "cleansing", label: "Cleansing" }
+    { value: "Bergkristall", label: "Bergkristall" },
+    { value: "Rosenquarz", label: "Rosenquarz" },
+    { value: "Amethyst", label: "Amethyst" },
+    { value: "Citrin", label: "Citrin" },
+    { value: "Orangencalcit", label: "Orangencalcit" },
+    { value: "Karneol", label: "Karneol" },
+    { value: "Mondstein", label: "Mondstein" },
+    { value: "Selenit", label: "Selenit" },
+    { value: "Aquamarin", label: "Aquamarin" },
+    { value: "Regenbogenfluorit", label: "Regenbogenfluorit" },
+    { value: "Grüner Fluorit", label: "Grüner Fluorit" },
+    { value: "Aventurin", label: "Aventurin" },
+    { value: "Malachit", label: "Malachit" },
+    { value: "Jaspis Rot / Algen Jaspis", label: "Jaspis Rot / Algen Jaspis" },
+    { value: "Labradorit", label: "Labradorit" },
+    { value: "Rauchquarz", label: "Rauchquarz" },
+    { value: "Pyrit", label: "Pyrit" },
+    { value: "Tigerauge", label: "Tigerauge" },
+    { value: "Schwarzer Turmalin", label: "Schwarzer Turmalin" },
+    { value: "Achatscheibe", label: "Achatscheibe" }
+
   ];
+
+  // Kategorie-Beschreibungen
+  const categoryDescriptions = {
+      "Bergkristall": "Der Bergkristall ist zweifellos der vielseitigste Kristall in jeder Sammlung und gleichzeitig der erste Kristall, den ich Einsteigern empfehlen würde.Bergkristall gilt als Meister der Heilsteine. Er fördert Klarheit und Ordnung in Gedanken und Gefühlen, stärkt deine Intuition. Zudem bringt Körper, Seele und Geist in Einklang. ",
+      "Rosenquarz": "Der Rosenquarz ist der Stein der bedingsungslosen Liebe. Er fördert die Selbstliebe und die Bereitschaft, Liebe zu empfangen und zu geben. Rosenquarz eignet sich hervorragend zur Selbstheilung bei Trennung oder Verlust eines geliebten Menschen.",
+      "Amethyst": "Als Stein der spirituellen Erkenntnis öffnet der Amethyst das dritte Auge und das Kronenchakra. Er lindert Stress, Ängste und Albträume. Der Amethyst wirkt beruhigend auf die Seele und fördert innere Ruhe. Ebenfalls gilt er als Schutzstein gegen negative Energie.",
+      "Citrin": "Der Citrin strahlt so energievoll wie die Sonne. Als Stein des Reichtums, schenkt er dir Wohlstand und Fülle auf allen Ebenen des Seins. Er stärkt das Selbstbewusstsein und fördert deine Lebensfreude. Ein leuchtender Begleiter für alle, die Fülle nicht nur wünschen, sondern leben möchten.",
+      "Orangencalcit": "Der Orangencalcit bringt durch seine Energie Wärme ins Herz, hebt die Stimmung an und öffnet den Weg zu mehr Leichtigkeit und innerem Frieden. Er unterstützt dich dabei, neue Energie zu schöpfen und mit Optimismus durchs Leben zu gehen.",
+      "Karneol": "Feuer der Lebenskraft, der Karneol entfacht unser inneres Feuer. Er steht für Mut und Tapferkeit.Der Karneol stärkt unser Selbstvertrauen und hilft Zweifel und Ängste zu überwinden, bringt Stabilität in unser Leben und fördert die Leidenschaft auf allen Ebenen. Spirituell hilft er, im Hier und Jetzt anzukommen.",
+      "Mondstein": "Spiegel der Seele - Der Mondstein ist ein Begleiter der Intuition, der Weiblickeit und des inneren Gleichgewichts. Er wirkt als Schutzstein für Frauen und Kinder Ebefalls hilft er bei Entscheidungen und fördert das rationale Denken.",
+      "Selenit": "Der Selenit wirkt wie ein energetisches Schutzschild gegen negative Energien. Da er selber keine Energie aufnimmt ist er perfekt um andere Heilsteine zu reinigen. Darüber hinaus fördert er deine Intuition und geistige Klarheit.Der Selenit hilft, loszulassen - nicht aus Schwäche, sondern aus Vertrauen.",
+      "Aquamarin": "Stein der Manifestation - Aquamarin zieht deine Wünsche an. Wie klares Wasser spült er alte Ängste fort und macht Platz für Wahheit, Mut und innere Stärke. Aquamarin fördert ehrliche Kommunikation , nicht nur mit anderen, sondern vorallem mir dir selbst.",
+      "Regenbogenfluorit": "Regenbogenfluorit vereint die Energien mehrerer Farbfrequenzen und bringt Ordnung in Seele, Geist und Herz. Er fördert die Selbstreflexion, innere Stärke und unterstützt bei seelischer Heilung.Durch seine vielseitige Energie gleicht er Stimmungsschwankungen aus und wirkt harmonisierend.",
+      "Grüner Fluorit": "Grüner Fluorit wirkt ausgleichend und stabilisierend auf deine Energie, hilft deinen Geist zu fokussieren und emotionale Blockaden zu lösen. Mit seiner kraftvollen Energie öffnet er das Herzchakra und befreit es von altem Ballast. Ein Kristall für tiefe Regeneration und geistige Frische. Er wird oft als Lernhilfe verwendet.",
+      "Aventurin": "Der Aventurin steht für Optimismus und Lebensfreude, stärkt bedingungslose Liebe und Mitgefühl. Er wirkt beruhigend auf unsere Seele, löst Ängste und innere Unruhe. Aventurin schenkt Vertrauen in sich selbst und ermutigt, das Leben mit Offenheit und Freude zu getsalten.Seine sanfte Energie bringt Harmonie in unser Gefühlsleben.",
+      "Malachit": "Kristall des Herzens und der Heilung. Seine Energie fördert nicht nur tiefgreifende Veränderungen, sondern auch seelischen Wachstum. Der Malachit bringt unterdrückte Gefühle an die Oberfläche, fördert innere Heilung und unterstützt dabei, alte Verletzungen zu verarbeiten. Er schenkt Mut und öffnet das Herz für Liebe und Mitgeffühl.",
+      "Jaspis Rot / Algen Jaspis": " Der Jaspis ist ein toller Begeliter für alle , die in ihrer inneren Mitte ankommen möchte.Mit seiner kraftvollen Energie schenkt der Jaspis dir Durchsetzungsvermögen und Ausdauer.Besonders in Zeiten von Stress und Überförderung wirkt er erdend. Ein verlässlicher Stein, um seelisch wieder ins Gleichgewicht zu finden.",
+      "Labradorit": "Ein Kristall der Transformation, der dich sanft durch Veränderungen trägt. Labradorit ist ein kraftvoller Schutzstein, der das spirituelle Bewusstsein unterstützt. Er stärkt das Bauchgefühl und fördert das Erkennen von Zeichen, Träumen und tiefen Zusammenhängen. Ob seelischer Wandel, spirituelle Entwicklung oder große Lebensveränderung - Labradorit untertsützt dich dabei.",
+      "Rauchquarz": "Der Rauchquarz hilft dabei, negative Energien abzubauen, wirkt gleichzeitig erdend und ausgleichend auf unsere Seele. Er hat die Fähigkeit negative Energie, in Positive umzuwandeln. Zudem vermittelt er dir Sicherheit und Stärke.",
+      "Pyrit": "Pyrit - der Glückskristall, er zieht Fülle, Wohlstand und positive Lebensenergie an. Er stärkt das Selbstvertrauen und öffnet den Blick für neue Chancen. Als Glückskristall bergleitet er dich auf deinem Weg mit innerer Stärke und Optimismus.",
+      "Tigerauge": "Tigerauge verleiht Mut und Schutz. Es stärkt die Willenskraft und hilft bei der Verwirklichung von Zielen.",
+      "Schwarzer Turmalin": "Schwarzer Turmalin ist ein kraftvoller Schutzstein. Er absorbiert negative Energien und schützt vor elektromagnetischen Feldern.",
+      "Achatscheibe": "Achatscheiben bringen Balance und Harmonie. Sie stabilisieren die Aura und fördern inneren Frieden."
+  };
 
   const filteredProducts = products
     .filter(product => filter === "all" || product.category === filter)
@@ -32,6 +71,10 @@ const Collections = () => {
           return a.name.localeCompare(b.name);
       }
     });
+
+  // Aktuelle Kategorie-Info
+  const selectedCategory = categories.find(cat => cat.value === filter);
+  const categoryDescription = filter !== "all" ? categoryDescriptions[filter as keyof typeof categoryDescriptions] : null;
 
   return (
     <div className="min-h-screen bg-gradient-mystical">
@@ -83,6 +126,18 @@ const Collections = () => {
               </Select>
             </div>
           </div>
+
+          {/*category description conditional rendered */}
+          {categoryDescription && (
+            <div className="mb-8 bg-gradient-to-r from-primary/10 to-secondary/10 backdrop-blur-sm p-6 rounded-lg border border-border/50">
+              <h2 className="font-serif text-2xl font-medium text-foreground mb-3">
+                {selectedCategory?.label}
+              </h2>
+              <p className="text-muted-foreground leading-relaxed">
+                {categoryDescription}
+              </p>
+            </div>
+          )}
 
           {/* Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
