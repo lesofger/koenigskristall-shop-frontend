@@ -5,11 +5,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Lock, Building2 } from 'lucide-react';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Lock, Building2} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { apiClient } from '@/lib/api';
@@ -337,7 +335,7 @@ const Checkout = () => {
 
             {/* Payment Information */}
             <Card>
-              <CardHeader className="pb-3">
+              <CardHeader className="pb-6">
                 <CardTitle className="flex items-center text-xl">
                   {paymentMethod === 'card' ? (
                     <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
