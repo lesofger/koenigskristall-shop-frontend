@@ -1,13 +1,34 @@
-import { useState } from "react";
-import Navbar from "@/components/Navbar";
+import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
-import { products } from "@/data/products";
+import { apiClient } from "@/lib/api";
+import { Product as ApiProduct, PaginationInfo } from "@/lib/api";
+import { Product as CartProduct } from "@/hooks/useCart";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Collections = () => {
   const [filter, setFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("name");
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [products, setProducts] = useState<CartProduct[]>([]);
+  const [pagination, setPagination] = useState<PaginationInfo | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const itemsPerPage = 12; // Number of products per page
+
+  // Convert API product to cart product
+  const mapApiProductToCartProduct = (apiProduct: ApiProduct): CartProduct => {
+    return {
+      id: apiProduct.id.toString(),
+      name: apiProduct.name,
+      description: apiProduct.description,
+      price: apiProduct.price,
+      image: apiProduct.imageUrl,
+      category: apiProduct.category
+    };
+  };
 
   const categories = [
     { value: "all", label: "All Categories" },
@@ -31,7 +52,6 @@ const Collections = () => {
     { value: "Tigerauge", label: "Tigerauge" },
     { value: "Schwarzer Turmalin", label: "Schwarzer Turmalin" },
     { value: "Achatscheibe", label: "Achatscheibe" }
-
   ];
 
   // Kategorie-Beschreibungen
@@ -58,19 +78,70 @@ const Collections = () => {
       "Achatscheibe": "Achatscheiben bringen Balance und Harmonie. Sie stabilisieren die Aura und fördern inneren Frieden."
   };
 
-  const filteredProducts = products
-    .filter(product => filter === "all" || product.category === filter)
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "price-low":
-          return a.price - b.price;
-        case "price-high":
-          return b.price - a.price;
-        case "name":
-        default:
-          return a.name.localeCompare(b.name);
+  // Fetch products from API
+  const fetchProducts = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      let response;
+      
+      if (filter === "all") {
+        response = await apiClient.products.getAll({
+          page: currentPage,
+          limit: itemsPerPage,
+          sortBy: sortBy,
+          sortOrder: sortOrder
+        });
+      } else {
+        response = await apiClient.products.getByCategory(filter, {
+          page: currentPage,
+          limit: itemsPerPage,
+          sortBy: sortBy,
+          sortOrder: sortOrder
+        });
       }
-    });
+
+      if (response.status === 'success' && response.data) {
+        const cartProducts = response.data.products.map(mapApiProductToCartProduct);
+        setProducts(cartProducts);
+        setPagination(response.data.pagination);
+      } else {
+        setError(response.message || 'Failed to fetch products');
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setError('Failed to fetch products. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch products when filters, sorting, or page changes
+  useEffect(() => {
+    fetchProducts();
+  }, [filter, sortBy, sortOrder, currentPage]);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter, sortBy, sortOrder]);
+
+  // Handle page change
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Handle filter change
+  const handleFilterChange = (newFilter: string) => {
+    setFilter(newFilter);
+  };
+
+  // Handle sort change
+  const handleSortChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+  };
 
   // Aktuelle Kategorie-Info
   const selectedCategory = categories.find(cat => cat.value === filter);
@@ -96,7 +167,7 @@ const Collections = () => {
               <label className="block text-sm font-medium text-foreground mb-2">
                 Category
               </label>
-              <Select value={filter} onValueChange={setFilter}>
+              <Select value={filter} onValueChange={handleFilterChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
@@ -114,20 +185,50 @@ const Collections = () => {
               <label className="block text-sm font-medium text-foreground mb-2">
                 Sort By
               </label>
-              <Select value={sortBy} onValueChange={setSortBy}>
+              <Select value={sortBy} onValueChange={handleSortChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="name">Name</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="price">Price</SelectItem>
+                  <SelectItem value="createdAt">Date Added</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Order
+              </label>
+              <Select value={sortOrder} onValueChange={(value: 'asc' | 'desc') => setSortOrder(value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sort order" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="asc">Ascending</SelectItem>
+                  <SelectItem value="desc">Descending</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
-          {/*category description conditional rendered */}
+          {/* Error Message */}
+          {error && (
+            <div className="mb-8 bg-red-50 border border-red-200 rounded-lg p-4">
+              <p className="text-red-700">{error}</p>
+              <Button 
+                onClick={fetchProducts} 
+                variant="outline" 
+                size="sm" 
+                className="mt-2"
+              >
+                Try Again
+              </Button>
+            </div>
+          )}
+
+          {/* Category Description */}
           {categoryDescription && (
             <div className="mb-8 bg-gradient-to-r from-primary/10 to-secondary/10 backdrop-blur-sm p-6 rounded-lg border border-border/50">
               <h2 className="font-serif text-2xl font-medium text-foreground mb-3">
@@ -139,24 +240,96 @@ const Collections = () => {
             </div>
           )}
 
-          {/* Product Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          {filteredProducts.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No products found in this category.</p>
-              <Button
-                onClick={() => setFilter("all")}
-                variant="outline"
-                className="mt-4"
-              >
-                Show All Products
-              </Button>
+          {/* Loading State */}
+          {loading && (
+            <div className="flex justify-center items-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <span className="ml-2 text-muted-foreground">Loading products...</span>
             </div>
+          )}
+
+          {/* Product Grid */}
+          {!loading && (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+
+              {/* No Products Message */}
+              {products.length === 0 && !loading && (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">No products found in this category.</p>
+                  <Button
+                    onClick={() => handleFilterChange("all")}
+                    variant="outline"
+                    className="mt-4"
+                  >
+                    Show All Products
+                  </Button>
+                </div>
+              )}
+
+              {/* Pagination */}
+              {pagination && pagination.totalPages > 1 && (
+                <div className="flex justify-center items-center gap-2 mt-8">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    Previous
+                  </Button>
+
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
+                      let pageNum;
+                      if (pagination.totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else if (currentPage <= 3) {
+                        pageNum = i + 1;
+                      } else if (currentPage >= pagination.totalPages - 2) {
+                        pageNum = pagination.totalPages - 4 + i;
+                      } else {
+                        pageNum = currentPage - 2 + i;
+                      }
+
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={currentPage === pageNum ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => handlePageChange(pageNum)}
+                          className="w-10 h-10"
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    })}
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === pagination.totalPages}
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+
+              {/* Results Info */}
+              {pagination && (
+                <div className="text-center mt-4 text-sm text-muted-foreground">
+                  Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, pagination.total)} of {pagination.total} products
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>

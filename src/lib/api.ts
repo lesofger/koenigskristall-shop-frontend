@@ -14,13 +14,6 @@ export const API_ENDPOINTS = {
     GET_BY_ID: (id: string) => `${API_BASE_URL}/api/products/${id}`,
     GET_BY_CATEGORY: (category: string) => `${API_BASE_URL}/api/products/category/${category}`,
   },
-  CART: {
-    GET: `${API_BASE_URL}/api/cart`,
-    ADD_ITEM: `${API_BASE_URL}/api/cart/add`,
-    UPDATE_ITEM: (cartItemId: string) => `${API_BASE_URL}/api/cart/${cartItemId}`,
-    REMOVE_ITEM: (cartItemId: string) => `${API_BASE_URL}/api/cart/${cartItemId}`,
-    CLEAR: `${API_BASE_URL}/api/cart`,
-  },
   PAYMENTS: {
     CREATE_PAYMENT_INTENT: `${API_BASE_URL}/api/payments/create-payment-intent`,
     WEBHOOK: `${API_BASE_URL}/api/payments/webhook`,
@@ -90,6 +83,20 @@ export interface Product {
   category: string;
   imageUrl: string;
   quantity: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PaginationInfo {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface ProductsResponse {
+  products: Product[];
+  pagination: PaginationInfo;
 }
 
 // Cart types
@@ -191,8 +198,23 @@ export const apiClient = {
 
   // Product APIs
   products: {
-    getAll: async (): Promise<ApiResponse<Product[]>> => {
-      const response = await fetch(API_ENDPOINTS.PRODUCTS.GET_ALL, {
+    getAll: async (params?: { 
+      page?: number; 
+      limit?: number; 
+      category?: string; 
+      sortBy?: string;
+      sortOrder?: 'asc' | 'desc';
+    }): Promise<ApiResponse<ProductsResponse>> => {
+      const searchParams = new URLSearchParams();
+      if (params?.page) searchParams.append('page', params.page.toString());
+      if (params?.limit) searchParams.append('limit', params.limit.toString());
+      if (params?.category) searchParams.append('category', params.category);
+      if (params?.sortBy) searchParams.append('sortBy', params.sortBy);
+      if (params?.sortOrder) searchParams.append('sortOrder', params.sortOrder);
+
+      const url = params ? `${API_ENDPOINTS.PRODUCTS.GET_ALL}?${searchParams.toString()}` : API_ENDPOINTS.PRODUCTS.GET_ALL;
+      
+      const response = await fetch(url, {
         method: 'GET',
         headers: getHeaders(),
       });
@@ -207,8 +229,21 @@ export const apiClient = {
       return response.json();
     },
 
-    getByCategory: async (category: string): Promise<ApiResponse<Product[]>> => {
-      const response = await fetch(API_ENDPOINTS.PRODUCTS.GET_BY_CATEGORY(category), {
+    getByCategory: async (category: string, params?: { 
+      page?: number; 
+      limit?: number; 
+      sortBy?: string;
+      sortOrder?: 'asc' | 'desc';
+    }): Promise<ApiResponse<ProductsResponse>> => {
+      const searchParams = new URLSearchParams();
+      if (params?.page) searchParams.append('page', params.page.toString());
+      if (params?.limit) searchParams.append('limit', params.limit.toString());
+      if (params?.sortBy) searchParams.append('sortBy', params.sortBy);
+      if (params?.sortOrder) searchParams.append('sortOrder', params.sortOrder);
+
+      const url = `${API_ENDPOINTS.PRODUCTS.GET_BY_CATEGORY(category)}?${searchParams.toString()}`;
+      
+      const response = await fetch(url, {
         method: 'GET',
         headers: getHeaders(),
       });
@@ -216,61 +251,8 @@ export const apiClient = {
     },
   },
 
-  // Cart APIs
-  cart: {
-    get: async (): Promise<ApiResponse<Cart>> => {
-      const response = await fetch(API_ENDPOINTS.CART.GET, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
-      return response.json();
-    },
-
-    addItem: async (data: { productId: number; quantity?: number }): Promise<ApiResponse<CartItem>> => {
-      const response = await fetch(API_ENDPOINTS.CART.ADD_ITEM, {
-        method: 'POST',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
-      return response.json();
-    },
-
-    updateItem: async (cartItemId: string, data: { quantity: number }): Promise<ApiResponse<CartItem>> => {
-      const response = await fetch(API_ENDPOINTS.CART.UPDATE_ITEM(cartItemId), {
-        method: 'PUT',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
-      return response.json();
-    },
-
-    removeItem: async (cartItemId: string): Promise<ApiResponse<{ message: string }>> => {
-      const response = await fetch(API_ENDPOINTS.CART.REMOVE_ITEM(cartItemId), {
-        method: 'DELETE',
-        headers: getHeaders(true),
-      });
-      return response.json();
-    },
-
-    clear: async (): Promise<ApiResponse<{ message: string }>> => {
-      const response = await fetch(API_ENDPOINTS.CART.CLEAR, {
-        method: 'DELETE',
-        headers: getHeaders(true),
-      });
-      return response.json();
-    },
-  },
-
   // Payment APIs
   payments: {
-    testAuth: async (): Promise<ApiResponse<{ message: string; user: any }>> => {
-      const response = await fetch(`${API_BASE_URL}/api/payments/test-auth`, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
-      return response.json();
-    },
-
     createPaymentIntent: async (data: CreatePaymentIntentRequest): Promise<ApiResponse<PaymentIntent>> => {
       const response = await fetch(API_ENDPOINTS.PAYMENTS.CREATE_PAYMENT_INTENT, {
         method: 'POST',
