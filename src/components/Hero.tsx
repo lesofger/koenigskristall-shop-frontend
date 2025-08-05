@@ -23,8 +23,8 @@ const Hero = () => {
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <div className="animate-float">
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-light text-background mb-6 tracking-wide">
-            Mystical
-            <span className="block text-accent font-normal">Crystals</span>
+            Koenigs
+            <span className="block text-accent font-normal">Kristall</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-background/90 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
