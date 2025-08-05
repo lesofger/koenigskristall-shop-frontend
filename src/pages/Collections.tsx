@@ -10,7 +10,7 @@ const Collections = () => {
   const [sortBy, setSortBy] = useState<string>("name");
 
   const categories = [
-    { value: "all", label: "All Categories" },
+    { value: "all", label: "Alle Kristalle" },
     { value: "Bergkristall", label: "Bergkristall" },
     { value: "Rosenquarz", label: "Rosenquarz" },
     { value: "Amethyst", label: "Amethyst" },
@@ -83,10 +83,10 @@ const Collections = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="font-serif text-4xl md:text-5xl font-light text-foreground mb-4">
-              Crystal Collections
+              Kristall Sammlung
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover our curated selection of healing crystals, each chosen for their unique properties and energy.
+              Entdecke eine große Auswahl an Kristallen, die ich persönlich zusammengetragen habe.
             </p>
           </div>
 
@@ -94,7 +94,7 @@ const Collections = () => {
           <div className="flex flex-col sm:flex-row gap-4 mb-8 bg-background/80 backdrop-blur-sm p-4 rounded-lg border border-border/50">
             <div className="flex-1">
               <label className="block text-sm font-medium text-foreground mb-2">
-                Category
+                Kategorie
               </label>
               <Select value={filter} onValueChange={setFilter}>
                 <SelectTrigger>
@@ -112,7 +112,7 @@ const Collections = () => {
             
             <div className="flex-1">
               <label className="block text-sm font-medium text-foreground mb-2">
-                Sort By
+                Sortiert nach
               </label>
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger>
@@ -120,8 +120,8 @@ const Collections = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="name">Name</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="price-low">Preis: Niedrig bis Hoch</SelectItem>
+                  <SelectItem value="price-high">Preis: Hoch bis Niedrig</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -148,13 +148,13 @@ const Collections = () => {
 
           {filteredProducts.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">No products found in this category.</p>
+              <p className="text-muted-foreground">Keine Produkte in dieser Kategorie gefunden.</p>
               <Button
                 onClick={() => setFilter("all")}
                 variant="outline"
                 className="mt-4"
               >
-                Show All Products
+                Alle Produkte anzeigen
               </Button>
             </div>
           )}

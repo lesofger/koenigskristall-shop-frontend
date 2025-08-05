@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import CrystalGrid from "@/components/CrystalGrid";
 import ServiceSection from "@/components/Services";
+import QualityPromise from "@/components/QualityPromise";
 
 const Index = () => {
   return (
@@ -8,6 +9,7 @@ const Index = () => {
       <Hero />
       <ServiceSection />
       <CrystalGrid />
+      <QualityPromise />
     </div>
   );
 };
