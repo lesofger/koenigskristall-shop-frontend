@@ -14,10 +14,12 @@ export const API_ENDPOINTS = {
     GET_BY_ID: (id: string) => `${API_BASE_URL}/api/products/${id}`,
     GET_BY_CATEGORY: (category: string) => `${API_BASE_URL}/api/products/category/${category}`,
   },
-  PAYMENTS: {
-    CREATE_PAYMENT_INTENT: `${API_BASE_URL}/api/payments/create-payment-intent`,
-    WEBHOOK: `${API_BASE_URL}/api/payments/webhook`,
-  },
+      PAYMENTS: {
+      CREATE_PAYMENT_INTENT: `${API_BASE_URL}/api/payments/create-payment-intent`,
+      CREATE_PAYPAL_ORDER: `${API_BASE_URL}/api/payments/paypal/create-order`,
+      CAPTURE_PAYPAL_PAYMENT: `${API_BASE_URL}/api/payments/paypal/capture`,
+      GET_PAYPAL_ORDER: (orderID: string) => `${API_BASE_URL}/api/payments/paypal/order/${orderID}`,
+    },
   ORDERS: {
     GET_ALL: `${API_BASE_URL}/api/orders`,
     GET_BY_ID: (id: string) => `${API_BASE_URL}/api/orders/${id}`,
@@ -126,7 +128,7 @@ export interface CreatePaymentIntentRequest {
     quantity: number;
     price: number;
   }>;
-  paymentMethod?: 'card' | 'bank_transfer';
+  paymentMethod?: 'card' | 'bank_transfer' | 'paypal';
 }
 
 export interface BankTransferDetails {
@@ -258,6 +260,32 @@ export const apiClient = {
         method: 'POST',
         headers: getHeaders(true),
         body: JSON.stringify(data),
+      });
+      return response.json();
+    },
+
+    createPayPalOrder: async (data: CreatePaymentIntentRequest): Promise<ApiResponse<any>> => {
+      const response = await fetch(API_ENDPOINTS.PAYMENTS.CREATE_PAYPAL_ORDER, {
+        method: 'POST',
+        headers: getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    },
+
+    capturePayPalPayment: async (orderID: string): Promise<ApiResponse<any>> => {
+      const response = await fetch(API_ENDPOINTS.PAYMENTS.CAPTURE_PAYPAL_PAYMENT, {
+        method: 'POST',
+        headers: getHeaders(true),
+        body: JSON.stringify({ orderID }),
+      });
+      return response.json();
+    },
+
+    getPayPalOrder: async (orderID: string): Promise<ApiResponse<any>> => {
+      const response = await fetch(API_ENDPOINTS.PAYMENTS.GET_PAYPAL_ORDER(orderID), {
+        method: 'GET',
+        headers: getHeaders(true),
       });
       return response.json();
     },

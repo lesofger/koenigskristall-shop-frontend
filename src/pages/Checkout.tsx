@@ -12,6 +12,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { apiClient } from '@/lib/api';
 import BankTransferPayment from '@/components/BankTransferPayment';
+import PayPalPayment from '@/components/PayPalPayment';
 
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -125,8 +126,9 @@ const Checkout = () => {
   const [clientSecret, setClientSecret] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank_transfer'>('card');
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank_transfer' | 'paypal'>('card');
   const [bankTransferClientSecret, setBankTransferClientSecret] = useState<string>('');
+  const [paypalOrder, setPaypalOrder] = useState<any>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -153,6 +155,14 @@ const Checkout = () => {
             })),
             paymentMethod: 'bank_transfer'
           });
+        } else if (paymentMethod === 'paypal') {
+          response = await apiClient.payments.createPayPalOrder({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            }))
+          });
         } else {
           response = await apiClient.payments.createPaymentIntent({
             items: items.map(item => ({
@@ -167,6 +177,8 @@ const Checkout = () => {
         if (response.status === 'success' && response.data) {
           if (paymentMethod === 'bank_transfer') {
             setBankTransferClientSecret(response.data.clientSecret);
+          } else if (paymentMethod === 'paypal') {
+            setPaypalOrder(response.data);
           } else {
             setClientSecret(response.data.clientSecret);
           }
@@ -212,12 +224,13 @@ const Checkout = () => {
     }
   };
 
-  const handlePaymentMethodChange = (method: 'card' | 'bank_transfer') => {
+  const handlePaymentMethodChange = (method: 'card' | 'bank_transfer' | 'paypal') => {
     setPaymentMethod(method);
     setIsLoading(true);
     setError('');
     setClientSecret('');
     setBankTransferClientSecret('');
+    setPaypalOrder(null); // Clear PayPal order data
   };
 
   if (!isAuthenticated) {
@@ -312,7 +325,7 @@ const Checkout = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-3">
                   <Button
                     variant={paymentMethod === 'card' ? 'default' : 'outline'}
                     onClick={() => handlePaymentMethodChange('card')}
@@ -329,6 +342,22 @@ const Checkout = () => {
                     <Building2 className="mr-2 h-4 w-4" />
                     Bank Transfer
                   </Button>
+                  <Button
+                    variant={paymentMethod === 'paypal' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('paypal')}
+                    className="h-12"
+                  >
+                    <svg
+                      className="mr-2 h-4 w-4 text-gray-500"
+                      viewBox="0 0 512 512"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M374.7 139.5C383.1 98.9 353.6 64 308.1 64H152.1c-10.7 0-19.8 7.8-21.5 18.4L80.1 417.6c-1.6 9.6 5.9 18.4 15.5 18.4h81.1l13.7-86.1 3.1-20.2c1.7-10.6 10.8-18.4 21.5-18.4h42.3c75.1 0 135.9-49.8 147.3-121.8 2.9-18.2 1.5-35.6-4.9-50.9z" />
+                      <path d="M445.4 175.3c-7.5-9.4-17.9-16.2-29.6-19.6-5.4-1.6-11-2.7-16.7-3.2 1.8 12.3 1.4 25.4-.6 38.5-9.3 58.2-53.2 95-112.1 95H234.1c-5.4 0-10.1 3.9-10.9 9.2l-16.7 105.1-.9 5.7c-1.1 6.7 4.1 12.8 10.9 12.8h59.3c9.9 0 18.4-7.2 19.9-17l.3-1.6 8.2-52.3.5-2.9c1.5-9.5 9.7-16.4 19.3-16.4h12.1c54.7 0 97.6-38.1 106.9-91.5 3.8-22.3 1-41.6-11.9-57.3z" />
+                    </svg>
+                    PayPal
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -339,10 +368,20 @@ const Checkout = () => {
                 <CardTitle className="flex items-center text-xl">
                   {paymentMethod === 'card' ? (
                     <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
-                  ) : (
+                  ) : paymentMethod === 'bank_transfer' ? (
                     <Building2 className="mr-2 h-6 w-6 text-green-600" />
+                  ) : (
+                    <svg
+                      className="mr-2 h-6 w-6 text-blue-600"
+                      viewBox="0 0 512 512"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M374.7 139.5C383.1 98.9 353.6 64 308.1 64H152.1c-10.7 0-19.8 7.8-21.5 18.4L80.1 417.6c-1.6 9.6 5.9 18.4 15.5 18.4h81.1l13.7-86.1 3.1-20.2c1.7-10.6 10.8-18.4 21.5-18.4h42.3c75.1 0 135.9-49.8 147.3-121.8 2.9-18.2 1.5-35.6-4.9-50.9z" />
+                      <path d="M445.4 175.3c-7.5-9.4-17.9-16.2-29.6-19.6-5.4-1.6-11-2.7-16.7-3.2 1.8 12.3 1.4 25.4-.6 38.5-9.3 58.2-53.2 95-112.1 95H234.1c-5.4 0-10.1 3.9-10.9 9.2l-16.7 105.1-.9 5.7c-1.1 6.7 4.1 12.8 10.9 12.8h59.3c9.9 0 18.4-7.2 19.9-17l.3-1.6 8.2-52.3.5-2.9c1.5-9.5 9.7-16.4 19.3-16.4h12.1c54.7 0 97.6-38.1 106.9-91.5 3.8-22.3 1-41.6-11.9-57.3z" />
+                    </svg>
                   )}
-                  {paymentMethod === 'card' ? 'Card Payment' : 'Bank Transfer Payment'}
+                  {paymentMethod === 'card' ? 'Card Payment' : paymentMethod === 'bank_transfer' ? 'Bank Transfer Payment' : 'PayPal Payment'}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -364,11 +403,21 @@ const Checkout = () => {
                     onError={handlePaymentError}
                   />
                 )}
+
+                {paymentMethod === 'paypal' && paypalOrder && (
+                  <PayPalPayment
+                    amount={getTotalPrice()}
+                    items={items}
+                    paypalOrder={paypalOrder}
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                  />
+                )}
                 
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
                   <div className="flex items-center text-xs text-blue-700">
                     <Shield className="mr-2 h-3 w-3" />
-                    <span>Your payment is secure and encrypted with Stripe</span>
+                    <span>Your payment is secure and encrypted with industry-standard protection</span>
                   </div>
                 </div>
                 
