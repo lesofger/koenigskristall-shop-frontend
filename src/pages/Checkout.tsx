@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Lock, Building2} from 'lucide-react';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { apiClient } from '@/lib/api';
@@ -478,19 +478,20 @@ const Checkout = () => {
                     </div>
                   </div>
                 ))}
-                                 {/* <Separator /> */}
-                 <div className="flex justify-between items-center text-2xl font-bold text-gray-900">
+
+                  {/* <Separator /> */}
+                 <div className="flex justify-between items-center text-2xl font-bold text-gray-900 pt-4 pb-2">
                    <span>Order Total</span>
                    <span className="text-blue-600">€{getTotalPrice().toFixed(2)}</span>
                  </div>
                  
                  {/* Security Message */}
-                 <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
-                   <div className="flex items-center text-xs text-green-700">
-                     <Lock className="mr-2 h-4 w-4" />
-                     <span>100% secure checkout. Your information is always protected, and every crystal is chosen and packed with care.</span>
-                   </div>
-                 </div>
+                 {/* <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200"> */}
+                   {/* <div className="flex items-center text-xs text-green-700"> */}
+                     {/* <Lock className="mr-2 h-4 w-4" /> */}
+                     <p className=" text-sm text-gray-500">We prioritize your privacy and ensure every crystal is hand-selected and carefully packaged for you.</p>
+                   {/* </div> */}
+                 {/* </div> */}
               </CardContent>
             </Card>
 
@@ -499,7 +500,7 @@ const Checkout = () => {
               <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-purple-600 text-lg">✨</span>
                     </div>
                     <div>
@@ -512,7 +513,7 @@ const Checkout = () => {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-green-600 text-lg">🛡️</span>
                     </div>
                     <div>
@@ -525,7 +526,7 @@ const Checkout = () => {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-blue-600 text-lg">🌍</span>
                     </div>
                     <div>
@@ -538,7 +539,7 @@ const Checkout = () => {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-orange-600 text-lg">🚚</span>
                     </div>
                     <div>
