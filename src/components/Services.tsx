@@ -1,4 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Sparkles, ShoppingBag, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 import image1 from "@/assets/berater.png";
 import image2 from "@/assets/shopLogo.png";
 import image3 from "@/assets/bibliothek.png";
@@ -6,51 +9,103 @@ import image3 from "@/assets/bibliothek.png";
 const services = [
   {
     title: "Persönliche Kristallberatung",
+    description: "Lass dich von mir bei der Auswahl deiner perfekten Kristalle beraten.",
     image: image1,
     alt: "Beratung",
+    icon: <Sparkles className="w-6 h-6" />,
+    link: "/beratung"
   },
   {
     title: "Kristall Shop",
+    description: "Entdecke unsere sorgfältig ausgewählte Kollektion an Heilsteinen.",
     image: image2,
     alt: "Shop",
+    icon: <ShoppingBag className="w-6 h-6" />,
+    link: "/shop"
   },
   {
     title: "Kristallbibliothek",
+    description: "Erweitere dein Wissen über die Welt der Kristalle und ihre Eigenschaften.",
     image: image3,
     alt: "Bibliothek",
+    icon: <BookOpen className="w-6 h-6" />,
+    link: "/bibliothek"
   },
 ];
 
 const ServiceSection = () => {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-10 bg-gradient-crystal border border-bottom-2">
+    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center px-4 py-16">
-          <h2 className="text-3xl md:text-4xl font-semibold mb-4">
-            Herzlich Willkommen,<br />auf deiner Reise, durch die magische Welt der Kristalle und Heilsteine.
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-6 tracking-wide">
+            Deine Kristall
+            <span className="block text-accent font-normal">Erfahrung</span>
           </h2>
-          <p className="text-xl md:text-2xl font-medium mt-2 text-muted-foreground">
-            Hier findest du Alles, was dein Kristallherz begehrt. Schau dich gerne um, auch du wirst dein Lieblingskristall finden.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+            Entdecke die verschiedenen Wege, wie ich dich auf deiner spirituellen Reise begleiten kann.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8 px-2 md:px-6">
+
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
           {services.map((service, idx) => (
             <Card
               key={service.title}
-              className="flex flex-col items-center text-center transition-transform hover:scale-105 hover:shadow-xl shadow-md bg-white/80 backdrop-blur rounded-2xl border-0"
+              className="group relative overflow-hidden bg-card border border-border hover:shadow-crystal transition-all duration-300 hover:-translate-y-1"
             >
-              <CardContent className="flex flex-col items-center p-8">
-                <img
-                  src={service.image}
-                  alt={service.alt}
-                  className="w-32 h-32 object-contain rounded-xl mb-6 bg-white"
-                  width={128}
-                  height={128}
-                />
-                <p className="font-bold text-lg mb-2 text-primary">{service.title}</p>
+              <CardContent className="p-8 text-center">
+                {/* Icon */}
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 text-accent mb-6">
+                  {service.icon}
+                </div>
+
+                {/* Image */}
+                <div className="relative mb-8">
+                  <img
+                    src={service.image}
+                    alt={service.alt}
+                    className="w-32 h-32 mx-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                    width={128}
+                    height={128}
+                  />
+                </div>
+
+                {/* Content */}
+                <h3 className="font-serif text-xl font-light text-foreground mb-3 tracking-wide">
+                  {service.title}
+                </h3>
+                <p className="text-muted-foreground mb-6 font-light leading-relaxed">
+                  {service.description}
+                </p>
+
+                {/* CTA Button */}
+                <Link to={service.link}>
+                  <Button 
+                    variant="outline"
+                    className="bg-background text-foreground hover:bg-accent hover:text-background border-border px-6 py-2 font-medium tracking-wide shadow-crystal group/btn"
+                  >
+                    Mehr erfahren
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-16">
+          <Link to="/shop">
+            <Button 
+              size="lg"
+              className="bg-accent text-background hover:bg-accent/90 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
+            >
+              Starte deine Kristallreise
+              <Sparkles className="w-5 h-5 ml-2" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

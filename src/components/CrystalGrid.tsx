@@ -3,50 +3,50 @@ import { Link } from "react-router-dom";
 
 const crystalCategories = [
   {
-    name: "Rose Quartz",
-    description: "Love & Compassion",
+    name: "Rosenquarz",
+    description: "Selbstliebe & Herzchakra",
     image: "🌸",
     color: "from-pink-100 to-rose-200",
   },
   {
     name: "Amethyst",
-    description: "Spiritual Growth",
+    description: "Spiritualität und Intuition",
     image: "💜",
     color: "from-purple-100 to-violet-200",
   },
   {
-    name: "Clear Quartz",
-    description: "Amplification",
+    name: "Bergkristall",
+    description: "Klarheit und Verstärkung",
     image: "💎",
     color: "from-slate-50 to-gray-100",
   },
   {
     name: "Citrine",
-    description: "Abundance & Joy",
+    description: "Fülle und Manifestation",
     image: "🟡",
     color: "from-yellow-100 to-amber-200",
   },
   {
-    name: "Black Tourmaline",
-    description: "Protection",
+    name: "Schwarzer Turmalin",
+    description: "Schutz und Erdung",
     image: "⚫",
     color: "from-gray-200 to-slate-300",
   },
   {
-    name: "Selenite",
-    description: "Cleansing",
+    name: "Selenit",
+    description: "Reinigung und Klarheit",
     image: "🤍",
     color: "from-white to-gray-50",
   },
   {
-    name: "Labradorite",
-    description: "Transformation",
+    name: "Labradorit",
+    description: "Transformation & Magie",
     image: "🔮",
     color: "from-blue-100 to-indigo-200",
   },
   {
-    name: "Green Aventurine",
-    description: "Prosperity",
+    name: "Grüner Aventurin",
+    description: "Glück & Herzensruhe",
     image: "💚",
     color: "from-green-100 to-emerald-200",
   },
@@ -58,11 +58,10 @@ const CrystalGrid = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground mb-6">
-            Crystal Categories
+            Die Kraft Der Kristalle
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Each crystal carries its own unique energy and healing properties. 
-            Explore our carefully curated collection to find your perfect match.
+            Jeder Kristall hat seine ganz eigenen Fähigkeiten und Kräfte, um dich individuell auf deinem Weg zu unterstützen.
           </p>
         </div>
 
