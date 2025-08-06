@@ -28,11 +28,11 @@ const QualityPromise = () => {
   return (
     <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+       {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-6 tracking-wide">
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide">
             Mein
-            <span className="block text-accent font-normal">Qualitätsversprechen</span>
+            <span className="block text-primary font-normal">Qualitätsversprechen</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Jeder Kristall in meinem Shop durchläuft einen besonderen Prozess der Auswahl und Vorbereitung, 
@@ -49,17 +49,17 @@ const QualityPromise = () => {
             >
               <CardContent className="p-8 text-center">
                 {/* Icon */}
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 text-accent mb-6 group-hover:bg-accent/20 transition-colors duration-300">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6 group-hover:bg-primary/20 transition-colors duration-300">
                   {promise.icon}
                 </div>
 
                 {/* Content */}
-                <h3 className="font-serif text-lg font-light text-foreground mb-3 tracking-wide">
-                  {promise.title}
-                </h3>
-                <p className="text-muted-foreground text-sm font-light leading-relaxed">
-                  {promise.description}
-                </p>
+                  <h3 className="font-serif text-lg font-light text-black mb-3 tracking-wide">
+                    {promise.title}
+                  </h3>
+                    <p className="text-muted-foreground text-sm font-light leading-relaxed">
+                      {promise.description}
+                    </p>
               </CardContent>
             </Card>
           ))}
@@ -67,16 +67,16 @@ const QualityPromise = () => {
 
         {/* Personal Touch Section */}
         <div className="mt-16 text-center">
-          <Card className="bg-gradient-to-br from-accent/5 to-background border border-accent/20 max-w-4xl mx-auto">
+          <Card className="bg-gradient-to-br from-primary/5 to-background border border-primary/20 max-w-4xl mx-auto">
             <CardContent className="p-8 md:p-12">
               <div className="flex flex-col md:flex-row items-center gap-8">
                 <div className="flex-shrink-0">
-                  <div className="w-24 h-24 rounded-full bg-accent/10 flex items-center justify-center">
-                    <Heart className="w-12 h-12 text-accent" />
+                  <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Heart className="w-12 h-12 text-primary" />
                   </div>
                 </div>
                 <div className="text-center md:text-left">
-                  <h3 className="font-serif text-2xl md:text-3xl font-light text-foreground mb-4 tracking-wide">
+                  <h3 className="font-serif text-2xl md:text-3xl font-light text-black mb-4 tracking-wide">
                     Eine persönliche Note
                   </h3>
                   <p className="text-muted-foreground font-light leading-relaxed text-lg">

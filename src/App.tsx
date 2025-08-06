@@ -15,6 +15,8 @@ import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Orders from "./pages/Orders";
 import Layout from "@/components/Layout";
+import Inspired from "./pages/Inspired";
+import Consulting from "./pages/Consulting";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +34,8 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/inspired" element={<Inspired />} />
+              <Route path="/consulting" element={<Consulting />} />
               <Route 
                 path="/checkout" 
                 element={
