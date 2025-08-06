@@ -5,14 +5,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Lock } from 'lucide-react';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { apiClient } from '@/lib/api';
+import BankTransferPayment from '@/components/BankTransferPayment';
+import PayPalPayment from '@/components/PayPalPayment';
 
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -126,6 +126,9 @@ const Checkout = () => {
   const [clientSecret, setClientSecret] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank_transfer' | 'paypal'>('card');
+  const [bankTransferClientSecret, setBankTransferClientSecret] = useState<string>('');
+  const [paypalOrder, setPaypalOrder] = useState<any>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -138,19 +141,47 @@ const Checkout = () => {
       return;
     }
 
-    // Create payment intent using centralized API client
+    // Create payment intent based on selected payment method
     const createPaymentIntent = async () => {
       try {
-        const response = await apiClient.payments.createPaymentIntent({
-          items: items.map(item => ({
-            id: parseInt(item.id),
-            quantity: item.quantity,
-            price: item.price
-          }))
-        });
+        let response;
+        
+        if (paymentMethod === 'bank_transfer') {
+          response = await apiClient.payments.createPaymentIntent({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            })),
+            paymentMethod: 'bank_transfer'
+          });
+        } else if (paymentMethod === 'paypal') {
+          response = await apiClient.payments.createPayPalOrder({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            }))
+          });
+        } else {
+          response = await apiClient.payments.createPaymentIntent({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            })),
+            paymentMethod: 'card'
+          });
+        }
 
         if (response.status === 'success' && response.data) {
-          setClientSecret(response.data.clientSecret);
+          if (paymentMethod === 'bank_transfer') {
+            setBankTransferClientSecret(response.data.clientSecret);
+          } else if (paymentMethod === 'paypal') {
+            setPaypalOrder(response.data);
+          } else {
+            setClientSecret(response.data.clientSecret);
+          }
         } else {
           setError(response.message || 'Failed to create payment intent');
         }
@@ -163,7 +194,7 @@ const Checkout = () => {
     };
 
     createPaymentIntent();
-  }, [isAuthenticated, items, navigate]);
+  }, [isAuthenticated, items, navigate, paymentMethod]);
 
   const handlePaymentSuccess = () => {
     console.log('Payment successful2===========>');
@@ -191,6 +222,15 @@ const Checkout = () => {
     } else {
       updateQuantity(itemId, newQuantity);
     }
+  };
+
+  const handlePaymentMethodChange = (method: 'card' | 'bank_transfer' | 'paypal') => {
+    setPaymentMethod(method);
+    setIsLoading(true);
+    setError('');
+    setClientSecret('');
+    setBankTransferClientSecret('');
+    setPaypalOrder(null); // Clear PayPal order data
   };
 
   if (!isAuthenticated) {
@@ -276,16 +316,76 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            {/* Payment Information */}
+            {/* Payment Method Selection */}
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center text-xl">
                   <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
-                  Payment Information
+                  Payment Method
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-3 gap-3">
+                  <Button
+                    variant={paymentMethod === 'card' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('card')}
+                    className="h-12"
+                  >
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Credit Card
+                  </Button>
+                  <Button
+                    variant={paymentMethod === 'bank_transfer' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('bank_transfer')}
+                    className="h-12"
+                  >
+                    <Building2 className="mr-2 h-4 w-4" />
+                    Bank Transfer
+                  </Button>
+                  <Button
+                    variant={paymentMethod === 'paypal' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('paypal')}
+                    className="h-12"
+                  >
+                    <svg
+                      className="mr-2 h-4 w-4 text-gray-500"
+                      viewBox="0 0 512 512"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M374.7 139.5C383.1 98.9 353.6 64 308.1 64H152.1c-10.7 0-19.8 7.8-21.5 18.4L80.1 417.6c-1.6 9.6 5.9 18.4 15.5 18.4h81.1l13.7-86.1 3.1-20.2c1.7-10.6 10.8-18.4 21.5-18.4h42.3c75.1 0 135.9-49.8 147.3-121.8 2.9-18.2 1.5-35.6-4.9-50.9z" />
+                      <path d="M445.4 175.3c-7.5-9.4-17.9-16.2-29.6-19.6-5.4-1.6-11-2.7-16.7-3.2 1.8 12.3 1.4 25.4-.6 38.5-9.3 58.2-53.2 95-112.1 95H234.1c-5.4 0-10.1 3.9-10.9 9.2l-16.7 105.1-.9 5.7c-1.1 6.7 4.1 12.8 10.9 12.8h59.3c9.9 0 18.4-7.2 19.9-17l.3-1.6 8.2-52.3.5-2.9c1.5-9.5 9.7-16.4 19.3-16.4h12.1c54.7 0 97.6-38.1 106.9-91.5 3.8-22.3 1-41.6-11.9-57.3z" />
+                    </svg>
+                    PayPal
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Payment Information */}
+            <Card>
+              <CardHeader className="pb-6">
+                <CardTitle className="flex items-center text-xl">
+                  {paymentMethod === 'card' ? (
+                    <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
+                  ) : paymentMethod === 'bank_transfer' ? (
+                    <Building2 className="mr-2 h-6 w-6 text-green-600" />
+                  ) : (
+                    <svg
+                      className="mr-2 h-6 w-6 text-blue-600"
+                      viewBox="0 0 512 512"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M374.7 139.5C383.1 98.9 353.6 64 308.1 64H152.1c-10.7 0-19.8 7.8-21.5 18.4L80.1 417.6c-1.6 9.6 5.9 18.4 15.5 18.4h81.1l13.7-86.1 3.1-20.2c1.7-10.6 10.8-18.4 21.5-18.4h42.3c75.1 0 135.9-49.8 147.3-121.8 2.9-18.2 1.5-35.6-4.9-50.9z" />
+                      <path d="M445.4 175.3c-7.5-9.4-17.9-16.2-29.6-19.6-5.4-1.6-11-2.7-16.7-3.2 1.8 12.3 1.4 25.4-.6 38.5-9.3 58.2-53.2 95-112.1 95H234.1c-5.4 0-10.1 3.9-10.9 9.2l-16.7 105.1-.9 5.7c-1.1 6.7 4.1 12.8 10.9 12.8h59.3c9.9 0 18.4-7.2 19.9-17l.3-1.6 8.2-52.3.5-2.9c1.5-9.5 9.7-16.4 19.3-16.4h12.1c54.7 0 97.6-38.1 106.9-91.5 3.8-22.3 1-41.6-11.9-57.3z" />
+                    </svg>
+                  )}
+                  {paymentMethod === 'card' ? 'Card Payment' : paymentMethod === 'bank_transfer' ? 'Bank Transfer Payment' : 'PayPal Payment'}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {clientSecret && (
+                {paymentMethod === 'card' && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
                     <CheckoutForm
                       clientSecret={clientSecret}
@@ -295,10 +395,29 @@ const Checkout = () => {
                   </Elements>
                 )}
                 
+                {paymentMethod === 'bank_transfer' && bankTransferClientSecret && (
+                  <BankTransferPayment
+                    clientSecret={bankTransferClientSecret}
+                    amount={getTotalPrice()}
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                  />
+                )}
+
+                {paymentMethod === 'paypal' && paypalOrder && (
+                  <PayPalPayment
+                    amount={getTotalPrice()}
+                    items={items}
+                    paypalOrder={paypalOrder}
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                  />
+                )}
+                
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
                   <div className="flex items-center text-xs text-blue-700">
                     <Shield className="mr-2 h-3 w-3" />
-                    <span>Your payment is secure and encrypted with Stripe</span>
+                    <span>Your payment is secure and encrypted with industry-standard protection</span>
                   </div>
                 </div>
                 
@@ -359,19 +478,20 @@ const Checkout = () => {
                     </div>
                   </div>
                 ))}
-                                 {/* <Separator /> */}
-                 <div className="flex justify-between items-center text-2xl font-bold text-gray-900">
+
+                  {/* <Separator /> */}
+                 <div className="flex justify-between items-center text-2xl font-bold text-gray-900 pt-4 pb-2">
                    <span>Order Total</span>
                    <span className="text-blue-600">€{getTotalPrice().toFixed(2)}</span>
                  </div>
                  
                  {/* Security Message */}
-                 <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
-                   <div className="flex items-center text-xs text-green-700">
-                     <Lock className="mr-2 h-4 w-4" />
-                     <span>100% secure checkout. Your information is always protected, and every crystal is chosen and packed with care.</span>
-                   </div>
-                 </div>
+                 {/* <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200"> */}
+                   {/* <div className="flex items-center text-xs text-green-700"> */}
+                     {/* <Lock className="mr-2 h-4 w-4" /> */}
+                     <p className=" text-sm text-gray-500">We prioritize your privacy and ensure every crystal is hand-selected and carefully packaged for you.</p>
+                   {/* </div> */}
+                 {/* </div> */}
               </CardContent>
             </Card>
 
@@ -380,7 +500,7 @@ const Checkout = () => {
               <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-purple-600 text-lg">✨</span>
                     </div>
                     <div>
@@ -393,7 +513,7 @@ const Checkout = () => {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-green-600 text-lg">🛡️</span>
                     </div>
                     <div>
@@ -406,7 +526,7 @@ const Checkout = () => {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-blue-600 text-lg">🌍</span>
                     </div>
                     <div>
@@ -419,7 +539,7 @@ const Checkout = () => {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-orange-600 text-lg">🚚</span>
                     </div>
                     <div>
