@@ -13,7 +13,7 @@ const services = [
     image: image1,
     alt: "Beratung",
     icon: <Sparkles className="w-6 h-6" />,
-    link: "/beratung"
+    link: "/consulting"
   },
   {
     title: "Kristall Shop",
@@ -29,7 +29,7 @@ const services = [
     image: image3,
     alt: "Bibliothek",
     icon: <BookOpen className="w-6 h-6" />,
-    link: "/bibliothek"
+    link: "/inspired"
   },
 ];
 
@@ -39,10 +39,9 @@ const ServiceSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-6 tracking-wide">
-            Deine Kristall
-            <span className="block text-accent font-normal">Erfahrung</span>
-          </h2>
+         <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide">
+            Deine Kristall Erfahrung
+        </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Entdecke die verschiedenen Wege, wie ich dich auf deiner spirituellen Reise begleiten kann.
           </p>
@@ -57,7 +56,7 @@ const ServiceSection = () => {
             >
               <CardContent className="p-8 text-center">
                 {/* Icon */}
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 text-accent mb-6">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 text-primary mb-6">
                   {service.icon}
                 </div>
 
@@ -81,15 +80,15 @@ const ServiceSection = () => {
                 </p>
 
                 {/* CTA Button */}
-                <Link to={service.link}>
-                  <Button 
-                    variant="outline"
-                    className="bg-background text-foreground hover:bg-accent hover:text-background border-border px-6 py-2 font-medium tracking-wide shadow-crystal group/btn"
-                  >
-                    Mehr erfahren
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
+                   <Link to={service.link}>
+                    <Button 
+                     variant="outline"
+                     className="bg-background text-primary hover:bg-primary hover:text-background border-border px-6 py-2 font-medium tracking-wide shadow-crystal group/btn"
+                      >
+                       Mehr erfahren
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
               </CardContent>
             </Card>
           ))}
@@ -99,12 +98,12 @@ const ServiceSection = () => {
         <div className="text-center mt-16">
           <Link to="/shop">
             <Button 
-              size="lg"
-              className="bg-accent text-background hover:bg-accent/90 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
-            >
-              Starte deine Kristallreise
-              <Sparkles className="w-5 h-5 ml-2" />
-            </Button>
+               size="lg"
+               className="bg-primary text-background hover:bg-primary/90 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
+                    >
+                 Starte deine Kristallreise
+                 <Sparkles className="w-5 h-5 ml-2" />
+             </Button>
           </Link>
         </div>
       </div>
