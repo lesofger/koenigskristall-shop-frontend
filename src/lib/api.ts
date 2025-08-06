@@ -122,12 +122,21 @@ export interface PaymentIntent {
   paymentMethod?: string;
 }
 
+export interface ShippingAddress {
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
+
 export interface CreatePaymentIntentRequest {
   items: Array<{
     id: number;
     quantity: number;
     price: number;
   }>;
+  shippingAddress?: ShippingAddress;
   paymentMethod?: 'card' | 'bank_transfer' | 'paypal';
 }
 

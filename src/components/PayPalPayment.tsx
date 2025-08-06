@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, CreditCard, Shield, CheckCircle, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { apiClient } from '@/lib/api';
+import { apiClient, type ShippingAddress } from '@/lib/api';
 
 interface PayPalPaymentProps {
   amount: number;
@@ -16,6 +16,7 @@ interface PayPalPaymentProps {
   paypalOrder: any; // Add this prop to receive the order from parent
   onSuccess: () => void;
   onError: (error: string) => void;
+  shippingAddress: ShippingAddress;
 }
 
 declare global {
@@ -24,7 +25,7 @@ declare global {
   }
 }
 
-const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError }: PayPalPaymentProps) => {
+const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippingAddress }: PayPalPaymentProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paypalLoaded, setPaypalLoaded] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'succeeded' | 'failed'>('pending');
@@ -90,6 +91,17 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError }: PayPa
           return paypalOrder.orderId;
         },
         onApprove: async (data: any, actions: any) => {
+          // Validate shipping address before payment
+          const validateShippingAddress = (): boolean => {
+            const { street, city, state, zipCode, country } = shippingAddress;
+            return !!(street && city && state && zipCode && country);
+          };
+
+          if (!validateShippingAddress()) {
+            onError('Please fill in all shipping address fields before proceeding.');
+            return;
+          }
+
           setIsProcessing(true);
           setPaymentStatus('processing');
           

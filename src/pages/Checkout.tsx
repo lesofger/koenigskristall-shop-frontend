@@ -7,116 +7,17 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2} from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2, MapPin} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import { apiClient } from '@/lib/api';
+import { Elements } from '@stripe/react-stripe-js';
+import { apiClient, type ShippingAddress } from '@/lib/api';
 import BankTransferPayment from '@/components/BankTransferPayment';
 import PayPalPayment from '@/components/PayPalPayment';
+import CardPayment from '@/components/CardPayment';
 
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-
-interface CheckoutFormProps {
-  clientSecret: string;
-  onSuccess: () => void;
-  onError: (error: string) => void;
-}
-
-const CheckoutForm = ({ clientSecret, onSuccess, onError }: CheckoutFormProps) => {
-  const [isProcessing, setIsProcessing] = useState(false);
-  const stripe = useStripe();
-  const elements = useElements();
-
-  console.log('CheckoutForm rendered with clientSecret:', !!clientSecret);
-  console.log('Stripe available:', !!stripe);
-  console.log('Elements available:', !!elements);
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setIsProcessing(true);
-
-    try {
-      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement)!,
-        },
-        return_url: `${window.location.origin}/payment-success`,
-      });
-
-      if (error) {
-        console.log('Payment error:', error);
-        onError(error.message || 'Payment failed');
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        console.log('Payment successful===========>', paymentIntent);
-        onSuccess();
-      } else {
-        console.log('Payment intent status:', paymentIntent?.status);
-        onError('Payment processing failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      onError('Payment failed. Please try again.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="card-element" className="text-sm font-medium">Card Information</Label>
-          <div className="mt-2 p-4 border rounded-lg bg-white">
-            <CardElement
-              id="card-element"
-              options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#374151',
-                    fontFamily: '"Inter", sans-serif',
-                    '::placeholder': {
-                      color: '#9CA3AF',
-                    },
-                  },
-                  invalid: {
-                    color: '#EF4444',
-                  },
-                },
-                hidePostalCode: false,
-                // disableLink: true,
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <Button 
-        type="submit" 
-        disabled={!stripe || isProcessing} 
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3"
-      >
-        {isProcessing ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Processing Payment...
-          </>
-        ) : (
-          <>
-            <CreditCard className="mr-2 h-4 w-4" />
-            Pay Now
-          </>
-        )}
-      </Button>
-    </form>
-  );
-};
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -129,6 +30,13 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank_transfer' | 'paypal'>('card');
   const [bankTransferClientSecret, setBankTransferClientSecret] = useState<string>('');
   const [paypalOrder, setPaypalOrder] = useState<any>(null);
+  const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: ''
+  });
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -316,6 +224,88 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
+            {/* Shipping Address */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center text-xl">
+                  <MapPin className="mr-2 h-6 w-6 text-blue-600" />
+                  Shipping Address
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <Label htmlFor="street" className="flex items-center">
+                      Street Address <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="street"
+                      value={shippingAddress.street}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, street: e.target.value }))}
+                      placeholder="Enter your street address"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="city" className="flex items-center">
+                      City <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="city"
+                      value={shippingAddress.city}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, city: e.target.value }))}
+                      placeholder="Enter city"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="state" className="flex items-center">
+                      State/Province <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="state"
+                      value={shippingAddress.state}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, state: e.target.value }))}
+                      placeholder="Enter state/province"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="zipCode" className="flex items-center">
+                      ZIP/Postal Code <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="zipCode"
+                      value={shippingAddress.zipCode}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, zipCode: e.target.value }))}
+                      placeholder="Enter ZIP code"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="country" className="flex items-center">
+                      Country <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="country"
+                      value={shippingAddress.country}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, country: e.target.value }))}
+                      placeholder="Enter country"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="text-xs text-gray-500 mt-2">
+                  <span className="text-red-500">*</span> Required fields
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Payment Method Selection */}
             <Card>
               <CardHeader className="pb-3">
@@ -387,10 +377,11 @@ const Checkout = () => {
               <CardContent>
                 {paymentMethod === 'card' && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckoutForm
+                    <CardPayment
                       clientSecret={clientSecret}
                       onSuccess={handlePaymentSuccess}
                       onError={handlePaymentError}
+                      shippingAddress={shippingAddress}
                     />
                   </Elements>
                 )}
@@ -401,6 +392,7 @@ const Checkout = () => {
                     amount={getTotalPrice()}
                     onSuccess={handlePaymentSuccess}
                     onError={handlePaymentError}
+                    shippingAddress={shippingAddress}
                   />
                 )}
 
@@ -411,6 +403,7 @@ const Checkout = () => {
                     paypalOrder={paypalOrder}
                     onSuccess={handlePaymentSuccess}
                     onError={handlePaymentError}
+                    shippingAddress={shippingAddress}
                   />
                 )}
                 
@@ -484,14 +477,8 @@ const Checkout = () => {
                    <span>Order Total</span>
                    <span className="text-blue-600">€{getTotalPrice().toFixed(2)}</span>
                  </div>
-                 
-                 {/* Security Message */}
-                 {/* <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200"> */}
-                   {/* <div className="flex items-center text-xs text-green-700"> */}
-                     {/* <Lock className="mr-2 h-4 w-4" /> */}
-                     <p className=" text-sm text-gray-500">We prioritize your privacy and ensure every crystal is hand-selected and carefully packaged for you.</p>
-                   {/* </div> */}
-                 {/* </div> */}
+
+                  <p className=" text-sm text-gray-500">We prioritize your privacy and ensure every crystal is hand-selected and carefully packaged for you.</p>
               </CardContent>
             </Card>
 

@@ -10,11 +10,14 @@ import { Elements } from '@stripe/react-stripe-js';
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
+import { type ShippingAddress } from '@/lib/api';
+
 interface BankTransferPaymentProps {
   clientSecret: string;
   amount: number;
   onSuccess: () => void;
   onError: (error: string) => void;
+  shippingAddress: ShippingAddress;
 }
 
 interface BankTransferDetails {
@@ -26,7 +29,7 @@ interface BankTransferDetails {
   dueDate: string;
 }
 
-const BankTransferForm = ({ clientSecret, amount, onSuccess, onError }: BankTransferPaymentProps) => {
+const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAddress }: BankTransferPaymentProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'succeeded' | 'failed' | 'requires_action'>('pending');
@@ -64,6 +67,17 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError }: BankTran
   };
 
   const handleConfirmPayment = async () => {
+    // Validate shipping address before payment
+    const validateShippingAddress = (): boolean => {
+      const { street, city, state, zipCode, country } = shippingAddress;
+      return !!(street && city && state && zipCode && country);
+    };
+
+    if (!validateShippingAddress()) {
+      onError('Please fill in all shipping address fields before proceeding.');
+      return;
+    }
+
     if (!stripe || !elements) {
       onError('Stripe is not loaded. Please refresh the page.');
       return;
@@ -281,7 +295,7 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError }: BankTran
   );
 };
 
-const BankTransferPayment = ({ clientSecret, amount, onSuccess, onError }: BankTransferPaymentProps) => {
+const BankTransferPayment = ({ clientSecret, amount, onSuccess, onError, shippingAddress }: BankTransferPaymentProps) => {
   return (
     <Elements stripe={stripePromise} options={{ clientSecret }}>
       <BankTransferForm
@@ -289,6 +303,7 @@ const BankTransferPayment = ({ clientSecret, amount, onSuccess, onError }: BankT
         amount={amount}
         onSuccess={onSuccess}
         onError={onError}
+        shippingAddress={shippingAddress}
       />
     </Elements>
   );
