@@ -282,11 +282,14 @@ export const apiClient = {
       return response.json();
     },
 
-    capturePayPalPayment: async (orderID: string): Promise<ApiResponse<any>> => {
+    capturePayPalPayment: async (orderID: string, data?: { shippingAddress?: ShippingAddress; userName?: string }): Promise<ApiResponse<any>> => {
       const response = await fetch(API_ENDPOINTS.PAYMENTS.CAPTURE_PAYPAL_PAYMENT, {
         method: 'POST',
         headers: getHeaders(true),
-        body: JSON.stringify({ orderID }),
+        body: JSON.stringify({ 
+          orderID,
+          ...data 
+        }),
       });
       return response.json();
     },

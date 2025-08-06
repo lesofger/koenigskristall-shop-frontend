@@ -17,6 +17,10 @@ interface PayPalPaymentProps {
   onSuccess: () => void;
   onError: (error: string) => void;
   shippingAddress: ShippingAddress;
+  user: {
+    firstName: string;
+    lastName: string;
+  };
 }
 
 declare global {
@@ -25,7 +29,7 @@ declare global {
   }
 }
 
-const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippingAddress }: PayPalPaymentProps) => {
+const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippingAddress, user }: PayPalPaymentProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paypalLoaded, setPaypalLoaded] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'succeeded' | 'failed'>('pending');
@@ -110,8 +114,11 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
             // console.log('PayPal order captured======>', order);
             
             // if (order.status === 'COMPLETED') {
-              // Capture the payment on our backend
-              const captureResponse = await apiClient.payments.capturePayPalPayment(paypalOrder.orderId);
+                          // Capture the payment on our backend with shipping address and user name
+            const captureResponse = await apiClient.payments.capturePayPalPayment(paypalOrder.orderId, {
+              shippingAddress,
+              userName: `${user.firstName} ${user.lastName}`
+            });
               
               if (captureResponse.status === 'success') {
                 setPaymentStatus('succeeded');

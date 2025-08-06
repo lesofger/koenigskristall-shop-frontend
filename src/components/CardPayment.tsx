@@ -10,9 +10,13 @@ interface CardPaymentProps {
   onSuccess: () => void;
   onError: (error: string) => void;
   shippingAddress: ShippingAddress;
+  user: {
+    firstName: string;
+    lastName: string;
+  };
 }
 
-const CardPayment = ({ clientSecret, onSuccess, onError, shippingAddress }: CardPaymentProps) => {
+const CardPayment = ({ clientSecret, onSuccess, onError, shippingAddress, user }: CardPaymentProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
@@ -47,6 +51,16 @@ const CardPayment = ({ clientSecret, onSuccess, onError, shippingAddress }: Card
           card: elements.getElement(CardElement)!,
         },
         return_url: `${window.location.origin}/payment-success`,
+        shipping: {
+          address: {
+            line1: shippingAddress.street,
+            city: shippingAddress.city,
+            state: shippingAddress.state,
+            postal_code: shippingAddress.zipCode,
+            country: shippingAddress.country,
+          },
+          name: `${user.firstName} ${user.lastName}`,
+        },
       });
 
       if (error) {

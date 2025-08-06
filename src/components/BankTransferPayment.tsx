@@ -18,6 +18,10 @@ interface BankTransferPaymentProps {
   onSuccess: () => void;
   onError: (error: string) => void;
   shippingAddress: ShippingAddress;
+  user: {
+    firstName: string;
+    lastName: string;
+  };
 }
 
 interface BankTransferDetails {
@@ -29,7 +33,7 @@ interface BankTransferDetails {
   dueDate: string;
 }
 
-const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAddress }: BankTransferPaymentProps) => {
+const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAddress, user }: BankTransferPaymentProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'succeeded' | 'failed' | 'requires_action'>('pending');
@@ -91,6 +95,16 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
         elements,
         confirmParams: {
           return_url: `${window.location.origin}/payment-success`,
+          shipping: {
+            address: {
+              line1: shippingAddress.street,
+              city: shippingAddress.city,
+              state: shippingAddress.state,
+              postal_code: shippingAddress.zipCode,
+              country: shippingAddress.country,
+            },
+            name: `${user.firstName} ${user.lastName}`,
+          },
         },
         redirect: 'if_required',
       });
@@ -295,7 +309,7 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
   );
 };
 
-const BankTransferPayment = ({ clientSecret, amount, onSuccess, onError, shippingAddress }: BankTransferPaymentProps) => {
+const BankTransferPayment = ({ clientSecret, amount, onSuccess, onError, shippingAddress, user }: BankTransferPaymentProps) => {
   return (
     <Elements stripe={stripePromise} options={{ clientSecret }}>
       <BankTransferForm
@@ -304,6 +318,7 @@ const BankTransferPayment = ({ clientSecret, amount, onSuccess, onError, shippin
         onSuccess={onSuccess}
         onError={onError}
         shippingAddress={shippingAddress}
+        user={user}
       />
     </Elements>
   );

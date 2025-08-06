@@ -382,6 +382,7 @@ const Checkout = () => {
                       onSuccess={handlePaymentSuccess}
                       onError={handlePaymentError}
                       shippingAddress={shippingAddress}
+                      user={user!}
                     />
                   </Elements>
                 )}
@@ -393,6 +394,7 @@ const Checkout = () => {
                     onSuccess={handlePaymentSuccess}
                     onError={handlePaymentError}
                     shippingAddress={shippingAddress}
+                    user={user!}
                   />
                 )}
 
@@ -404,6 +406,7 @@ const Checkout = () => {
                     onSuccess={handlePaymentSuccess}
                     onError={handlePaymentError}
                     shippingAddress={shippingAddress}
+                    user={user!}
                   />
                 )}
                 
