@@ -3,6 +3,8 @@ import CrystalGrid from "@/components/CrystalGrid";
 import ServiceSection from "@/components/Services";
 import QualityPromise from "@/components/QualityPromise";
 import { useEffect } from "react";
+import Footer from "@/components/Footer";
+
 
 const Index = () => {
    useEffect(() => {
@@ -14,6 +16,7 @@ const Index = () => {
       <ServiceSection />
       <CrystalGrid />
       <QualityPromise />
+      <Footer />
     </div>
   );
 };
