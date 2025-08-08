@@ -37,9 +37,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Entdecke die transformative Kraft der Kristalle. Mit liebevoller Hingabe und jahrelanger 
-              Erfahrung begleite ich dich auf deiner spirituellen Reise zu mehr Wohlbefinden und innerer Balance.
-              Jeder Kristall wird mit Sorgfalt ausgewählt und mit positiver Energie aufgeladen.
+              
             </p>
             <div className="flex items-center gap-2 text-primary">
               <Sparkles className="w-4 h-4" />
@@ -104,7 +102,7 @@ const Footer = () => {
                 className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group"
               >
                 <Mail className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                <span className="text-sm">info@koenigskristall.de</span>
+                <span className="text-sm">shop@koenigskristall.de</span>
               </a>
               
               {/* Phone */}

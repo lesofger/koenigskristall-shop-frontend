@@ -35,7 +35,7 @@ const Hero = () => {
             <Link to="/shop">
               <Button 
                 size="lg" 
-                className="bg-background text-foreground hover:bg-background/70 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
+                className="bg-background text-foreground hover:bg-background/70 px-8 py-6 text-lg font-light tracking-wide shadow-crystal"
               >
                 Kristalle Erkunden
               </Button>
@@ -45,7 +45,7 @@ const Hero = () => {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="bg-background text-muted-foreground hover:bg-background/70 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
+                className="bg-background text-muted-foreground hover:bg-background/70 px-8 py-6 text-lg font-light tracking-wide shadow-crystal"
               >
                 Über Mich
               </Button>

@@ -1,7 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Sparkles, Package, Gem } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 
 const QualityPromise = () => {
+  const [isInView, setIsInView] = useState(false);
+  const [animationStage, setAnimationStage] = useState(0);
+  const sectionRef = useRef(null);
+
   const promises = [
     {
       icon: <Gem className="w-8 h-8" />,
@@ -25,16 +30,47 @@ const QualityPromise = () => {
     }
   ];
 
+  // Intersection Observer for scroll-based animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          // Start Animation
+          setTimeout(() => setAnimationStage(1), 200);
+          setTimeout(() => setAnimationStage(2), 600);
+          setTimeout(() => setAnimationStage(3), 1000);
+        }
+      },
+      {
+        threshold: 0.1 // Trigger when 10% of the section is in view
+      }
+      
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
+    <section ref={sectionRef} className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
        {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide">
+          <h2 className={`font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide transition-all duration-1000 ${
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}>
             Mein
-            <span className="block text-primary font-normal">Qualitätsversprechen</span>
+            <span className={`block text-primary font-normal transition-all duration-1000 delay-300 ${
+              animationStage >= 1 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+            }`}>Qualitätsversprechen</span>
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+          <p className={`text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed transition-all duration-1000 delay-500 ${
+            animationStage >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
             Jeder Kristall in meinem Shop durchläuft einen besonderen Prozess der Auswahl und Vorbereitung, 
             damit er seine volle Kraft für dich entfalten kann.
           </p>
@@ -45,7 +81,10 @@ const QualityPromise = () => {
           {promises.map((promise, idx) => (
             <Card
               key={promise.title}
-              className="group relative overflow-hidden bg-card border border-border hover:shadow-crystal transition-all duration-300 hover:-translate-y-1"
+              className={`group relative overflow-hidden bg-card border border-border hover:shadow-crystal transition-all duration-300  ${
+                animationStage >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: `${idx * 150}ms` }}
             >
               <CardContent className="p-8 text-center">
                 {/* Icon */}
@@ -66,7 +105,9 @@ const QualityPromise = () => {
         </div>
 
         {/* Personal Touch Section */}
-        <div className="mt-16 text-center">
+        <div className={`mt-16 text-center transition-all duration-1000 delay-1000 ${
+          animationStage >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}>
           <Card className="bg-gradient-to-br from-primary/5 to-background border border-primary/20 max-w-4xl mx-auto">
             <CardContent className="p-8 md:p-12">
               <div className="flex flex-col md:flex-row items-center gap-8">

@@ -15,15 +15,15 @@ import {
   Wind,
 } from "lucide-react";
 
-// Import Components - KORRIGIERTE PFADE
-import HeroLibrary from "@/components/InpiredComponents/HeroLibrary";
-import Cleaning from "@/components/InpiredComponents/Cleaning";
-import Charging from "@/components/InpiredComponents/Charging";
-import CrystalProgramming from "@/components/InpiredComponents/CrystalProgramming";
-import BrokenCrystal from "@/components/InpiredComponents/BrokenCrystal";
-import CrystalCombination from "@/components/InpiredComponents/CrystalCombination";
-import StoringCrystals from "@/components/InpiredComponents/StoringCrystals";
-import CTAcomponent from "@/components/InpiredComponents/CTAcomponent";
+// Import Components
+import CrystalLibraryHero from "@/components/CrystalLibrary/CrystalLibraryHero";
+import CleansingSection from "@/components/CrystalLibrary/CleansingSection";
+import ChargingSection from "@/components/CrystalLibrary/ChargingSection";
+import ProgrammingSection from "@/components/CrystalLibrary/ProgrammingSection";
+import BrokenCrystalsSection from "@/components/CrystalLibrary/BrokenCrystalsSection";
+import CombinationSection from "@/components/CrystalLibrary/CombinationSection";
+import StorageSection from "@/components/CrystalLibrary/StorageSection";
+import CallToAction from "@/components/CrystalLibrary/CallToAction";
 
 const CrystalCare = () => {
   useEffect(() => {
@@ -218,25 +218,25 @@ const CrystalCare = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <HeroLibrary careTopics={careTopics} scrollToSection={scrollToSection} />
+      <CrystalLibraryHero careTopics={careTopics} scrollToSection={scrollToSection} />
       
-      <Cleaning cleansingMethods={cleansingMethods} />
+      <CleansingSection cleansingMethods={cleansingMethods} />
       <Separator className="my-16" />
       
-      <Charging chargingMethods={chargingMethods} />
+      <ChargingSection chargingMethods={chargingMethods} />
       <Separator className="my-16" />
       
-      <CrystalProgramming />
+      <ProgrammingSection />
       <Separator className="my-16" />
       
-      <BrokenCrystal brokenCrystalMeanings={brokenCrystalMeanings} />
+      <BrokenCrystalsSection brokenCrystalMeanings={brokenCrystalMeanings} />
       <Separator className="my-16" />
       
-      <CrystalCombination crystalCombinations={crystalCombinations} />
+      <CombinationSection crystalCombinations={crystalCombinations} />
       
-      <StoringCrystals />
+      <StorageSection />
       
-      <CTAcomponent />
+      <CallToAction />
     </div>
   );
 };

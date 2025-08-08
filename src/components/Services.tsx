@@ -25,7 +25,7 @@ const services = [
   },
   {
     title: "Kristallbibliothek",
-    description: "Erweitere dein Wissen über die Welt der Kristalle und ihre Eigenschaften.",
+    description: "Erweitere dein Wissen über die Welt der Kristalle und ihrer Eigenschaften.",
     image: image3,
     alt: "Bibliothek",
     icon: <BookOpen className="w-6 h-6" />,
