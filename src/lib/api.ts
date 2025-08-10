@@ -26,6 +26,16 @@ export const API_ENDPOINTS = {
     CREATE: `${API_BASE_URL}/api/orders`,
     UPDATE_STATUS: (id: string) => `${API_BASE_URL}/api/orders/${id}/status`,
   },
+  ADMIN_ORDERS: {
+    GET_ALL: `${API_BASE_URL}/api/admin/orders`,
+    GET_BY_ID: (id: string) => `${API_BASE_URL}/api/admin/orders/${id}`,
+    UPDATE_STATUS: (id: string) => `${API_BASE_URL}/api/admin/orders/${id}/status`,
+    UPDATE: (id: string) => `${API_BASE_URL}/api/admin/orders/${id}`,
+    DELETE: (id: string) => `${API_BASE_URL}/api/admin/orders/${id}`,
+    BULK_UPDATE: `${API_BASE_URL}/api/admin/orders/bulk-update`,
+    GET_STATISTICS: `${API_BASE_URL}/api/admin/orders/statistics`,
+    EXPORT: `${API_BASE_URL}/api/admin/orders/export`,
+  },
 } as const;
 
 // Common headers
@@ -156,7 +166,7 @@ export interface OrderItem {
   productId: number;
   quantity: number;
   price: number;
-  product: Product;
+  Product: Product;
 }
 
 export interface Order {
@@ -167,6 +177,46 @@ export interface Order {
   createdAt: string;
   updatedAt: string;
   items: OrderItem[];
+}
+
+export interface AdminOrder extends Order {
+  paymentIntentId: string;
+  shippingAddress: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+  notes?: string;
+  trackingNumber?: string;
+  User: {
+    id: number;
+    email: string;
+    firstName: string;
+    lastName: string;
+  };
+  OrderItems: OrderItem[];
+}
+
+export interface OrderStatistics {
+  period: string;
+  totalOrders: number;
+  totalRevenue: number;
+  ordersByStatus: Array<{
+    status: string;
+    count: number;
+  }>;
+  dailyOrders: Array<{
+    date: string;
+    count: number;
+    revenue: number;
+  }>;
+}
+
+export interface BulkUpdateRequest {
+  orderIds: number[];
+  status: string;
 }
 
 // API Client functions
@@ -349,6 +399,113 @@ export const apiClient = {
         body: JSON.stringify({ status }),
       });
       return response.json();
+    },
+  },
+
+  // Admin Order APIs
+  adminOrders: {
+    getAll: async (params?: {
+      page?: number;
+      limit?: number;
+      status?: string;
+      startDate?: string;
+      endDate?: string;
+    }): Promise<ApiResponse<{ orders: AdminOrder[]; pagination: PaginationInfo }>> => {
+      const searchParams = new URLSearchParams();
+      if (params?.page) searchParams.append('page', params.page.toString());
+      if (params?.limit) searchParams.append('limit', params.limit.toString());
+      if (params?.status) searchParams.append('status', params.status);
+      if (params?.startDate) searchParams.append('startDate', params.startDate);
+      if (params?.endDate) searchParams.append('endDate', params.endDate);
+
+      const url = params ? `${API_ENDPOINTS.ADMIN_ORDERS.GET_ALL}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_ORDERS.GET_ALL;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      return response.json();
+    },
+
+    getById: async (id: string): Promise<ApiResponse<{ order: AdminOrder }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.GET_BY_ID(id), {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      return response.json();
+    },
+
+    updateStatus: async (id: string, status: string): Promise<ApiResponse<{ order: AdminOrder }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.UPDATE_STATUS(id), {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify({ status }),
+      });
+      return response.json();
+    },
+
+    update: async (id: string, data: Partial<AdminOrder>): Promise<ApiResponse<{ order: AdminOrder }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.UPDATE(id), {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    },
+
+    delete: async (id: string): Promise<ApiResponse<{ message: string }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.DELETE(id), {
+        method: 'DELETE',
+        headers: getHeaders(true),
+      });
+      return response.json();
+    },
+
+    bulkUpdate: async (data: BulkUpdateRequest): Promise<ApiResponse<{ updatedCount: number; status: string; orderIds: number[] }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.BULK_UPDATE, {
+        method: 'POST',
+        headers: getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    },
+
+    getStatistics: async (params?: {
+      startDate?: string;
+      endDate?: string;
+    }): Promise<ApiResponse<OrderStatistics>> => {
+      const searchParams = new URLSearchParams();
+      if (params?.startDate) searchParams.append('startDate', params.startDate);
+      if (params?.endDate) searchParams.append('endDate', params.endDate);
+
+      const url = params ? `${API_ENDPOINTS.ADMIN_ORDERS.GET_STATISTICS}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_ORDERS.GET_STATISTICS;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      return response.json();
+    },
+
+    export: async (params?: {
+      format?: string;
+      status?: string;
+      startDate?: string;
+      endDate?: string;
+    }): Promise<Blob> => {
+      const searchParams = new URLSearchParams();
+      if (params?.format) searchParams.append('format', params.format);
+      if (params?.status) searchParams.append('status', params.status);
+      if (params?.startDate) searchParams.append('startDate', params.startDate);
+      if (params?.endDate) searchParams.append('endDate', params.endDate);
+
+      const url = params ? `${API_ENDPOINTS.ADMIN_ORDERS.EXPORT}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_ORDERS.EXPORT;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      return response.blob();
     },
   },
 }; 

@@ -14,6 +14,7 @@ import About from "./pages/About";
 import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Orders from "./pages/Orders";
+import AdminOrders from "./pages/AdminOrders";
 import Layout from "@/components/Layout";
 import Inspired from "./pages/Inspired";
 import Consulting from "./pages/Consulting";
@@ -45,8 +46,6 @@ const App = () => (
               <Route path="/agb" element={<AGB />} />
               <Route path="/widerruf" element={<Widerruf />} />
 
-              {/* Catch-all route for 404 Not Found */}
-              
               {/* Protected Routes */}
               <Route 
                 path="/checkout" 
@@ -69,6 +68,14 @@ const App = () => (
                 element={
                   <ProtectedRoute requireAuth={true}>
                     <Orders />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/orders" 
+                element={
+                  <ProtectedRoute requireAuth={true}>
+                    <AdminOrders />
                   </ProtectedRoute>
                 } 
               />
