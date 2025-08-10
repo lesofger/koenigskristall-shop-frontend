@@ -24,6 +24,7 @@ export const API_ENDPOINTS = {
     GET_ALL: `${API_BASE_URL}/api/orders`,
     GET_BY_ID: (id: string) => `${API_BASE_URL}/api/orders/${id}`,
     CREATE: `${API_BASE_URL}/api/orders`,
+    UPDATE_STATUS: (id: string) => `${API_BASE_URL}/api/orders/${id}/status`,
   },
 } as const;
 
@@ -305,8 +306,19 @@ export const apiClient = {
 
   // Order APIs
   orders: {
-    getAll: async (): Promise<ApiResponse<Order[]>> => {
-      const response = await fetch(API_ENDPOINTS.ORDERS.GET_ALL, {
+    getAll: async (params?: { 
+      page?: number; 
+      limit?: number; 
+      status?: string;
+    }): Promise<ApiResponse<{ orders: Order[]; pagination: PaginationInfo }>> => {
+      const searchParams = new URLSearchParams();
+      if (params?.page) searchParams.append('page', params.page.toString());
+      if (params?.limit) searchParams.append('limit', params.limit.toString());
+      if (params?.status) searchParams.append('status', params.status);
+
+      const url = params ? `${API_ENDPOINTS.ORDERS.GET_ALL}?${searchParams.toString()}` : API_ENDPOINTS.ORDERS.GET_ALL;
+      
+      const response = await fetch(url, {
         method: 'GET',
         headers: getHeaders(true),
       });
@@ -326,6 +338,15 @@ export const apiClient = {
         method: 'POST',
         headers: getHeaders(true),
         body: JSON.stringify(data),
+      });
+      return response.json();
+    },
+
+    updateStatus: async (id: string, status: 'pending' | 'delivered'): Promise<ApiResponse<Order>> => {
+      const response = await fetch(API_ENDPOINTS.ORDERS.UPDATE_STATUS(id), {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify({ status }),
       });
       return response.json();
     },
