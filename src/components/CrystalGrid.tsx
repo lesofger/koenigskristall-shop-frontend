@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { useRef, useEffect } from "react";
 
 const crystalCategories = [
   {
@@ -53,6 +54,113 @@ const crystalCategories = [
 ];
 
 const CrystalGrid = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    let animationId: number;
+    let scrollPosition = 0;
+    const scrollSpeed = 0.8;
+    let isAnimating = true;
+    let isInteracting = false; 
+    let isDragging = false;
+
+    const animate = () => {
+      if (!isAnimating || !scrollContainer || isInteracting) return;
+
+      scrollPosition += scrollSpeed;
+      const containerWidth = scrollContainer.scrollWidth / 2;
+      
+      if (scrollPosition >= containerWidth) {
+        scrollPosition = 0;
+      }
+      
+      scrollContainer.scrollLeft = scrollPosition;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    // Start the animation loop
+    animationId = requestAnimationFrame(animate);
+
+    // Desktop Mouse Events
+    const handleMouseEnter = () => {
+      isInteracting = true;
+      scrollContainer.style.overflowX = 'auto';
+      scrollContainer.style.cursor = 'grab';
+      cancelAnimationFrame(animationId);
+    };
+
+    const handleMouseLeave = () => {
+      isInteracting = false;
+      isDragging = false;
+      scrollContainer.style.overflowX = 'auto'; 
+      scrollContainer.style.cursor = 'pointer';
+      
+      scrollPosition = scrollContainer.scrollLeft;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    const handleMouseDown = () => {
+      if (isInteracting) {
+        isDragging = true;
+        scrollContainer.style.cursor = 'grabbing';
+      }
+    };
+
+    const handleMouseUp = () => {
+      isDragging = false;
+      if (isInteracting) {
+        scrollContainer.style.cursor = 'grab';
+      }
+    };
+
+    // Touch Events für Mobile
+    const handleTouchStart = (e: TouchEvent) => {
+      isInteracting = true;
+      isDragging = true;
+      scrollContainer.style.overflowX = 'auto';
+      cancelAnimationFrame(animationId);
+    };
+
+    const handleTouchEnd = () => {
+      isDragging = false;
+      isInteracting = false;
+      scrollContainer.style.overflowX = 'auto'; 
+      
+      scrollPosition = scrollContainer.scrollLeft;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    // Desktop Events
+    scrollContainer.addEventListener('mouseenter', handleMouseEnter);
+    scrollContainer.addEventListener('mouseleave', handleMouseLeave);
+    scrollContainer.addEventListener('mousedown', handleMouseDown);
+    scrollContainer.addEventListener('mouseup', handleMouseUp);
+
+    // Touch Events
+    scrollContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+    scrollContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      isAnimating = false;
+      cancelAnimationFrame(animationId);
+      
+      if (scrollContainer) {
+        // Desktop Events
+        scrollContainer.removeEventListener('mouseenter', handleMouseEnter);
+        scrollContainer.removeEventListener('mouseleave', handleMouseLeave);
+        scrollContainer.removeEventListener('mousedown', handleMouseDown);
+        scrollContainer.removeEventListener('mouseup', handleMouseUp);
+        
+        // Touch Events
+        scrollContainer.removeEventListener('touchstart', handleTouchStart);
+        scrollContainer.removeEventListener('touchend', handleTouchEnd);
+      }
+    };
+  }, []);
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-crystal">
       <div className="max-w-7xl mx-auto">
@@ -65,40 +173,61 @@ const CrystalGrid = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {crystalCategories.map((crystal, index) => (
-            <Link 
-              key={crystal.name} 
-              to={`/category/${crystal.name.toLowerCase().replace(' ', '-')}`}
-              className="group"
-            >
-              <Card className="overflow-hidden bg-gradient-card border-border/50 hover:shadow-hover transition-all duration-500 group-hover:scale-105">
-                <CardContent className="p-0">
-                  <div className={`h-48 bg-gradient-to-br ${crystal.color} flex items-center justify-center relative overflow-hidden`}>
-                    <div className="text-6xl transform group-hover:scale-110 transition-transform duration-500">
-                      {crystal.image}
-                    </div>
-                    <div className="absolute inset-0 bg-background/10 group-hover:bg-background/5 transition-colors duration-500"></div>
-                  </div>
-                  
-                  <div className="p-6 text-center">
-                    <h3 className="font-serif text-xl font-medium text-foreground mb-2">
-                      {crystal.name}
-                    </h3>
-                    <p className="text-muted-foreground text-sm tracking-wide">
-                      {crystal.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+        {/* Infinite Auto-Scroll with Manual Control */}
+        <div 
+          ref={scrollRef}
+          className="overflow-x-auto overflow-y-hidden cursor-pointer transition-all duration-300 touch-pan-x"
+          style={{ 
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'hsl(345 35% 75%) transparent',
+            WebkitOverflowScrolling: 'touch',
+            touchAction: 'pan-x'
+          }}
+        >
+          <div className="inline-flex space-x-6" style={{ width: 'max-content' }}>
+            {/* Erstelle doppelte Items für nahtloses Looping */}
+            {[...crystalCategories, ...crystalCategories].map((crystal, index) => (
+              <div key={`${crystal.name}-${index}`} className="flex-shrink-0 w-80">
+                <Link 
+                  to={`/category/${crystal.name.toLowerCase().replace(' ', '-')}`}
+                  className="group block"
+                  onClick={(e) => {
+                    // Prevent navigation when dragging (desktop or mobile)
+                    if (scrollRef.current && 
+                        scrollRef.current.style.cursor === 'grabbing') {
+                      e.preventDefault();
+                    }
+                  }}
+                >
+                  <Card className="overflow-hidden bg-gradient-card border-border/50 hover:shadow-hover transition-all duration-500 group-hover:scale-105 h-full select-none">
+                    <CardContent className="p-0">
+                      <div className={`h-48 bg-gradient-to-br ${crystal.color} flex items-center justify-center relative overflow-hidden`}>
+                        <div className="text-6xl transform group-hover:scale-110 transition-transform duration-500">
+                          {crystal.image}
+                        </div>
+                        <div className="absolute inset-0 bg-background/10 group-hover:bg-background/5 transition-colors duration-500"></div>
+                      </div>
+                      
+                      <div className="p-6 text-center">
+                        <h3 className="font-serif text-xl font-medium text-foreground mb-2">
+                          {crystal.name}
+                        </h3>
+                        <p className="text-muted-foreground text-sm tracking-wide">
+                          {crystal.description}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="text-center mt-12">
           <Link to="/shop">
             <button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-lg font-medium tracking-wide transition-colors shadow-crystal">
-              View All Crystals
+              Entdecke Noch Weitere Eigenschaften
             </button>
           </Link>
         </div>

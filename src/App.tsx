@@ -17,6 +17,10 @@ import Orders from "./pages/Orders";
 import Layout from "@/components/Layout";
 import Inspired from "./pages/Inspired";
 import Consulting from "./pages/Consulting";
+import Impressum from "./pages/legal/Impressum";
+import Datenschutz from "./pages/legal/Datenschutz";
+import AGB from "./pages/legal/AGB";
+import Widerruf from "./pages/legal/Widerruf";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +40,14 @@ const App = () => (
               <Route path="/signup" element={<SignUp />} />
               <Route path="/inspired" element={<Inspired />} />
               <Route path="/consulting" element={<Consulting />} />
+              <Route path="/impressum" element={<Impressum />} />
+              <Route path="/datenschutz" element={<Datenschutz />} />
+              <Route path="/agb" element={<AGB />} />
+              <Route path="/widerruf" element={<Widerruf />} />
+
+              {/* Catch-all route for 404 Not Found */}
+              
+              {/* Protected Routes */}
               <Route 
                 path="/checkout" 
                 element={
