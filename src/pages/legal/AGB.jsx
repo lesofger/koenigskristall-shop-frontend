@@ -1,6 +1,12 @@
 import React from "react";
+import { useEffect } from "react";
 
 const AGB = () => {
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-12 text-gray-800">
       <h1 className="text-3xl font-bold mb-6">Allgemeine Geschäftsbedingungen (AGB)</h1>
