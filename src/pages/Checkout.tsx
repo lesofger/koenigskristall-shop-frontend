@@ -38,6 +38,11 @@ const Checkout = () => {
     country: ''
   });
 
+  const SHIPPING_COST = 5.00; // shipping price 
+  const getTotalWithShipping = () => {
+    return getTotalPrice() + SHIPPING_COST;
+  };
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/signin');
@@ -169,7 +174,7 @@ const Checkout = () => {
               <p className="text-red-600 mb-4">{error}</p>
               <Button onClick={() => navigate('/shop')}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Shop
+                zurück zum Shop
               </Button>
             </div>
           </CardContent>
@@ -188,9 +193,9 @@ const Checkout = () => {
             className="mb-3 text-gray-600 hover:text-gray-800"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Shop
+            zurück zum Shop
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Bestellung abschließen</h1>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -219,7 +224,7 @@ const Checkout = () => {
                   <span className="text-sm text-gray-600">{user?.email}</span>
                 </div>
                 <Badge variant="secondary" className="w-fit text-xs">
-                  Authenticated
+                  Authentifiziert
                 </Badge>
               </CardContent>
             </Card>
@@ -229,79 +234,79 @@ const Checkout = () => {
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center text-xl">
                   <MapPin className="mr-2 h-6 w-6 text-blue-600" />
-                  Shipping Address
+                  Lieferadresse
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2">
                     <Label htmlFor="street" className="flex items-center">
-                      Street Address <span className="text-red-500 ml-1">*</span>
+                      Straße <span className="text-red-500 ml-1">*</span>
                     </Label>
                     <Input
                       id="street"
                       value={shippingAddress.street}
                       onChange={(e) => setShippingAddress(prev => ({ ...prev, street: e.target.value }))}
-                      placeholder="Enter your street address"
+                      placeholder="Straße"
                       className="mt-1"
                       required
                     />
                   </div>
                   <div>
                     <Label htmlFor="city" className="flex items-center">
-                      City <span className="text-red-500 ml-1">*</span>
+                      Stadt <span className="text-red-500 ml-1">*</span>
                     </Label>
                     <Input
                       id="city"
                       value={shippingAddress.city}
                       onChange={(e) => setShippingAddress(prev => ({ ...prev, city: e.target.value }))}
-                      placeholder="Enter city"
+                      placeholder="Stadt"
                       className="mt-1"
                       required
                     />
                   </div>
                   <div>
                     <Label htmlFor="state" className="flex items-center">
-                      State/Province <span className="text-red-500 ml-1">*</span>
+                      Bundesland 
                     </Label>
                     <Input
                       id="state"
                       value={shippingAddress.state}
                       onChange={(e) => setShippingAddress(prev => ({ ...prev, state: e.target.value }))}
-                      placeholder="Enter state/province"
+                      placeholder="Bundesland"
                       className="mt-1"
                       required
                     />
                   </div>
                   <div>
                     <Label htmlFor="zipCode" className="flex items-center">
-                      ZIP/Postal Code <span className="text-red-500 ml-1">*</span>
+                      Postleitzahl <span className="text-red-500 ml-1">*</span>
                     </Label>
                     <Input
                       id="zipCode"
                       value={shippingAddress.zipCode}
                       onChange={(e) => setShippingAddress(prev => ({ ...prev, zipCode: e.target.value }))}
-                      placeholder="Enter ZIP code"
+                      placeholder="Postleitzahl"
                       className="mt-1"
                       required
                     />
                   </div>
                   <div>
                     <Label htmlFor="country" className="flex items-center">
-                      Country <span className="text-red-500 ml-1">*</span>
+                      Land <span className="text-red-500 ml-1">*</span>
                     </Label>
                     <Input
                       id="country"
                       value={shippingAddress.country}
                       onChange={(e) => setShippingAddress(prev => ({ ...prev, country: e.target.value }))}
-                      placeholder="Enter country"
+                      placeholder="Land"
                       className="mt-1"
                       required
                     />
                   </div>
                 </div>
                 <div className="text-xs text-gray-500 mt-2">
-                  <span className="text-red-500">*</span> Required fields
+                  <span className="text-red-500">*</span> Pflichtfelder
                 </div>
               </CardContent>
             </Card>
@@ -311,7 +316,7 @@ const Checkout = () => {
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center text-xl">
                   <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
-                  Payment Method
+                  Bezahlmethode
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -322,7 +327,7 @@ const Checkout = () => {
                     className="h-12"
                   >
                     <CreditCard className="mr-2 h-4 w-4" />
-                    Credit Card
+                    Kreditkarte
                   </Button>
                   <Button
                     variant={paymentMethod === 'bank_transfer' ? 'default' : 'outline'}
@@ -330,7 +335,7 @@ const Checkout = () => {
                     className="h-12"
                   >
                     <Building2 className="mr-2 h-4 w-4" />
-                    Bank Transfer
+                    Banküberweisung
                   </Button>
                   <Button
                     variant={paymentMethod === 'paypal' ? 'default' : 'outline'}
@@ -427,7 +432,7 @@ const Checkout = () => {
               <CardHeader className="pb-3 mb-2">
                 <CardTitle className="flex items-center text-xl">
                   <ShoppingBag className="mr-2 h-6 w-6 text-blue-600" />
-                  Order Summary
+                  Bestellübersicht
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -475,13 +480,32 @@ const Checkout = () => {
                   </div>
                 ))}
 
-                  {/* <Separator /> */}
-                 <div className="flex justify-between items-center text-2xl font-bold text-gray-900 pt-4 pb-2">
-                   <span>Order Total</span>
-                   <span className="text-blue-600">€{getTotalPrice().toFixed(2)}</span>
-                 </div>
+                {/* Zwischensumme und Versandkosten */}
+                <div className="border-t pt-4 space-y-3">
+                  <div className="flex justify-between items-center text-gray-700">
+                    <span>Zwischensumme</span>
+                    <span>€{getTotalPrice().toFixed(2)}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center text-gray-700">
+                    <div className="flex items-center space-x-2">
+                      <span>Versandkosten</span>
+                      <span className="text-xs text-gray-500">(Standard)</span>
+                    </div>
+                    <span>€{SHIPPING_COST.toFixed(2)}</span>
+                  </div>
+                  
+                  <div className="border-t pt-3">
+                    <div className="flex justify-between items-center text-2xl font-bold text-gray-900">
+                      <span>Gesamtsumme</span>
+                      <span className="text-blue-600">€{getTotalWithShipping().toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
 
-                  <p className=" text-sm text-gray-500">We prioritize your privacy and ensure every crystal is hand-selected and carefully packaged for you.</p>
+                <p className="text-sm text-gray-500 pt-2">
+                  Deine Bestellung wird bearbeitet und du erhältst in Kürze eine Bestätigung.
+                </p>
               </CardContent>
             </Card>
 
@@ -494,23 +518,10 @@ const Checkout = () => {
                       <span className="text-purple-600 text-lg">✨</span>
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900 text-sm">Authentic Crystals</h3>
+                      <h3 className="font-medium text-gray-900 text-sm">Echtheit der Kristalle</h3>
                       <p className="text-xs text-gray-600 mt-1">
-                        Each crystal is carefully selected and verified for authenticity. 
-                        Our expert gemologists ensure you receive genuine, high-quality crystals.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
-                      <span className="text-green-600 text-lg">🛡️</span>
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 text-sm">100% Quality Guarantee</h3>
-                      <p className="text-xs text-gray-600 mt-1">
-                        We guarantee the quality of every crystal. If you're not completely satisfied, 
-                        we offer a 30-day return policy with full refund.
+                        Jeder Kristall ist sorgfältig ausgewählt und auf Authentizität geprüft.
+                        Unsere Experten für Edelsteine stellen sicher, dass Du echte, hochwertige Kristalle erhalten.
                       </p>
                     </div>
                   </div>
@@ -520,10 +531,10 @@ const Checkout = () => {
                       <span className="text-blue-600 text-lg">🌍</span>
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900 text-sm">Ethically Sourced</h3>
+                      <h3 className="font-medium text-gray-900 text-sm">Nachhaltigkeit</h3>
                       <p className="text-xs text-gray-600 mt-1">
-                        All our crystals are ethically sourced from responsible suppliers. 
-                        We support sustainable mining practices and fair trade principles.
+                        Alle unsere Kristalle werden ethisch von verantwortungsbewussten Lieferanten bezogen.
+                        Wir unterstützen nachhaltige Bergbaupraktiken und faire Handelsprinzipien.
                       </p>
                     </div>
                   </div>
@@ -533,10 +544,10 @@ const Checkout = () => {
                       <span className="text-orange-600 text-lg">🚚</span>
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900 text-sm">Secure & Fast Shipping</h3>
+                      <h3 className="font-medium text-gray-900 text-sm">Sicherer & schneller Versand</h3>
                       <p className="text-xs text-gray-600 mt-1">
-                        Your crystals are carefully packaged and shipped with tracking. 
-                        Orders typically arrive within 3-5 business days.
+                        Deine Kristalle werden sorgfältig verpackt und mit Sendungsverfolgung versendet.
+                        Bestellungen treffen in der Regel innerhalb von 3-5 Werktagen bei dir ein.
                       </p>
                     </div>
                   </div>
