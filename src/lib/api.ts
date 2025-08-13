@@ -1,5 +1,7 @@
+import { config } from './config';
+
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+const API_BASE_URL = config.apiBaseUrl;
 
 // API endpoints
 export const API_ENDPOINTS = {
@@ -170,7 +172,8 @@ export interface BankTransferDetails {
   dueDate: string;
 }
 
-// Order types
+export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered';
+
 export interface OrderItem {
   id: number;
   productId: number;
@@ -183,24 +186,14 @@ export interface Order {
   id: number;
   userId: number;
   totalAmount: number;
-  status: string;
+  status: OrderStatus;
   createdAt: string;
   updatedAt: string;
   items: OrderItem[];
 }
 
-export interface AdminOrder extends Order {
-  paymentIntentId: string;
-  shippingAddress: {
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-  };
-}
 
-// User types
+
 export interface User {
   id: number;
   email: string;
@@ -258,7 +251,7 @@ export interface OrderStatistics {
   totalOrders: number;
   totalRevenue: number;
   ordersByStatus: Array<{
-    status: string;
+    status: OrderStatus;
     count: number;
   }>;
   dailyOrders: Array<{
@@ -270,7 +263,7 @@ export interface OrderStatistics {
 
 export interface BulkUpdateRequest {
   orderIds: number[];
-  status: string;
+  status: OrderStatus;
 }
 
 // API Client functions

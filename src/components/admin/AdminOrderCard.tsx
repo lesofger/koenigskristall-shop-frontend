@@ -160,8 +160,23 @@ const AdminOrderCard = ({
                 {order.OrderItems.map((item) => (
                   <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
-                        <Package className="w-6 h-6 text-gray-500" />
+                      <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                        {item.Product.imageUrl ? (
+                          <img 
+                            src={item.Product.imageUrl} 
+                            alt={item.Product.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                              target.nextElementSibling?.classList.remove('hidden');
+                            }}
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center">
+                            <Package className="w-6 h-6 text-gray-500" />
+                          </div>
+                        )}
                       </div>
                       <div>
                         <div className="font-medium text-gray-900">{item.Product.name} ({item.Product.id})</div>

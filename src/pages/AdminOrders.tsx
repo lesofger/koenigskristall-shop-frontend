@@ -41,24 +41,24 @@ const AdminOrders = () => {
 
   const statusOptions = [
     { value: "all", label: "Alle Status" },
-    { value: "pending", label: "Bezahlt" },
-    { value: "processing", label: "Bearbeitung" },
+    { value: "pending", label: "Ausstehend" },
+    { value: "processing", label: "In Bearbeitung" },
     { value: "shipped", label: "Versendet" },
-    { value: "delivered", label: "Zugestellt" }
+    { value: "delivered", label: "Zugestellt" },
   ];
 
   const statusColors = {
-    pending: 'bg-blue-100 text-blue-800',
-    processing: 'bg-yellow-100 text-yellow-800',
+    pending: 'bg-yellow-100 text-yellow-800',
+    processing: 'bg-blue-100 text-blue-800',
     shipped: 'bg-purple-100 text-purple-800',
-    delivered: 'bg-green-100 text-green-800'
+    delivered: 'bg-green-100 text-green-800',
   };
 
   const statusLabels = {
-    pending: 'Bezahlt',
+    pending: 'Ausstehend',
     processing: 'In Bearbeitung',
     shipped: 'Versendet',
-    delivered: 'Zugestellt'
+    delivered: 'Zugestellt',
   };
 
   useEffect(() => {
@@ -133,7 +133,7 @@ const AdminOrders = () => {
         setOrders(prevOrders => 
           prevOrders.map(order => 
             order.id === orderId 
-              ? { ...order, status }
+              ? { ...order, status: status as any }
               : order
           )
         );

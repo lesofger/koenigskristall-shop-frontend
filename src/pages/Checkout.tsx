@@ -110,14 +110,12 @@ const Checkout = () => {
   }, [isAuthenticated, items, navigate, paymentMethod]);
 
   const handlePaymentSuccess = () => {
-    console.log('Payment successful2===========>');
     clearCart();
     toast({
       title: "Payment Successful!",
       description: "Your order has been placed successfully.",
     });
     
-    // Use navigate with replace to prevent going back to checkout
     navigate('/payment-success', { replace: true });
   };
 
@@ -143,7 +141,7 @@ const Checkout = () => {
     setError('');
     setClientSecret('');
     setBankTransferClientSecret('');
-    setPaypalOrder(null); // Clear PayPal order data
+    setPaypalOrder(null);
   };
 
   if (!isAuthenticated) {
@@ -199,7 +197,6 @@ const Checkout = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Section: Account Information and Payment Information */}
           <div className="space-y-6">
             {/* Account Information */}
             <Card>

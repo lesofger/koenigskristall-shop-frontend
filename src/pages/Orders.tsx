@@ -39,7 +39,7 @@ interface OrderItem {
 interface Order {
   id: number;
   totalAmount: number;
-  status: 'pending' | 'delivered';
+  status: 'pending' | 'processing' | 'shipped' | 'delivered';
   paymentIntentId: string;
   shippingAddress: {
     street: string;
@@ -69,9 +69,31 @@ const Orders = () => {
 
   const statusOptions = [
     { value: "all", label: "Alle Bestellungen" },
-    { value: "pending", label: "In Bearbeitung" },
-    { value: "delivered", label: "Abgeschlossen" }
+    { value: "pending", label: "Ausstehend" },
+    { value: "processing", label: "In Bearbeitung" },
+    { value: "shipped", label: "Versendet" },
+    { value: "delivered", label: "Zugestellt" },
   ];
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'pending': return 'Ausstehend';
+      case 'processing': return 'In Bearbeitung';
+      case 'shipped': return 'Versendet';
+      case 'delivered': return 'Zugestellt';
+      default: return status;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'processing': return 'bg-blue-100 text-blue-800';
+      case 'shipped': return 'bg-purple-100 text-purple-800';
+      case 'delivered': return 'bg-green-100 text-green-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -143,27 +165,32 @@ const Orders = () => {
     setExpandedOrders(newExpandedOrders);
   };
 
+  const getNextStatus = (currentStatus: string) => {
+    if (currentStatus === 'delivered') return 'pending';
+    return 'delivered';
+  };
+
   // Update order status
-  const updateOrderStatus = async (orderId: number, currentStatus: 'pending' | 'delivered') => {
+  const updateOrderStatus = async (orderId: number, currentStatus: string) => {
     try {
       setUpdatingStatus(prev => new Set(prev).add(orderId));
       
-      const newStatus = currentStatus === 'pending' ? 'delivered' : 'pending';
+      // Client can mark any status as delivered, or toggle delivered back to pending
+      const newStatus = getNextStatus(currentStatus);
       const response = await apiClient.orders.updateStatus(orderId.toString(), newStatus);
       
       if (response.status === 'success' && response.data) {
-        // Update the order in the local state
         setOrders(prevOrders => 
           prevOrders.map(order => 
             order.id === orderId 
-              ? { ...order, status: newStatus }
+              ? { ...order, status: newStatus as any }
               : order
           )
         );
         
         toast({
           title: "Status aktualisiert",
-          description: `Bestellung #${orderId} wurde auf "${newStatus === 'delivered' ? 'Abgeschlossen' : 'In Bearbeitung'}" gesetzt.`,
+          description: `Bestellung #${orderId} wurde auf "${getStatusLabel(newStatus)}" gesetzt.`,
           variant: "default",
         });
       } else {
@@ -259,7 +286,7 @@ const Orders = () => {
             <p className="text-gray-600 mb-4">
               {statusFilter === 'all' 
                 ? 'Du hast noch keine Bestellungen getätigt.'
-                : `Keine Bestellungen mit dem Status "${statusFilter === 'pending' ? 'In Bearbeitung' : 'Abgeschlossen'}" gefunden.`
+                : `Keine Bestellungen mit dem Status "${getStatusLabel(statusFilter)}" gefunden.`
               }
             </p>
             {statusFilter !== 'all' && (
@@ -285,13 +312,9 @@ const Orders = () => {
                       <div className="flex items-center  gap-4">
                         <CardTitle className="text-lg">Bestellung #{order.id}</CardTitle>
                         <Badge 
-                          variant={
-                            order.status === 'delivered' ? 'default' :
-                            order.status === 'pending' ? 'outline' : 'secondary'
-                          }
+                          className={getStatusColor(order.status)}
                         >
-                          {order.status === 'delivered' ? 'Abgeschlossen' : 
-                           order.status === 'pending' ? 'In Bearbeitung' : order.status}
+                          {getStatusLabel(order.status)}
                         </Badge>
                       </div>
                       <div className="flex items-center gap-4">
@@ -304,14 +327,14 @@ const Orders = () => {
                               updateOrderStatus(order.id, order.status);
                             }}
                             disabled={updatingStatus.has(order.id)}
-                            className="text-xs"
+                            className={`text-xs hover:bg-green-100`}
                           >
                             {updatingStatus.has(order.id) ? (
                               <Loader2 className="h-3 w-3 animate-spin" />
                             ) : (
                               <Edit className="h-3 w-3" />
                             )}
-                            {order.status === 'pending' ? 'Als abgeschlossen markieren' : 'Als in Bearbeitung markieren'}
+                            {order.status === 'delivered' ? 'Als ausstehend markieren' : 'Als zugestellt markieren'}
                           </Button>
                           <Button
                             variant="ghost"
@@ -368,8 +391,24 @@ const Orders = () => {
                         {order.OrderItems.map((item) => (
                           <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
-                                <Package className="w-6 h-6 text-gray-500" />
+                              <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                                {item.Product.imageUrl ? (
+                                  <img 
+                                    src={item.Product.imageUrl} 
+                                    alt={item.Product.name}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement;
+                                      target.style.display = 'none';
+                                      target.nextElementSibling?.classList.remove('hidden');
+                                    }}
+                                  />
+                                ) : (
+                                  <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center">
+                                    <Package className="w-6 h-6 text-gray-500" />
+                                  </div>
+                                )
+                                }
                               </div>
                               <div>
                                 <div className="font-medium text-gray-900">{item.Product.name}</div>

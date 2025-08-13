@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, CreditCard, Shield, CheckCircle, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { apiClient, type ShippingAddress } from '@/lib/api';
+import { config, isPayPalSandbox } from '@/lib/config';
 
 interface PayPalPaymentProps {
   amount: number;
@@ -46,7 +47,10 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
       }
 
       const script = document.createElement('script');
-      script.src = `https://www.paypal.com/sdk/js?client-id=${import.meta.env.VITE_PAYPAL_CLIENT_ID}&currency=EUR&intent=capture`;
+      const paypalUrl = isPayPalSandbox
+        ? `https://www.sandbox.paypal.com/sdk/js?client-id=${config.paypalClientId}&currency=EUR&intent=capture`
+        : `https://www.paypal.com/sdk/js?client-id=${config.paypalClientId}&currency=EUR&intent=capture`;
+      script.src = paypalUrl;
       script.async = true;
       script.onload = () => {
         setPaypalLoaded(true);
