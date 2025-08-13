@@ -15,6 +15,7 @@ import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import Orders from "./pages/Orders";
 import AdminOrders from "./pages/AdminOrders";
+import AdminUsers from "./pages/AdminUsers";
 import Layout from "@/components/Layout";
 import Inspired from "./pages/Inspired";
 import Consulting from "./pages/Consulting";
@@ -76,6 +77,14 @@ const App = () => (
                 element={
                   <ProtectedRoute requireAuth={true}>
                     <AdminOrders />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/users" 
+                element={
+                  <ProtectedRoute requireAuth={true}>
+                    <AdminUsers />
                   </ProtectedRoute>
                 } 
               />

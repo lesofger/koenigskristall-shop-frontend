@@ -14,12 +14,12 @@ export const API_ENDPOINTS = {
     GET_BY_ID: (id: string) => `${API_BASE_URL}/api/products/${id}`,
     GET_BY_CATEGORY: (category: string) => `${API_BASE_URL}/api/products/category/${category}`,
   },
-      PAYMENTS: {
-      CREATE_PAYMENT_INTENT: `${API_BASE_URL}/api/payments/create-payment-intent`,
-      CREATE_PAYPAL_ORDER: `${API_BASE_URL}/api/payments/paypal/create-order`,
-      CAPTURE_PAYPAL_PAYMENT: `${API_BASE_URL}/api/payments/paypal/capture`,
-      GET_PAYPAL_ORDER: (orderID: string) => `${API_BASE_URL}/api/payments/paypal/order/${orderID}`,
-    },
+  PAYMENTS: {
+    CREATE_PAYMENT_INTENT: `${API_BASE_URL}/api/payments/create-payment-intent`,
+    CREATE_PAYPAL_ORDER: `${API_BASE_URL}/api/payments/paypal/create-order`,
+    CAPTURE_PAYPAL_PAYMENT: `${API_BASE_URL}/api/payments/paypal/capture`,
+    GET_PAYPAL_ORDER: (orderID: string) => `${API_BASE_URL}/api/payments/paypal/order/${orderID}`,
+  },
   ORDERS: {
     GET_ALL: `${API_BASE_URL}/api/orders`,
     GET_BY_ID: (id: string) => `${API_BASE_URL}/api/orders/${id}`,
@@ -35,6 +35,16 @@ export const API_ENDPOINTS = {
     BULK_UPDATE: `${API_BASE_URL}/api/admin/orders/bulk-update`,
     GET_STATISTICS: `${API_BASE_URL}/api/admin/orders/statistics`,
     EXPORT: `${API_BASE_URL}/api/admin/orders/export`,
+  },
+  ADMIN_USERS: {
+    GET_ALL: `${API_BASE_URL}/api/admin/users`,
+    GET_BY_ID: (id: string) => `${API_BASE_URL}/api/admin/users/${id}`,
+    CREATE: `${API_BASE_URL}/api/admin/users`,
+    UPDATE: (id: string) => `${API_BASE_URL}/api/admin/users/${id}`,
+    UPDATE_PASSWORD: (id: string) => `${API_BASE_URL}/api/admin/users/${id}/password`,
+    DELETE: (id: string) => `${API_BASE_URL}/api/admin/users/${id}`,
+    GET_STATISTICS: `${API_BASE_URL}/api/admin/users/statistics`,
+    EXPORT: `${API_BASE_URL}/api/admin/users/export`,
   },
 } as const;
 
@@ -177,6 +187,50 @@ export interface Order {
   createdAt: string;
   updatedAt: string;
   items: OrderItem[];
+}
+
+export interface AdminOrder extends Order {
+  paymentIntentId: string;
+  shippingAddress: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+}
+
+// User types
+export interface User {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: 'customer' | 'admin';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateUserRequest {
+  email: string;
+  password?: string;
+  firstName: string;
+  lastName: string;
+  role?: 'customer' | 'admin';
+}
+
+export interface UpdateUserRequest {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: 'customer' | 'admin';
+}
+
+export interface UserStatistics {
+  totalUsers: number;
+  customerCount: number;
+  adminCount: number;
+  recentUsers: number;
 }
 
 export interface AdminOrder extends Order {
@@ -502,6 +556,93 @@ export const apiClient = {
       const url = params ? `${API_ENDPOINTS.ADMIN_ORDERS.EXPORT}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_ORDERS.EXPORT;
       
       const response = await fetch(url, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      return response.blob();
+    },
+  },
+
+  // Admin User APIs
+  adminUsers: {
+    getAll: async (params?: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      role?: string;
+      sortBy?: string;
+      sortOrder?: string;
+    }): Promise<ApiResponse<{ users: User[]; pagination: PaginationInfo }>> => {
+      const searchParams = new URLSearchParams();
+      if (params?.page) searchParams.append('page', params.page.toString());
+      if (params?.limit) searchParams.append('limit', params.limit.toString());
+      if (params?.search) searchParams.append('search', params.search);
+      if (params?.role) searchParams.append('role', params.role);
+      if (params?.sortBy) searchParams.append('sortBy', params.sortBy);
+      if (params?.sortOrder) searchParams.append('sortOrder', params.sortOrder);
+
+      const url = params ? `${API_ENDPOINTS.ADMIN_USERS.GET_ALL}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_USERS.GET_ALL;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      return response.json();
+    },
+
+    getById: async (id: string): Promise<ApiResponse<{ user: User }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.GET_BY_ID(id), {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      return response.json();
+    },
+
+    create: async (data: CreateUserRequest): Promise<ApiResponse<{ user: User }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.CREATE, {
+        method: 'POST',
+        headers: getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    },
+
+    update: async (id: string, data: UpdateUserRequest): Promise<ApiResponse<{ user: User }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.UPDATE(id), {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    },
+
+    updatePassword: async (id: string, password: string): Promise<ApiResponse<{ message: string }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.UPDATE_PASSWORD(id), {
+        method: 'PUT',
+        headers: getHeaders(true),
+        body: JSON.stringify({ password }),
+      });
+      return response.json();
+    },
+
+    delete: async (id: string): Promise<ApiResponse<{ message: string }>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.DELETE(id), {
+        method: 'DELETE',
+        headers: getHeaders(true),
+      });
+      return response.json();
+    },
+
+    getStatistics: async (): Promise<ApiResponse<UserStatistics>> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.GET_STATISTICS, {
+        method: 'GET',
+        headers: getHeaders(true),
+      });
+      return response.json();
+    },
+
+    export: async (): Promise<Blob> => {
+      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.EXPORT, {
         method: 'GET',
         headers: getHeaders(true),
       });

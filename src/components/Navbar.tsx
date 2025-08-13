@@ -191,9 +191,14 @@ const Navbar = () => {
                     </div>
                     <DropdownMenuSeparator />
                     {user?.role === 'admin' ? (
-                      <DropdownMenuItem asChild>
-                        <Link to="/admin/orders">Admin Orders</Link>
-                      </DropdownMenuItem>
+                      <>
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin/orders">Admin Orders</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin/users">Benutzerverwaltung</Link>
+                        </DropdownMenuItem>
+                      </>
                     ) : (
                       <DropdownMenuItem asChild>
                         <Link to="/orders">Orders</Link>
