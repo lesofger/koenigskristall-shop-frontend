@@ -4,7 +4,32 @@ import Maja2 from "@/assets/Maja2.jpeg";
 import MajaShop from "@/assets/MajaShop.jpeg";
 import MajaCrystal from "@/assets/MajaCrystal.jpeg";
 import MajaRaja from "@/assets/MajaRaja.jpeg";
-import downArrow from "@/assets/downArrow.png";
+import { Calendar, MapPin, Clock } from "lucide-react";
+import BottomFooter from "./BottomFooter";
+
+const upcomingMarkets = [
+    {
+      name: "Weihnachtsmarkt Oldenburg",
+      date: "15. - 17. Dezember 2024",
+      time: "10:00 - 18:00 Uhr",
+      location: "Schlossplatz Oldenburg",
+      description: "Gemütlicher Weihnachtsmarkt mit handgefertigten Produkten und spirituellen Schätzen"
+    },
+    {
+      name: "Neujahrsmarkt Bremen",
+      date: "6. - 8. Januar 2025",
+      time: "11:00 - 17:00 Uhr", 
+      location: "Marktplatz Bremen",
+      description: "Starte das neue Jahr mit positiver Energie und kraftvollen Kristallen"
+    },
+    {
+      name: "Frühlingserwachen Hannover",
+      date: "22. - 24. März 2025",
+      time: "9:00 - 16:00 Uhr",
+      location: "Stadtpark Hannover",
+      description: "Erwecke deine Sinne und entdecke neue spirituelle Begleiter für das Frühjahr"
+    }
+  ];
 
 function AboutMe() {
   return (
@@ -24,7 +49,7 @@ function AboutMe() {
       {/* About Content */}
       <section className="pt-0.1 pb-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
             <div className="flex justify-center -mt-8 pb-8">
               <img
                 className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover object-top shadow-xl border-4 border-white"
@@ -57,7 +82,7 @@ function AboutMe() {
       {/* Markets Section */}
       <section className="py-16 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-primary">
                 Unterwegs auf kleinen Märkten
@@ -87,7 +112,7 @@ function AboutMe() {
       {/* Consultation Section */}
       <section className="py-16 px-4 bg-gradient-to-r from-primary/5 to-secondary/5">
         <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
             <div className="flex justify-center order-2 md:order-1">
               <img
                 className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover object-top shadow-xl transition-transform duration-300 hover:scale-110"
@@ -117,7 +142,7 @@ function AboutMe() {
       {/* Integration Section */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-primary">
                 Kristalle ganz einfach in den Alltag integrieren
@@ -150,48 +175,82 @@ function AboutMe() {
 
       {/* Call to Action */}
       <section className="py-20 px-4 bg-gradient-to-br from-primary/15 via-secondary/10 to-primary/5">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center space-y-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
             <div className="space-y-6">
-              <img
-                className="w-16 h-16 mx-auto animate-bounce opacity-70"
-                src={downArrow}
-                alt="arrow"
-              />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 text-primary mb-4">
+                <Calendar className="w-8 h-8" />
+              </div>
               <div className="space-y-4">
                 <h3 className="text-3xl md:text-4xl font-bold text-primary">
-                  Der erste Schritt ist getan
+                  Besuche mich auf kommenden Märkten
                 </h3>
-                <p className="text-xl md:text-2xl text-muted-foreground/80 max-w-3xl mx-auto leading-relaxed">
-                  Der erste Schritt in die richtige Richtung ist bereits getan, denn Du bist hier auf meiner Seite gelandet.
+                <p className="text-xl text-muted-foreground/80 max-w-3xl mx-auto leading-relaxed">
+                  Hier findest du alle Termine, wo du mich und meine Kristalle persönlich antreffen kannst. 
+                  Ich freue mich darauf, dich kennenzulernen!
                 </p>
               </div>
             </div>
-            
-            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-white/20">
-              <div className="space-y-6">
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  Schau dich gerne um und lass dich von deiner Intuition leiten. 
-                  Vertraue auf dein Gefühl - es wird dich zu dem Kristall führen, der perfekt zu dir passt.
-                </p>
-                
-                <div className="text-center space-y-4">
-                  <p className="text-2xl md:text-3xl font-bold text-primary">
-                    Dein Kristall wartet bereits auf dich!
-                  </p>
-                  <div className="flex justify-center space-x-2 text-primary/60">
-                    <span className="text-2xl animate-pulse">✨</span>
-                    <span className="text-xl animate-pulse delay-200">💎</span>
-                    <span className="text-2xl animate-pulse delay-400">✨</span>
+          </div>
+
+          {/* Market Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {upcomingMarkets.map((market, idx) => (
+              <div
+                key={idx}
+                className="group bg-white/40 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 hover:shadow-2xl hover:bg-white/50 transition-all duration-300 hover:-translate-y-2"
+              >
+                <div className="space-y-6">
+                  {/* Market Name */}
+                  <h4 className="text-xl font-bold text-primary group-hover:text-primary/90 transition-colors">
+                    {market.name}
+                  </h4>
+                  
+                  {/* Date & Time */}
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3 text-muted-foreground">
+                      <Calendar className="w-5 h-5 text-primary/70" />
+                      <span className="text-sm font-medium">{market.date}</span>
+                    </div>
+                    <div className="flex items-center space-x-3 text-muted-foreground">
+                      <Clock className="w-5 h-5 text-primary/70" />
+                      <span className="text-sm">{market.time}</span>
+                    </div>
+                    <div className="flex items-start space-x-3 text-muted-foreground">
+                      <MapPin className="w-5 h-5 text-primary/70 mt-0.5" />
+                      <span className="text-sm">{market.location}</span>
+                    </div>
                   </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {market.description}
+                  </p>
                 </div>
               </div>
+            ))}
+          </div>
+
+          {/* Bottom Message */}
+          <div className="text-center">
+            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-white/20">
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h4 className="text-2xl md:text-3xl font-bold text-primary">
+                    Ich freue mich auf dich!
+                  </h4>
+                  <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                    Komm einfach vorbei und lass dich von der magischen Atmosphäre verzaubern. 
+                    Gemeinsam finden wir den Kristall, der perfekt zu dir und deiner Energie passt.
+                  </p>
+                </div>
+               </div>
             </div>
           </div>
         </div>
       </section>
-    </div>
-  );
+      </div>
+    );
 }
 
 export default AboutMe;

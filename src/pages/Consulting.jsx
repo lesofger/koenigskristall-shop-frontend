@@ -18,6 +18,7 @@ import {
   Clock,
   CheckCircle
 } from "lucide-react";
+import BottomFooter from "../components/BottomFooter";
 
 function Consulting() {
   const [formData, setFormData] = useState({
@@ -430,6 +431,7 @@ function Consulting() {
           </div>
         </div>
       </section>
+      <BottomFooter />
     </div>
   );
 }

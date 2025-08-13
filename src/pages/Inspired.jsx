@@ -1,3 +1,4 @@
+
 import { Separator } from "@/components/ui/separator";
 import { useEffect } from "react";
 import { 
@@ -24,6 +25,7 @@ import BrokenCrystal from "@/components/InpiredComponents/BrokenCrystal";
 import CrystalCombination from "@/components/InpiredComponents/CrystalCombination";
 import StoringCrystals from "@/components/InpiredComponents/StoringCrystals";
 import CTAcomponent from "@/components/InpiredComponents/CTAcomponent";
+import BottomFooter from "../components/BottomFooter";
 
 const CrystalCare = () => {
   useEffect(() => {
@@ -237,6 +239,7 @@ const CrystalCare = () => {
       <StoringCrystals />
       
       <CTAcomponent />
+      <BottomFooter />
     </div>
   );
 };

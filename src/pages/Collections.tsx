@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
+import BottomFooter from "@/components/BottomFooter";
 import { apiClient } from "@/lib/api";
 import { Product as ApiProduct, PaginationInfo } from "@/lib/api";
 import { Product as CartProduct } from "@/hooks/useCart";
@@ -333,6 +334,7 @@ const Collections = () => {
           )}
         </div>
       </main>
+      <BottomFooter />
     </div>
   );
 };

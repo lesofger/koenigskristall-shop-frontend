@@ -4,6 +4,7 @@ import ServiceSection from "@/components/Services";
 import QualityPromise from "@/components/QualityPromise";
 import { useEffect } from "react";
 import Footer from "@/components/Footer";
+import BottomFooter from "@/components/BottomFooter";
 
 
 const Index = () => {
@@ -17,6 +18,7 @@ const Index = () => {
       <CrystalGrid />
       <QualityPromise />
       <Footer />
+      <BottomFooter />
     </div>
   );
 };
