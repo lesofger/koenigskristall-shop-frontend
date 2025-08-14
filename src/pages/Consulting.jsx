@@ -21,6 +21,10 @@ import {
 import BottomFooter from "../components/BottomFooter";
 
 function Consulting() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,11 +35,7 @@ function Consulting() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const handleInputChange = (e) => {
+ const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -100,10 +100,9 @@ function Consulting() {
             Kristallheilkunde helfe ich dir dabei, die perfekten energetischen Begleiter für dein Leben zu finden.
           </p>
           <div className="flex items-center justify-center gap-4 text-primary">
+            <span className="text-sm font-medium">Individuelle Beratung mit</span>
             <Heart className="w-5 h-5" />
-            <span className="text-sm font-medium">Individuelle Beratung mit Herz</span>
-            <Sparkles className="w-5 h-5" />
-          </div>
+            </div>
         </div>
       </section>
 
@@ -425,10 +424,8 @@ function Consulting() {
             deinen Weg zu mehr spiritueller Klarheit und Wohlbefinden erkunden.
           </p>
           <div className="flex items-center justify-center gap-4 text-primary">
-            <Sparkles className="w-5 h-5" />
             <span className="text-sm font-medium">Deine Transformation wartet auf dich</span>
-            <Heart className="w-5 h-5" />
-          </div>
+            </div>
         </div>
       </section>
       <BottomFooter />
