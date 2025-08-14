@@ -130,8 +130,9 @@ const Navbar = () => {
 
   const navItems = [
     { name: "SHOP", href: "/shop" },
-    { name: "ABOUT", href: "/about" },
-    { name: "INSPIRED", href: "/inspired" },
+    { name: "ÜBER MICH", href: "/about" },
+    { name: "BIBLIOTHEK", href: "/inspired" },
+    { name: "BERATUNG", href: "/consulting" }
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -143,7 +144,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-crystal rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-background-crystal flex items-center justify-center">
                 <div className="w-8 h-8 mr-2" style={{backgroundImage: "url('/src/assets/crystalLogo.png')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
               </div>
               <span className="font-serif text-2xl font-light tracking-wider text-foreground">
@@ -189,12 +190,20 @@ const Navbar = () => {
                       </div>
                     </div>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild>
-                      <Link to="/profile">Profile</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/orders">Orders</Link>
-                    </DropdownMenuItem>
+                    {user?.role === 'admin' ? (
+                      <>
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin/orders">Admin Orders</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin/users">Benutzerverwaltung</Link>
+                        </DropdownMenuItem>
+                      </>
+                    ) : (
+                      <DropdownMenuItem asChild>
+                        <Link to="/orders">Orders</Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       onClick={async () => {

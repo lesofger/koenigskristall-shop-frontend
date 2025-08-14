@@ -5,118 +5,20 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Lock } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2, MapPin} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import { apiClient } from '@/lib/api';
+import { Elements } from '@stripe/react-stripe-js';
+import { api } from '@/lib/api';
+import { type ShippingAddress } from '@/lib/types';
+import BankTransferPayment from '@/components/BankTransferPayment';
+import PayPalPayment from '@/components/PayPalPayment';
+import CardPayment from '@/components/CardPayment';
 
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-
-interface CheckoutFormProps {
-  clientSecret: string;
-  onSuccess: () => void;
-  onError: (error: string) => void;
-}
-
-const CheckoutForm = ({ clientSecret, onSuccess, onError }: CheckoutFormProps) => {
-  const [isProcessing, setIsProcessing] = useState(false);
-  const stripe = useStripe();
-  const elements = useElements();
-
-  console.log('CheckoutForm rendered with clientSecret:', !!clientSecret);
-  console.log('Stripe available:', !!stripe);
-  console.log('Elements available:', !!elements);
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setIsProcessing(true);
-
-    try {
-      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement)!,
-        },
-        return_url: `${window.location.origin}/payment-success`,
-      });
-
-      if (error) {
-        console.log('Payment error:', error);
-        onError(error.message || 'Payment failed');
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        console.log('Payment successful===========>', paymentIntent);
-        onSuccess();
-      } else {
-        console.log('Payment intent status:', paymentIntent?.status);
-        onError('Payment processing failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      onError('Payment failed. Please try again.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="card-element" className="text-sm font-medium">Card Information</Label>
-          <div className="mt-2 p-4 border rounded-lg bg-white">
-            <CardElement
-              id="card-element"
-              options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#374151',
-                    fontFamily: '"Inter", sans-serif',
-                    '::placeholder': {
-                      color: '#9CA3AF',
-                    },
-                  },
-                  invalid: {
-                    color: '#EF4444',
-                  },
-                },
-                hidePostalCode: false,
-                // disableLink: true,
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <Button 
-        type="submit" 
-        disabled={!stripe || isProcessing} 
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3"
-      >
-        {isProcessing ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Processing Payment...
-          </>
-        ) : (
-          <>
-            <CreditCard className="mr-2 h-4 w-4" />
-            Pay Now
-          </>
-        )}
-      </Button>
-    </form>
-  );
-};
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -126,6 +28,21 @@ const Checkout = () => {
   const [clientSecret, setClientSecret] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank_transfer' | 'paypal'>('card');
+  const [bankTransferClientSecret, setBankTransferClientSecret] = useState<string>('');
+  const [paypalOrder, setPaypalOrder] = useState<any>(null);
+  const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: ''
+  });
+
+  const SHIPPING_COST = 5.00; // shipping price 
+  const getTotalWithShipping = () => {
+    return getTotalPrice() + SHIPPING_COST;
+  };
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -138,19 +55,47 @@ const Checkout = () => {
       return;
     }
 
-    // Create payment intent using centralized API client
+    // Create payment intent based on selected payment method
     const createPaymentIntent = async () => {
       try {
-        const response = await apiClient.payments.createPaymentIntent({
-          items: items.map(item => ({
-            id: parseInt(item.id),
-            quantity: item.quantity,
-            price: item.price
-          }))
-        });
+        let response;
+        
+        if (paymentMethod === 'bank_transfer') {
+          response = await api.payments.createPaymentIntent({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            })),
+            paymentMethod: 'bank_transfer'
+          });
+        } else if (paymentMethod === 'paypal') {
+          response = await api.payments.createPayPalOrder({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            }))
+          });
+        } else {
+          response = await api.payments.createPaymentIntent({
+            items: items.map(item => ({
+              id: parseInt(item.id),
+              quantity: item.quantity,
+              price: item.price
+            })),
+            paymentMethod: 'card'
+          });
+        }
 
         if (response.status === 'success' && response.data) {
-          setClientSecret(response.data.clientSecret);
+          if (paymentMethod === 'bank_transfer') {
+            setBankTransferClientSecret(response.data.clientSecret);
+          } else if (paymentMethod === 'paypal') {
+            setPaypalOrder(response.data);
+          } else {
+            setClientSecret(response.data.clientSecret);
+          }
         } else {
           setError(response.message || 'Failed to create payment intent');
         }
@@ -163,17 +108,15 @@ const Checkout = () => {
     };
 
     createPaymentIntent();
-  }, [isAuthenticated, items, navigate]);
+  }, [isAuthenticated, items, navigate, paymentMethod]);
 
   const handlePaymentSuccess = () => {
-    console.log('Payment successful2===========>');
     clearCart();
     toast({
       title: "Payment Successful!",
       description: "Your order has been placed successfully.",
     });
     
-    // Use navigate with replace to prevent going back to checkout
     navigate('/payment-success', { replace: true });
   };
 
@@ -191,6 +134,15 @@ const Checkout = () => {
     } else {
       updateQuantity(itemId, newQuantity);
     }
+  };
+
+  const handlePaymentMethodChange = (method: 'card' | 'bank_transfer' | 'paypal') => {
+    setPaymentMethod(method);
+    setIsLoading(true);
+    setError('');
+    setClientSecret('');
+    setBankTransferClientSecret('');
+    setPaypalOrder(null);
   };
 
   if (!isAuthenticated) {
@@ -221,7 +173,7 @@ const Checkout = () => {
               <p className="text-red-600 mb-4">{error}</p>
               <Button onClick={() => navigate('/shop')}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Shop
+                zurück zum Shop
               </Button>
             </div>
           </CardContent>
@@ -240,13 +192,12 @@ const Checkout = () => {
             className="mb-3 text-gray-600 hover:text-gray-800"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Shop
+            zurück zum Shop
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Bestellung abschließen</h1>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Section: Account Information and Payment Information */}
           <div className="space-y-6">
             {/* Account Information */}
             <Card>
@@ -271,34 +222,201 @@ const Checkout = () => {
                   <span className="text-sm text-gray-600">{user?.email}</span>
                 </div>
                 <Badge variant="secondary" className="w-fit text-xs">
-                  Authenticated
+                  Authentifiziert
                 </Badge>
+              </CardContent>
+            </Card>
+
+            {/* Shipping Address */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center text-xl">
+                  <MapPin className="mr-2 h-6 w-6 text-blue-600" />
+                  Lieferadresse
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <Label htmlFor="street" className="flex items-center">
+                      Straße <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="street"
+                      value={shippingAddress.street}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, street: e.target.value }))}
+                      placeholder="Straße"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="city" className="flex items-center">
+                      Stadt <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="city"
+                      value={shippingAddress.city}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, city: e.target.value }))}
+                      placeholder="Stadt"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="state" className="flex items-center">
+                      Bundesland 
+                    </Label>
+                    <Input
+                      id="state"
+                      value={shippingAddress.state}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, state: e.target.value }))}
+                      placeholder="Bundesland"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="zipCode" className="flex items-center">
+                      Postleitzahl <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="zipCode"
+                      value={shippingAddress.zipCode}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, zipCode: e.target.value }))}
+                      placeholder="Postleitzahl"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="country" className="flex items-center">
+                      Land <span className="text-red-500 ml-1">*</span>
+                    </Label>
+                    <Input
+                      id="country"
+                      value={shippingAddress.country}
+                      onChange={(e) => setShippingAddress(prev => ({ ...prev, country: e.target.value }))}
+                      placeholder="Land"
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="text-xs text-gray-500 mt-2">
+                  <span className="text-red-500">*</span> Pflichtfelder
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Payment Method Selection */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center text-xl">
+                  <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
+                  Bezahlmethode
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-3 gap-3">
+                  <Button
+                    variant={paymentMethod === 'card' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('card')}
+                    className="h-12"
+                  >
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Kreditkarte
+                  </Button>
+                  <Button
+                    variant={paymentMethod === 'bank_transfer' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('bank_transfer')}
+                    className="h-12"
+                  >
+                    <Building2 className="mr-2 h-4 w-4" />
+                    Banküberweisung
+                  </Button>
+                  <Button
+                    variant={paymentMethod === 'paypal' ? 'default' : 'outline'}
+                    onClick={() => handlePaymentMethodChange('paypal')}
+                    className="h-12"
+                  >
+                    <svg
+                      className="mr-2 h-4 w-4 text-gray-500"
+                      viewBox="0 0 512 512"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M374.7 139.5C383.1 98.9 353.6 64 308.1 64H152.1c-10.7 0-19.8 7.8-21.5 18.4L80.1 417.6c-1.6 9.6 5.9 18.4 15.5 18.4h81.1l13.7-86.1 3.1-20.2c1.7-10.6 10.8-18.4 21.5-18.4h42.3c75.1 0 135.9-49.8 147.3-121.8 2.9-18.2 1.5-35.6-4.9-50.9z" />
+                      <path d="M445.4 175.3c-7.5-9.4-17.9-16.2-29.6-19.6-5.4-1.6-11-2.7-16.7-3.2 1.8 12.3 1.4 25.4-.6 38.5-9.3 58.2-53.2 95-112.1 95H234.1c-5.4 0-10.1 3.9-10.9 9.2l-16.7 105.1-.9 5.7c-1.1 6.7 4.1 12.8 10.9 12.8h59.3c9.9 0 18.4-7.2 19.9-17l.3-1.6 8.2-52.3.5-2.9c1.5-9.5 9.7-16.4 19.3-16.4h12.1c54.7 0 97.6-38.1 106.9-91.5 3.8-22.3 1-41.6-11.9-57.3z" />
+                    </svg>
+                    PayPal
+                  </Button>
+                </div>
               </CardContent>
             </Card>
 
             {/* Payment Information */}
             <Card>
-              <CardHeader className="pb-3">
+              <CardHeader className="pb-6">
                 <CardTitle className="flex items-center text-xl">
-                  <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
-                  Payment Information
+                  {paymentMethod === 'card' ? (
+                    <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
+                  ) : paymentMethod === 'bank_transfer' ? (
+                    <Building2 className="mr-2 h-6 w-6 text-green-600" />
+                  ) : (
+                    <svg
+                      className="mr-2 h-6 w-6 text-blue-600"
+                      viewBox="0 0 512 512"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M374.7 139.5C383.1 98.9 353.6 64 308.1 64H152.1c-10.7 0-19.8 7.8-21.5 18.4L80.1 417.6c-1.6 9.6 5.9 18.4 15.5 18.4h81.1l13.7-86.1 3.1-20.2c1.7-10.6 10.8-18.4 21.5-18.4h42.3c75.1 0 135.9-49.8 147.3-121.8 2.9-18.2 1.5-35.6-4.9-50.9z" />
+                      <path d="M445.4 175.3c-7.5-9.4-17.9-16.2-29.6-19.6-5.4-1.6-11-2.7-16.7-3.2 1.8 12.3 1.4 25.4-.6 38.5-9.3 58.2-53.2 95-112.1 95H234.1c-5.4 0-10.1 3.9-10.9 9.2l-16.7 105.1-.9 5.7c-1.1 6.7 4.1 12.8 10.9 12.8h59.3c9.9 0 18.4-7.2 19.9-17l.3-1.6 8.2-52.3.5-2.9c1.5-9.5 9.7-16.4 19.3-16.4h12.1c54.7 0 97.6-38.1 106.9-91.5 3.8-22.3 1-41.6-11.9-57.3z" />
+                    </svg>
+                  )}
+                  {paymentMethod === 'card' ? 'Card Payment' : paymentMethod === 'bank_transfer' ? 'Bank Transfer Payment' : 'PayPal Payment'}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {clientSecret && (
+                {paymentMethod === 'card' && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckoutForm
+                    <CardPayment
                       clientSecret={clientSecret}
                       onSuccess={handlePaymentSuccess}
                       onError={handlePaymentError}
+                      shippingAddress={shippingAddress}
+                      user={user!}
                     />
                   </Elements>
+                )}
+                
+                {paymentMethod === 'bank_transfer' && bankTransferClientSecret && (
+                  <BankTransferPayment
+                    clientSecret={bankTransferClientSecret}
+                    amount={getTotalPrice()}
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                    shippingAddress={shippingAddress}
+                    user={user!}
+                  />
+                )}
+
+                {paymentMethod === 'paypal' && paypalOrder && (
+                  <PayPalPayment
+                    amount={getTotalPrice()}
+                    items={items}
+                    paypalOrder={paypalOrder}
+                    onSuccess={handlePaymentSuccess}
+                    onError={handlePaymentError}
+                    shippingAddress={shippingAddress}
+                    user={user!}
+                  />
                 )}
                 
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
                   <div className="flex items-center text-xs text-blue-700">
                     <Shield className="mr-2 h-3 w-3" />
-                    <span>Your payment is secure and encrypted with Stripe</span>
+                    <span>Your payment is secure and encrypted with industry-standard protection</span>
                   </div>
                 </div>
                 
@@ -312,7 +430,7 @@ const Checkout = () => {
               <CardHeader className="pb-3 mb-2">
                 <CardTitle className="flex items-center text-xl">
                   <ShoppingBag className="mr-2 h-6 w-6 text-blue-600" />
-                  Order Summary
+                  Bestellübersicht
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -359,19 +477,33 @@ const Checkout = () => {
                     </div>
                   </div>
                 ))}
-                                 {/* <Separator /> */}
-                 <div className="flex justify-between items-center text-2xl font-bold text-gray-900">
-                   <span>Order Total</span>
-                   <span className="text-blue-600">€{getTotalPrice().toFixed(2)}</span>
-                 </div>
-                 
-                 {/* Security Message */}
-                 <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
-                   <div className="flex items-center text-xs text-green-700">
-                     <Lock className="mr-2 h-4 w-4" />
-                     <span>100% secure checkout. Your information is always protected, and every crystal is chosen and packed with care.</span>
-                   </div>
-                 </div>
+
+                {/* Zwischensumme und Versandkosten */}
+                <div className="border-t pt-4 space-y-3">
+                  <div className="flex justify-between items-center text-gray-700">
+                    <span>Zwischensumme</span>
+                    <span>€{getTotalPrice().toFixed(2)}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center text-gray-700">
+                    <div className="flex items-center space-x-2">
+                      <span>Versandkosten</span>
+                      <span className="text-xs text-gray-500">(Standard)</span>
+                    </div>
+                    <span>€{SHIPPING_COST.toFixed(2)}</span>
+                  </div>
+                  
+                  <div className="border-t pt-3">
+                    <div className="flex justify-between items-center text-2xl font-bold text-gray-900">
+                      <span>Gesamtsumme</span>
+                      <span className="text-blue-600">€{getTotalWithShipping().toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-500 pt-2">
+                  Deine Bestellung wird bearbeitet und du erhältst in Kürze eine Bestätigung.
+                </p>
               </CardContent>
             </Card>
 
@@ -380,53 +512,40 @@ const Checkout = () => {
               <CardContent className="pt-6">
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-purple-600 text-lg">✨</span>
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900 text-sm">Authentic Crystals</h3>
+                      <h3 className="font-medium text-gray-900 text-sm">Echtheit der Kristalle</h3>
                       <p className="text-xs text-gray-600 mt-1">
-                        Each crystal is carefully selected and verified for authenticity. 
-                        Our expert gemologists ensure you receive genuine, high-quality crystals.
+                        Jeder Kristall ist sorgfältig ausgewählt und auf Authentizität geprüft.
+                        Unsere Experten für Edelsteine stellen sicher, dass Du echte, hochwertige Kristalle erhalten.
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-green-600 text-lg">🛡️</span>
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900 text-sm">100% Quality Guarantee</h3>
-                      <p className="text-xs text-gray-600 mt-1">
-                        We guarantee the quality of every crystal. If you're not completely satisfied, 
-                        we offer a 30-day return policy with full refund.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-blue-600 text-lg">🌍</span>
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900 text-sm">Ethically Sourced</h3>
+                      <h3 className="font-medium text-gray-900 text-sm">Nachhaltigkeit</h3>
                       <p className="text-xs text-gray-600 mt-1">
-                        All our crystals are ethically sourced from responsible suppliers. 
-                        We support sustainable mining practices and fair trade principles.
+                        Alle unsere Kristalle werden ethisch von verantwortungsbewussten Lieferanten bezogen.
+                        Wir unterstützen nachhaltige Bergbaupraktiken und faire Handelsprinzipien.
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
                       <span className="text-orange-600 text-lg">🚚</span>
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-900 text-sm">Secure & Fast Shipping</h3>
+                      <h3 className="font-medium text-gray-900 text-sm">Sicherer & schneller Versand</h3>
                       <p className="text-xs text-gray-600 mt-1">
-                        Your crystals are carefully packaged and shipped with tracking. 
-                        Orders typically arrive within 3-5 business days.
+                        Deine Kristalle werden sorgfältig verpackt und mit Sendungsverfolgung versendet.
+                        Bestellungen treffen in der Regel innerhalb von 3-5 Werktagen bei dir ein.
                       </p>
                     </div>
                   </div>

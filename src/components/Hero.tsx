@@ -23,21 +23,21 @@ const Hero = () => {
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <div className="animate-float">
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-light text-background mb-6 tracking-wide">
-            Mystical
-            <span className="block text-accent font-normal">Crystals</span>
+            Willkommen
+            <span className="block text-accent font-normal">bei Koenigskristall</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-background/90 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-            Discover the ancient power of healing crystals and transform your energy with our curated collection
+            Ich freue mich, dass du hier bist, schau dich gerne ein wenig um und entdecke die Welt der Kristalle.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/shop">
               <Button 
                 size="lg" 
-                className="bg-background text-foreground hover:bg-background/70 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
+                className="bg-background text-foreground hover:bg-background/70 px-8 py-6 text-lg font-light tracking-wide shadow-crystal"
               >
-                Explore Collection
+                Kristalle Erkunden
               </Button>
             </Link>
             
@@ -45,9 +45,9 @@ const Hero = () => {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="bg-background text-muted-foreground hover:bg-background/70 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
+                className="bg-background text-muted-foreground hover:bg-background/70 px-8 py-6 text-lg font-light tracking-wide shadow-crystal"
               >
-                Our Story
+                Über Mich
               </Button>
             </Link>
           </div>
