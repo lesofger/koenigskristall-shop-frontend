@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { apiClient, AdminOrder, OrderStatistics } from '@/lib/api';
+import { api, AdminOrder, OrderStatistics } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, ArrowLeft, Download, BarChart3, Package } from 'lucide-react';
@@ -83,7 +83,7 @@ const AdminOrders = () => {
       if (filters.startDate) params.startDate = filters.startDate;
       if (filters.endDate) params.endDate = filters.endDate;
       
-      const response = await apiClient.adminOrders.getAll(params);
+      const response = await api.adminOrders.getAll(params);
       
       if (response.status === 'success' && response.data) {
         const responseData = response.data as any;
@@ -114,7 +114,7 @@ const AdminOrders = () => {
       if (filters.startDate) params.startDate = filters.startDate;
       if (filters.endDate) params.endDate = filters.endDate;
       
-      const response = await apiClient.adminOrders.getStatistics(params);
+      const response = await api.adminOrders.getStatistics(params);
       if (response.status === 'success' && response.data) {
         setStatistics(response.data);
       }
@@ -127,7 +127,7 @@ const AdminOrders = () => {
     try {
       setUpdatingStatus(prev => new Set(prev).add(orderId));
       
-      const response = await apiClient.adminOrders.updateStatus(orderId.toString(), status);
+      const response = await api.adminOrders.updateStatus(orderId.toString(), status);
       
       if (response.status === 'success' && response.data) {
         setOrders(prevOrders => 
@@ -170,7 +170,7 @@ const AdminOrders = () => {
     if (!confirm('Sind Sie sicher, dass Sie diese Bestellung löschen möchten?')) return;
 
     try {
-      const response = await apiClient.adminOrders.delete(orderId.toString());
+      const response = await api.adminOrders.delete(orderId.toString());
       
       if (response.status === 'success') {
         setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
@@ -197,7 +197,7 @@ const AdminOrders = () => {
       if (filters.startDate) params.startDate = filters.startDate;
       if (filters.endDate) params.endDate = filters.endDate;
       
-      const blob = await apiClient.adminOrders.export(params);
+      const blob = await api.adminOrders.export(params);
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

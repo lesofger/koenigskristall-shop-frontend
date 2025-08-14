@@ -1,4 +1,5 @@
 import { config } from './config';
+import { apiClient } from './apiClient';
 
 // API Configuration
 const API_BASE_URL = config.apiBaseUrl;
@@ -49,25 +50,6 @@ export const API_ENDPOINTS = {
     EXPORT: `${API_BASE_URL}/api/admin/users/export`,
   },
 } as const;
-
-// Common headers
-export const getHeaders = (includeAuth = false) => {
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
-
-  if (includeAuth) {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-      console.log('Auth header added:', `Bearer ${token.substring(0, 20)}...`);
-    } else {
-      console.warn('No access token found in localStorage');
-    }
-  }
-
-  return headers;
-};
 
 // API response types
 export interface ApiResponse<T = any> {
@@ -267,44 +249,7 @@ export interface BulkUpdateRequest {
 }
 
 // API Client functions
-export const apiClient = {
-  // Auth APIs
-  auth: {
-    register: async (data: { email: string; password: string; firstName: string; lastName: string }): Promise<ApiResponse<AuthResponse>> => {
-      const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(data),
-      });
-      return response.json();
-    },
-
-    login: async (data: { email: string; password: string }): Promise<ApiResponse<AuthResponse>> => {
-      const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(data),
-      });
-      return response.json();
-    },
-
-    logout: async (): Promise<ApiResponse<LogoutResponse>> => {
-      const response = await fetch(API_ENDPOINTS.AUTH.LOGOUT, {
-        method: 'POST',
-        headers: getHeaders(true),
-      });
-      return response.json();
-    },
-
-    refreshToken: async (): Promise<ApiResponse<RefreshTokenResponse>> => {
-      const response = await fetch(API_ENDPOINTS.AUTH.REFRESH_TOKEN, {
-        method: 'POST',
-        headers: getHeaders(),
-      });
-      return response.json();
-    },
-  },
-
+export const api = {
   // Product APIs
   products: {
     getAll: async (params?: { 
@@ -323,18 +268,12 @@ export const apiClient = {
 
       const url = params ? `${API_ENDPOINTS.PRODUCTS.GET_ALL}?${searchParams.toString()}` : API_ENDPOINTS.PRODUCTS.GET_ALL;
       
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: getHeaders(),
-      });
+      const response = await apiClient.get(url);
       return response.json();
     },
 
     getById: async (id: string): Promise<ApiResponse<Product>> => {
-      const response = await fetch(API_ENDPOINTS.PRODUCTS.GET_BY_ID(id), {
-        method: 'GET',
-        headers: getHeaders(),
-      });
+      const response = await apiClient.get(API_ENDPOINTS.PRODUCTS.GET_BY_ID(id));
       return response.json();
     },
 
@@ -352,10 +291,7 @@ export const apiClient = {
 
       const url = `${API_ENDPOINTS.PRODUCTS.GET_BY_CATEGORY(category)}?${searchParams.toString()}`;
       
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: getHeaders(),
-      });
+      const response = await apiClient.get(url);
       return response.json();
     },
   },
@@ -363,40 +299,25 @@ export const apiClient = {
   // Payment APIs
   payments: {
     createPaymentIntent: async (data: CreatePaymentIntentRequest): Promise<ApiResponse<PaymentIntent>> => {
-      const response = await fetch(API_ENDPOINTS.PAYMENTS.CREATE_PAYMENT_INTENT, {
-        method: 'POST',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
+      const response = await apiClient.post(API_ENDPOINTS.PAYMENTS.CREATE_PAYMENT_INTENT, data);
       return response.json();
     },
 
     createPayPalOrder: async (data: CreatePaymentIntentRequest): Promise<ApiResponse<any>> => {
-      const response = await fetch(API_ENDPOINTS.PAYMENTS.CREATE_PAYPAL_ORDER, {
-        method: 'POST',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
+      const response = await apiClient.post(API_ENDPOINTS.PAYMENTS.CREATE_PAYPAL_ORDER, data);
       return response.json();
     },
 
     capturePayPalPayment: async (orderID: string, data?: { shippingAddress?: ShippingAddress; userName?: string }): Promise<ApiResponse<any>> => {
-      const response = await fetch(API_ENDPOINTS.PAYMENTS.CAPTURE_PAYPAL_PAYMENT, {
-        method: 'POST',
-        headers: getHeaders(true),
-        body: JSON.stringify({ 
-          orderID,
-          ...data 
-        }),
+      const response = await apiClient.post(API_ENDPOINTS.PAYMENTS.CAPTURE_PAYPAL_PAYMENT, { 
+        orderID,
+        ...data 
       });
       return response.json();
     },
 
     getPayPalOrder: async (orderID: string): Promise<ApiResponse<any>> => {
-      const response = await fetch(API_ENDPOINTS.PAYMENTS.GET_PAYPAL_ORDER(orderID), {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(API_ENDPOINTS.PAYMENTS.GET_PAYPAL_ORDER(orderID));
       return response.json();
     },
   },
@@ -415,36 +336,22 @@ export const apiClient = {
 
       const url = params ? `${API_ENDPOINTS.ORDERS.GET_ALL}?${searchParams.toString()}` : API_ENDPOINTS.ORDERS.GET_ALL;
       
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(url);
       return response.json();
     },
 
     getById: async (id: string): Promise<ApiResponse<Order>> => {
-      const response = await fetch(API_ENDPOINTS.ORDERS.GET_BY_ID(id), {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(API_ENDPOINTS.ORDERS.GET_BY_ID(id));
       return response.json();
     },
 
     create: async (data: { items: Array<{ productId: number; quantity: number; price: number }> }): Promise<ApiResponse<Order>> => {
-      const response = await fetch(API_ENDPOINTS.ORDERS.CREATE, {
-        method: 'POST',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
+      const response = await apiClient.post(API_ENDPOINTS.ORDERS.CREATE, data);
       return response.json();
     },
 
     updateStatus: async (id: string, status: 'pending' | 'delivered'): Promise<ApiResponse<Order>> => {
-      const response = await fetch(API_ENDPOINTS.ORDERS.UPDATE_STATUS(id), {
-        method: 'PUT',
-        headers: getHeaders(true),
-        body: JSON.stringify({ status }),
-      });
+      const response = await apiClient.put(API_ENDPOINTS.ORDERS.UPDATE_STATUS(id), { status });
       return response.json();
     },
   },
@@ -467,53 +374,32 @@ export const apiClient = {
 
       const url = params ? `${API_ENDPOINTS.ADMIN_ORDERS.GET_ALL}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_ORDERS.GET_ALL;
       
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(url);
       return response.json();
     },
 
     getById: async (id: string): Promise<ApiResponse<{ order: AdminOrder }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.GET_BY_ID(id), {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(API_ENDPOINTS.ADMIN_ORDERS.GET_BY_ID(id));
       return response.json();
     },
 
     updateStatus: async (id: string, status: string): Promise<ApiResponse<{ order: AdminOrder }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.UPDATE_STATUS(id), {
-        method: 'PUT',
-        headers: getHeaders(true),
-        body: JSON.stringify({ status }),
-      });
+      const response = await apiClient.put(API_ENDPOINTS.ADMIN_ORDERS.UPDATE_STATUS(id), { status });
       return response.json();
     },
 
     update: async (id: string, data: Partial<AdminOrder>): Promise<ApiResponse<{ order: AdminOrder }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.UPDATE(id), {
-        method: 'PUT',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
+      const response = await apiClient.put(API_ENDPOINTS.ADMIN_ORDERS.UPDATE(id), data);
       return response.json();
     },
 
     delete: async (id: string): Promise<ApiResponse<{ message: string }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.DELETE(id), {
-        method: 'DELETE',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.delete(API_ENDPOINTS.ADMIN_ORDERS.DELETE(id));
       return response.json();
     },
 
     bulkUpdate: async (data: BulkUpdateRequest): Promise<ApiResponse<{ updatedCount: number; status: string; orderIds: number[] }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_ORDERS.BULK_UPDATE, {
-        method: 'POST',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
+      const response = await apiClient.post(API_ENDPOINTS.ADMIN_ORDERS.BULK_UPDATE, data);
       return response.json();
     },
 
@@ -527,10 +413,7 @@ export const apiClient = {
 
       const url = params ? `${API_ENDPOINTS.ADMIN_ORDERS.GET_STATISTICS}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_ORDERS.GET_STATISTICS;
       
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(url);
       return response.json();
     },
 
@@ -548,10 +431,7 @@ export const apiClient = {
 
       const url = params ? `${API_ENDPOINTS.ADMIN_ORDERS.EXPORT}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_ORDERS.EXPORT;
       
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(url);
       return response.blob();
     },
   },
@@ -576,69 +456,42 @@ export const apiClient = {
 
       const url = params ? `${API_ENDPOINTS.ADMIN_USERS.GET_ALL}?${searchParams.toString()}` : API_ENDPOINTS.ADMIN_USERS.GET_ALL;
       
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(url);
       return response.json();
     },
 
     getById: async (id: string): Promise<ApiResponse<{ user: User }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.GET_BY_ID(id), {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(API_ENDPOINTS.ADMIN_USERS.GET_BY_ID(id));
       return response.json();
     },
 
     create: async (data: CreateUserRequest): Promise<ApiResponse<{ user: User }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.CREATE, {
-        method: 'POST',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
+      const response = await apiClient.post(API_ENDPOINTS.ADMIN_USERS.CREATE, data);
       return response.json();
     },
 
     update: async (id: string, data: UpdateUserRequest): Promise<ApiResponse<{ user: User }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.UPDATE(id), {
-        method: 'PUT',
-        headers: getHeaders(true),
-        body: JSON.stringify(data),
-      });
+      const response = await apiClient.put(API_ENDPOINTS.ADMIN_USERS.UPDATE(id), data);
       return response.json();
     },
 
     updatePassword: async (id: string, password: string): Promise<ApiResponse<{ message: string }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.UPDATE_PASSWORD(id), {
-        method: 'PUT',
-        headers: getHeaders(true),
-        body: JSON.stringify({ password }),
-      });
+      const response = await apiClient.put(API_ENDPOINTS.ADMIN_USERS.UPDATE_PASSWORD(id), { password });
       return response.json();
     },
 
     delete: async (id: string): Promise<ApiResponse<{ message: string }>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.DELETE(id), {
-        method: 'DELETE',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.delete(API_ENDPOINTS.ADMIN_USERS.DELETE(id));
       return response.json();
     },
 
     getStatistics: async (): Promise<ApiResponse<UserStatistics>> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.GET_STATISTICS, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(API_ENDPOINTS.ADMIN_USERS.GET_STATISTICS);
       return response.json();
     },
 
     export: async (): Promise<Blob> => {
-      const response = await fetch(API_ENDPOINTS.ADMIN_USERS.EXPORT, {
-        method: 'GET',
-        headers: getHeaders(true),
-      });
+      const response = await apiClient.get(API_ENDPOINTS.ADMIN_USERS.EXPORT);
       return response.blob();
     },
   },

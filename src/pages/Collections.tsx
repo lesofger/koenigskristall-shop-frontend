@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
 import BottomFooter from "@/components/BottomFooter";
-import { apiClient } from "@/lib/api";
+import { api } from "@/lib/api";
 import { Product as ApiProduct, PaginationInfo } from "@/lib/api";
 import { Product as CartProduct } from "@/hooks/useCart";
 import { Button } from "@/components/ui/button";
@@ -88,14 +88,14 @@ const Collections = () => {
       let response;
       
       if (filter === "all") {
-        response = await apiClient.products.getAll({
+        response = await api.products.getAll({
           page: currentPage,
           limit: itemsPerPage,
           sortBy: sortBy,
           sortOrder: sortOrder
         });
       } else {
-        response = await apiClient.products.getByCategory(filter, {
+        response = await api.products.getByCategory(filter, {
           page: currentPage,
           limit: itemsPerPage,
           sortBy: sortBy,
