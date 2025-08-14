@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
 import BottomFooter from "@/components/BottomFooter";
 import { api } from "@/lib/api";
-import { Product as ApiProduct, PaginationInfo } from "@/lib/api";
+import { type Product as ApiProduct, type PaginationInfo } from "@/lib/types";
 import { Product as CartProduct } from "@/hooks/useCart";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -17,9 +17,8 @@ const Collections = () => {
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const itemsPerPage = 12; // Number of products per page
+  const itemsPerPage = 12;
 
-  // Convert API product to cart product
   const mapApiProductToCartProduct = (apiProduct: ApiProduct): CartProduct => {
     return {
       id: apiProduct.id.toString(),
@@ -236,7 +235,7 @@ const Collections = () => {
                 {selectedCategory?.label}
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                {categoryDescription}
+                {categoryDescription} 
               </p>
             </div>
           )}

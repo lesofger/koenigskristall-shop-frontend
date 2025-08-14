@@ -1,5 +1,6 @@
-import { API_ENDPOINTS, type ApiResponse, type AuthResponse, type RefreshTokenResponse, type LogoutResponse } from './api';
+import { API_ENDPOINTS } from './api';
 import { apiClient } from './apiClient';
+import { type ApiResponse, type AuthResponse, type RefreshTokenResponse, type LogoutResponse } from './types';
 
 // Authentication service
 export class AuthService {

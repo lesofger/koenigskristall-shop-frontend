@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { api, type ShippingAddress } from '@/lib/api';
+import { api } from '@/lib/api';
+import { type ShippingAddress } from '@/lib/types';
 import { config, isPayPalSandbox } from '@/lib/config';
 
 interface PayPalPaymentProps {

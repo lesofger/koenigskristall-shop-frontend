@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { api, AdminOrder, OrderStatistics } from '@/lib/api';
+import { api } from '@/lib/api';
+import { type AdminOrder, type OrderStatistics } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, ArrowLeft, Download, BarChart3, Package } from 'lucide-react';

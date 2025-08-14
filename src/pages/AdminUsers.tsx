@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { api, User, UserStatistics, CreateUserRequest, UpdateUserRequest } from '@/lib/api';
+import { api } from '@/lib/api';
+import { type User, type UserStatistics, type CreateUserRequest, type UpdateUserRequest } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, ArrowLeft, Download, BarChart3, Users, Plus, Shield } from 'lucide-react';
@@ -24,7 +25,6 @@ const AdminUsers = () => {
   const [loading, setLoading] = useState(true);
   const [statistics, setStatistics] = useState<UserStatistics | null>(null);
   const [pagination, setPagination] = useState<any>(null);
-  const [selectedUsers, setSelectedUsers] = useState<Set<number>>(new Set());
   const [showStatistics, setShowStatistics] = useState(false);
   
   // Dialog states
