@@ -15,7 +15,7 @@ const AGB = () => {
         <div>
           <p className="font-semibold">1. Geltungsbereich</p>
           <p>
-            Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen,
+            Diese Allgemeinen Geschäftsbedingungen Gelten für MARKOOOO (AGB) gelten für alle Bestellungen,
             die über unseren Online-Shop erfolgen.
           </p>
         </div>
@@ -44,7 +44,7 @@ const AGB = () => {
           <p className="font-semibold">4. Preise und Versandkosten</p>
           <p>
             Alle Preise verstehen sich inklusive gesetzlicher Mehrwertsteuer zuzüglich Versandkosten.
-            Diese werden im Bestellprozess ausgewiesen.
+            Diese werden im Bphillipestellprozess ausgewiesen.
           </p>
         </div>
 
