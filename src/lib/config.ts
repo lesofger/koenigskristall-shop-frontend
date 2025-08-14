@@ -69,27 +69,7 @@ const buildConfig = (): AppConfig => {
     // Application Configuration
     appName: import.meta.env.VITE_APP_NAME || 'Königskristall Shop',
     appVersion: import.meta.env.VITE_APP_VERSION || '1.0.0',
-    appEnv: (import.meta.env.VITE_APP_ENV || import.meta.env.MODE) as 'development' | 'staging' | 'production',
-    
-    // Feature Flags
-    enableAnalytics: import.meta.env.VITE_ENABLE_ANALYTICS === 'true',
-    enableDebugMode: import.meta.env.VITE_ENABLE_DEBUG_MODE === 'true',
-    enableMaintenanceMode: import.meta.env.VITE_ENABLE_MAINTENANCE_MODE === 'true',
-    
-    // Development Tools
-    enableDevTools: import.meta.env.VITE_ENABLE_DEVTOOLS === 'true',
-    useMockApi: import.meta.env.VITE_USE_MOCK_API === 'true',
-    enableBundleAnalyzer: import.meta.env.VITE_ENABLE_BUNDLE_ANALYZER === 'true',
-    
-    // Performance
-    enableServiceWorker: import.meta.env.VITE_ENABLE_SERVICE_WORKER === 'true',
-    
-    // External Services
-    gaTrackingId: import.meta.env.VITE_GA_TRACKING_ID,
-    sentryDsn: import.meta.env.VITE_SENTRY_DSN,
-    
-    // Security
-    cspNonce: import.meta.env.VITE_CSP_NONCE,
+    appEnv: (import.meta.env.VITE_APP_ENV) as 'development' | 'production',
   };
 
   return validateConfig(config);
@@ -100,12 +80,11 @@ export const config = buildConfig();
 
 // Environment-specific helpers
 export const isDevelopment = config.appEnv === 'development';
-export const isStaging = config.appEnv === 'staging';
 export const isProduction = config.appEnv === 'production';
 
 // Payment environment helpers
-export const isPayPalSandbox = isDevelopment || isStaging;
-export const isStripeTestMode = isDevelopment || isStaging;
+export const isPayPalSandbox = isDevelopment;
+export const isStripeTestMode = isDevelopment;
 
 // Debug logging (only in development)
 export const debugLog = (...args: any[]) => {
@@ -120,7 +99,6 @@ export const getEnvironmentInfo = () => ({
   version: config.appVersion,
   apiUrl: config.apiBaseUrl,
   isDevelopment,
-  isStaging,
   isProduction,
   isPayPalSandbox,
   isStripeTestMode,
