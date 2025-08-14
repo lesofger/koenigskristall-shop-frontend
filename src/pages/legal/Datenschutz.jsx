@@ -72,7 +72,7 @@ const Datenschutz = () => {
             Diamant Glanz Krefeld<br />
             Musterstraße 1<br />
             47800 Krefeld<br />
-            E-Mail: info@diamantkristall.de
+            E-Mail: info@diamantkristall.de majaaaa
           </p>
         </div>
       </div>
