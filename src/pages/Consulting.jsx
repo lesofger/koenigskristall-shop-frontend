@@ -25,12 +25,18 @@ function Consulting() {
     window.scrollTo(0, 0);
   }, []);
 
+  //emailjs ID+Key
+  const SERVICE_ID = "service_36e8mqn";
+  const TEMPLATE_ID = "template_49ens3g";
+  const PUBLIC_KEY = "1ORBuEvNYVGE3c6wv";
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     subject: '',
-    message: ''
+    message: '',
+    honeypot: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -43,21 +49,32 @@ function Consulting() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Hier würdest du normalerweise die Email-API aufrufen
-    // Beispiel mit EmailJS oder einer Backend-API
-    console.log('Formular gesendet:', formData);
-    
-    // Simulation der Übertragung
-    setTimeout(() => {
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  // Honeypot validation
+  if (formData.honeypot) {
+    setIsSubmitting(false);
+    return; //Bot detected no submit 
+  }
+  setIsSubmitting(true);
+
+  emailjs.send(
+    SERVICE_ID,
+    TEMPLATE_ID,
+    formData,
+    PUBLIC_KEY
+  ).then(
+    (result) => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    }, 2000);
-  };
+    },
+    (error) => {
+      setIsSubmitting(false);
+      alert("Fehler beim Senden: " + error.text);
+    }
+  );
+};
 
   const consultingServices = [
     {
@@ -222,6 +239,32 @@ function Consulting() {
                         placeholder="Worum geht es?"
                       />
                     </div>
+                    <div>
+                      <label className="block text-sm font-medium text-primary mb-2">
+                        Betreff
+                      </label>
+                      <Input
+                        type="text"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        className="w-full"
+                        placeholder="Worum geht es?"
+                      />
+                    </div>
+                    <div style={{ display: "none" }}>  {/* Honeypot-Feld */}
+                      <label>
+                        Bitte ausfüllen:
+                        <input
+                          type="text"
+                            name="honeypot"
+                            value={formData.honeypot}
+                            onChange={handleInputChange}
+                            autoComplete="off"
+                            tabIndex="-1"
+                          />
+                        </label>
+                      </div>
                   </div>
 
                   <div>
