@@ -19,6 +19,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import BottomFooter from "../components/BottomFooter";
+import emailjs from "emailjs-com";
 
 function Consulting() {
   useEffect(() => {
