@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { apiClient, type ShippingAddress } from '@/lib/api';
+import { api } from '@/lib/api';
+import { type ShippingAddress } from '@/lib/types';
 import { config, isPayPalSandbox } from '@/lib/config';
 
 interface PayPalPaymentProps {
@@ -72,21 +73,17 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
   }, []); // Remove onError from dependencies
 
   useEffect(() => {
-    console.log('PayPalOrder==============>', paypalOrder);
-    // Reset buttons created flag when paypalOrder changes
     if (paypalOrder && buttonsCreatedRef.current) {
       buttonsCreatedRef.current = false;
     }
     
     if (paypalLoaded && window.paypal && paypalOrder && !buttonsCreatedRef.current) {
-      // Clear existing buttons first
       const container = document.getElementById('paypal-button-container');
       if (!container) {
         return; // Component might be unmounting
       }
       container.innerHTML = '';
 
-      // Create PayPal buttons
       window.paypal.Buttons({
         style: {
           layout: 'vertical',
@@ -95,49 +92,43 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
           label: 'pay'
         },
         createOrder: (data: any, actions: any) => {
-          return paypalOrder.orderId;
+          // Validate shipping address before payment
+          return new Promise((resolve, reject) => {
+            const validateShippingAddress = (): boolean => {
+              const { street, city, state, zipCode, country } = shippingAddress;
+              return !!(street && city && state && zipCode && country);
+            };
+        
+            if (!validateShippingAddress()) {
+              onError('Please fill in all shipping address fields before proceeding.');
+              reject(new Error('Invalid shipping address'));
+              return;
+            }
+        
+            resolve(paypalOrder.orderId);
+          });
         },
         onApprove: async (data: any, actions: any) => {
-          // Validate shipping address before payment
-          const validateShippingAddress = (): boolean => {
-            const { street, city, state, zipCode, country } = shippingAddress;
-            return !!(street && city && state && zipCode && country);
-          };
-
-          if (!validateShippingAddress()) {
-            onError('Please fill in all shipping address fields before proceeding.');
-            return;
-          }
-
           setIsProcessing(true);
           setPaymentStatus('processing');
           
           try {
-            // const order = await actions.order.capture();
-            // console.log('PayPal order captured======>', order);
-            
-            // if (order.status === 'COMPLETED') {
-                          // Capture the payment on our backend with shipping address and user name
-            const captureResponse = await apiClient.payments.capturePayPalPayment(paypalOrder.orderId, {
+            const captureResponse = await api.payments.capturePayPalPayment(paypalOrder.orderId, {
               shippingAddress,
               userName: `${user.firstName} ${user.lastName}`
             });
               
-              if (captureResponse.status === 'success') {
-                setPaymentStatus('succeeded');
-                toast({
-                  title: "Payment Successful!",
-                  description: "Your PayPal payment has been processed successfully.",
-                });
-                onSuccess();
-              } else {
-                setPaymentStatus('failed');
-                onError('Payment capture failed on server');
-              }
-            // } else {
-              // setPaymentStatus('failed');
-              // onError('Payment was not completed');
-            //  }
+            if (captureResponse.status === 'success') {
+              setPaymentStatus('succeeded');
+              toast({
+                title: "Payment Successful!",
+                description: "Your PayPal payment has been processed successfully.",
+              });
+              onSuccess();
+            } else {
+              setPaymentStatus('failed');
+              onError('Payment capture failed on server');
+            }
           } catch (error) {
             console.error('PayPal capture error:', error);
             setPaymentStatus('failed');

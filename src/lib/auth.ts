@@ -1,4 +1,6 @@
-import { API_ENDPOINTS, getHeaders, type ApiResponse, type AuthResponse, type RefreshTokenResponse, type LogoutResponse } from './api';
+import { API_ENDPOINTS } from './api';
+import { apiClient } from './apiClient';
+import { type ApiResponse, type AuthResponse, type RefreshTokenResponse, type LogoutResponse } from './types';
 
 // Authentication service
 export class AuthService {
@@ -10,12 +12,7 @@ export class AuthService {
     lastName: string;
   }): Promise<ApiResponse<AuthResponse>> {
     try {
-      const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(data),
-      });
-
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.REGISTER, data);
       const result = await response.json();
 
       if (response.ok && result.status === 'success') {
@@ -41,12 +38,7 @@ export class AuthService {
     password: string;
   }): Promise<ApiResponse<AuthResponse>> {
     try {
-      const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(data),
-      });
-
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, data);
       const result = await response.json();
 
       if (response.ok && result.status === 'success') {
@@ -69,11 +61,7 @@ export class AuthService {
   // Logout user
   static async logout(): Promise<ApiResponse<LogoutResponse>> {
     try {
-      const response = await fetch(API_ENDPOINTS.AUTH.LOGOUT, {
-        method: 'POST',
-        headers: getHeaders(true), // Include auth header
-      });
-
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGOUT);
       const result = await response.json();
 
       if (response.ok) {
@@ -110,12 +98,7 @@ export class AuthService {
         };
       }
 
-      const response = await fetch(API_ENDPOINTS.AUTH.REFRESH_TOKEN, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify({ refreshToken }),
-      });
-
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.REFRESH_TOKEN, { refreshToken });
       const result = await response.json();
 
       if (response.ok && result.status === 'success') {

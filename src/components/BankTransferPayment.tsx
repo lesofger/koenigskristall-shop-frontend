@@ -10,7 +10,7 @@ import { Elements } from '@stripe/react-stripe-js';
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-import { type ShippingAddress } from '@/lib/api';
+import { type ShippingAddress } from '@/lib/types';
 
 interface BankTransferPaymentProps {
   clientSecret: string;

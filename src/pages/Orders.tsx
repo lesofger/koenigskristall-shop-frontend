@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { apiClient } from '@/lib/api';
+import { api } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -117,7 +117,7 @@ const Orders = () => {
         params.status = statusFilter;
       }
       
-      const response = await apiClient.orders.getAll(params);
+      const response = await api.orders.getAll(params);
       
       if (response.status === 'success' && response.data) {
         const responseData = response.data as any;
@@ -177,7 +177,7 @@ const Orders = () => {
       
       // Client can mark any status as delivered, or toggle delivered back to pending
       const newStatus = getNextStatus(currentStatus);
-      const response = await apiClient.orders.updateStatus(orderId.toString(), newStatus);
+      const response = await api.orders.updateStatus(orderId.toString(), newStatus);
       
       if (response.status === 'success' && response.data) {
         setOrders(prevOrders => 

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { apiClient, User, UserStatistics, CreateUserRequest, UpdateUserRequest } from '@/lib/api';
+import { api } from '@/lib/api';
+import { type User, type UserStatistics, type CreateUserRequest, type UpdateUserRequest } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, ArrowLeft, Download, BarChart3, Users, Plus, Shield } from 'lucide-react';
@@ -24,7 +25,6 @@ const AdminUsers = () => {
   const [loading, setLoading] = useState(true);
   const [statistics, setStatistics] = useState<UserStatistics | null>(null);
   const [pagination, setPagination] = useState<any>(null);
-  const [selectedUsers, setSelectedUsers] = useState<Set<number>>(new Set());
   const [showStatistics, setShowStatistics] = useState(false);
   
   // Dialog states
@@ -68,7 +68,7 @@ const AdminUsers = () => {
       if (filters.search) params.search = filters.search;
       if (filters.role !== 'all') params.role = filters.role;
       
-      const response = await apiClient.adminUsers.getAll(params);
+      const response = await api.adminUsers.getAll(params);
       
       if (response.status === 'success' && response.data) {
         const responseData = response.data as any;
@@ -95,7 +95,7 @@ const AdminUsers = () => {
 
   const fetchStatistics = async () => {
     try {
-      const response = await apiClient.adminUsers.getStatistics();
+      const response = await api.adminUsers.getStatistics();
       
       if (response.status === 'success' && response.data) {
         setStatistics(response.data);
@@ -145,7 +145,7 @@ const AdminUsers = () => {
       
       if (editingUser) {
         // Update existing user
-        const response = await apiClient.adminUsers.update(editingUser.id.toString(), data as UpdateUserRequest);
+        const response = await api.adminUsers.update(editingUser.id.toString(), data as UpdateUserRequest);
         
         if (response.status === 'success') {
           toast({
@@ -163,7 +163,7 @@ const AdminUsers = () => {
         }
       } else {
         // Create new user
-        const response = await apiClient.adminUsers.create(data as CreateUserRequest);
+        const response = await api.adminUsers.create(data as CreateUserRequest);
         
         if (response.status === 'success') {
           toast({
@@ -197,7 +197,7 @@ const AdminUsers = () => {
     
     try {
       setIsSaving(true);
-      const response = await apiClient.adminUsers.updatePassword(passwordUserId.toString(), password);
+      const response = await api.adminUsers.updatePassword(passwordUserId.toString(), password);
       
       if (response.status === 'success') {
         toast({
@@ -227,7 +227,7 @@ const AdminUsers = () => {
   const handleDeleteUser = async (userId: number) => {
     try {
       setIsDeleting(true);
-      const response = await apiClient.adminUsers.delete(userId.toString());
+      const response = await api.adminUsers.delete(userId.toString());
       
       if (response.status === 'success') {
         toast({
@@ -256,7 +256,7 @@ const AdminUsers = () => {
 
   const handleExportUsers = async () => {
     try {
-      const blob = await apiClient.adminUsers.export();
+      const blob = await api.adminUsers.export();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

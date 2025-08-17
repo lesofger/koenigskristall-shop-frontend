@@ -11,7 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2, MapPin} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { apiClient, type ShippingAddress } from '@/lib/api';
+import { api } from '@/lib/api';
+import { type ShippingAddress } from '@/lib/types';
 import BankTransferPayment from '@/components/BankTransferPayment';
 import PayPalPayment from '@/components/PayPalPayment';
 import CardPayment from '@/components/CardPayment';
@@ -60,7 +61,7 @@ const Checkout = () => {
         let response;
         
         if (paymentMethod === 'bank_transfer') {
-          response = await apiClient.payments.createPaymentIntent({
+          response = await api.payments.createPaymentIntent({
             items: items.map(item => ({
               id: parseInt(item.id),
               quantity: item.quantity,
@@ -69,7 +70,7 @@ const Checkout = () => {
             paymentMethod: 'bank_transfer'
           });
         } else if (paymentMethod === 'paypal') {
-          response = await apiClient.payments.createPayPalOrder({
+          response = await api.payments.createPayPalOrder({
             items: items.map(item => ({
               id: parseInt(item.id),
               quantity: item.quantity,
@@ -77,7 +78,7 @@ const Checkout = () => {
             }))
           });
         } else {
-          response = await apiClient.payments.createPaymentIntent({
+          response = await api.payments.createPaymentIntent({
             items: items.map(item => ({
               id: parseInt(item.id),
               quantity: item.quantity,
