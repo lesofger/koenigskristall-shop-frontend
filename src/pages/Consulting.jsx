@@ -68,7 +68,7 @@ function Consulting() {
     (result) => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
     },
     (error) => {
       setIsSubmitting(false);
@@ -231,33 +231,23 @@ function Consulting() {
                       <label className="block text-sm font-medium text-primary mb-2">
                         Betreff
                       </label>
-                      <Input
-                        type="text"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        className="w-full"
-                        placeholder="Worum geht es?"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-primary mb-2">
-                        Betreff
-                      </label>
-                      <Input
-                        type="text"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        className="w-full"
-                        placeholder="Worum geht es?"
-                      />
-                    </div>
-                    <div style={{ display: "none" }}>  {/* Honeypot-Feld */}
-                      <label>
-                        Bitte ausfüllen:
-                        <input
-                          type="text"
+                          <Input
+                            type="text"
+                            name="subject"
+                            value={formData.subject}
+                            onChange={handleInputChange}
+                            className="w-full"
+                            placeholder="Worum geht es?"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Honeypot-Feld AUSSERHALB des Grid-Containers */}
+                      <div style={{ display: "none" }}>
+                        <label>
+                          Bitte nicht ausfüllen:
+                          <input
+                            type="text"
                             name="honeypot"
                             value={formData.honeypot}
                             onChange={handleInputChange}
@@ -265,8 +255,7 @@ function Consulting() {
                             tabIndex="-1"
                           />
                         </label>
-                      </div>
-                  </div>
+</div>
 
                   <div>
                     <label className="block text-sm font-medium text-primary mb-2">
