@@ -28,7 +28,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-background/90 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-            Hier findest du alles, was dein Kristallherz begehrt - Schau dich gerne um.
+            Ich freue mich, dass du hier bist, schau dich gerne ein wenig um und entdecke die Welt der Kristalle.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -37,7 +37,7 @@ const Hero = () => {
                 size="lg" 
                 className="bg-background text-foreground hover:bg-background/70 px-8 py-6 text-lg font-light tracking-wide shadow-crystal"
               >
-                Kristalle 
+                Kristalle Erkunden
               </Button>
             </Link>
             

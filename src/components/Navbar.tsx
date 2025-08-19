@@ -148,7 +148,7 @@ const Navbar = () => {
                 <div className="w-8 h-8 mr-2" style={{backgroundImage: "url('/src/assets/crystalLogo.png')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
               </div>
               <span className="font-serif text-2xl font-light tracking-wider text-foreground">
-                KOENIGSKRISTALL
+                Koenigskristall
               </span>
             </Link>
 
