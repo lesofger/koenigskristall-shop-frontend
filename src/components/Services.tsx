@@ -25,7 +25,7 @@ const services = [
   },
   {
     title: "Kristallbibliothek",
-    description: "Erweitere dein Wissen über die Welt der Kristalle und ihrer Eigenschaften.",
+    description: "Erweitere dein Wissen über die Welt der Kristalle",
     image: image3,
     alt: "Bibliothek",
     icon: <BookOpen className="w-6 h-6" />,
@@ -40,7 +40,7 @@ const ServiceSection = () => {
         {/* Header */}
         <div className="text-center mb-16">
          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide">
-            Deine Kristall Erfahrung
+            Was Dich Erwartet
         </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Entdecke die verschiedenen Wege, wie ich dich auf deiner spirituellen Reise begleiten kann.

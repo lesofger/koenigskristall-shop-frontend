@@ -131,8 +131,8 @@ const Navbar = () => {
   const navItems = [
     { name: "SHOP", href: "/shop" },
     { name: "ÜBER MICH", href: "/about" },
-    { name: "BIBLIOTHEK", href: "/inspired" },
-    { name: "BERATUNG", href: "/consulting" }
+    { name: "BERATUNG", href: "/consulting" },
+    { name: "BIBLIOTHEK", href: "/inspired" }
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -148,7 +148,7 @@ const Navbar = () => {
                 <div className="w-8 h-8 mr-2" style={{backgroundImage: "url('/src/assets/crystalLogo.png')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
               </div>
               <span className="font-serif text-2xl font-light tracking-wider text-foreground">
-                Koenigskristall
+                KOENIGSKRISTALL
               </span>
             </Link>
 
