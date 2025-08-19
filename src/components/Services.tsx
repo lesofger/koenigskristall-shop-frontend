@@ -35,7 +35,7 @@ const services = [
 
 const ServiceSection = () => {
   return (
-    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
+    <section className="py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -92,19 +92,6 @@ const ServiceSection = () => {
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <Link to="/shop">
-            <Button 
-               size="lg"
-               className="bg-primary text-background hover:bg-primary/90 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
-                    >
-                 Starte deine Kristallreise
-                 <Sparkles className="w-5 h-5 ml-2" />
-             </Button>
-          </Link>
         </div>
       </div>
     </section>

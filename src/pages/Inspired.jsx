@@ -66,6 +66,13 @@ const CrystalCare = () => {
       description: "Setze klare Absichten und verbinde dich energetisch mit deinen Kristallen"
     },
     {
+      id: "combination",
+      title: "Kristalle Kombinieren",
+      icon: <Sparkles className="w-8 h-8" />,
+      color: "from-indigo-500/10 to-blue-500/10",
+      description: "Welche Kristalle harmonieren miteinander und verstärken ihre Wirkung"
+    },
+    {
       id: "storage",
       title: "Aufbewahrung & Pflege",
       icon: <Shield className="w-8 h-8" />,
@@ -78,15 +85,8 @@ const CrystalCare = () => {
       icon: <AlertTriangle className="w-8 h-8" />,
       color: "from-purple-500/10 to-violet-500/10",
       description: "Die spirituelle Bedeutung und der richtige Umgang mit zerbrochenen Kristallen"
-    },
-    {
-      id: "combination",
-      title: "Kristalle Kombinieren",
-      icon: <Sparkles className="w-8 h-8" />,
-      color: "from-indigo-500/10 to-blue-500/10",
-      description: "Welche Kristalle harmonieren miteinander und verstärken ihre Wirkung"
     }
-  ];
+    ];
 
   const cleansingMethods = [
     {
@@ -229,13 +229,17 @@ const CrystalCare = () => {
       
       <CrystalProgramming />
       <Separator className="my-16" />
+
+      <CrystalCombination crystalCombinations={crystalCombinations} />
+
+      <StoringCrystals />
       
       <BrokenCrystal brokenCrystalMeanings={brokenCrystalMeanings} />
       <Separator className="my-16" />
       
-      <CrystalCombination crystalCombinations={crystalCombinations} />
       
-      <StoringCrystals />
+      
+      
       
       <CTAcomponent />
       <BottomFooter />

@@ -189,7 +189,7 @@ const CrystalGrid = () => {
             {[...crystalCategories, ...crystalCategories].map((crystal, index) => (
               <div key={`${crystal.name}-${index}`} className="flex-shrink-0 w-80">
                 <Link 
-                  to={`/category/${crystal.name.toLowerCase().replace(' ', '-')}`}
+                  to={`/shop`}
                   className="group block"
                   onClick={(e) => {
                     // Prevent navigation when dragging (desktop or mobile)

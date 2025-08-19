@@ -120,7 +120,7 @@ const QualityPromise = () => {
                   <h3 className="font-serif text-2xl md:text-3xl font-light text-black mb-4 tracking-wide">
                     Eine persönliche Note
                   </h3>
-                  <p className="text-muted-foreground font-light leading-relaxed text-lg">
+                  <p className="text-muted-foreground font-light leading-relaxed text-s">
                     Als Kristallliebhaberin weiß ich, wie wichtig es ist, dass dein Kristall 
                     nicht nur schön aussieht, sondern auch energetisch zu dir passt. 
                     Deshalb behandle ich jeden Kristall wie einen wertvollen Schatz, 

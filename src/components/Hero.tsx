@@ -37,7 +37,7 @@ const Hero = () => {
                 size="lg" 
                 className="bg-background text-foreground hover:bg-background/70 px-8 py-6 text-lg font-light tracking-wide shadow-crystal"
               >
-                Kristalle Erkunden
+                Kristalle 
               </Button>
             </Link>
             
