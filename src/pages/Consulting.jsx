@@ -27,9 +27,9 @@ function Consulting() {
   }, []);
 
   //emailjs ID+Key
-  const SERVICE_ID = "service_36e8mqn";
-  const TEMPLATE_ID = "template_49ens3g";
-  const PUBLIC_KEY = "1ORBuEvNYVGE3c6wv";
+  const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
   const [formData, setFormData] = useState({
     name: '',

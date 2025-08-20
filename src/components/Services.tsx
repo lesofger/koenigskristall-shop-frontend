@@ -9,7 +9,7 @@ import image3 from "@/assets/bibliothek.png";
 const services = [
   {
     title: "Persönliche Kristallberatung",
-    description: "Lass dich von mir bei der Auswahl deiner perfekten Kristalle beraten.",
+    description: "Ich biete dir eine persönliche und individuelle Kristallberatung.",
     image: image1,
     alt: "Beratung",
     icon: <Sparkles className="w-6 h-6" />,
@@ -40,7 +40,7 @@ const ServiceSection = () => {
         {/* Header */}
         <div className="text-center mb-16">
          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide">
-            Was Dich Erwartet
+            Was dich Erwartet
         </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Entdecke die verschiedenen Wege, wie ich dich auf deiner spirituellen Reise begleiten kann.
