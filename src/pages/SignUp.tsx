@@ -38,21 +38,21 @@ const SignUp = () => {
 
       if (result.success) {
         toast({
-          title: "Success!",
-          description: "Account created successfully. Welcome to Koenigskristall!",
+          title: "Erfolgreich!",
+          description: "Account erfolgreich erstellt. Willkommen bei Koenigskristall!",
         });
         navigate("/");
       } else {
         toast({
-          title: "Registration Failed",
+          title: "Registrierung fehlgeschlagen",
           description: result.message,
           variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
+        title: "Fehler",
+        description: "Etwas ist schief gelaufen. Bitte versuche es erneut.",
         variant: "destructive",
       });
     } finally {
@@ -61,7 +61,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen -mt-16 flex items-center justify-center bg-gradient-crystal px-4 py-8">
+    <div className="min-h-screen -mt-18 flex items-center justify-center bg-gradient-crystal px-4 py-12">
       <Card className="w-full max-w-md bg-gradient-card border-border/50 shadow-crystal">
         <CardHeader className="text-center space-y-4">
           <div className="w-16 h-16 bg-gradient-hero rounded-full flex items-center justify-center mx-auto">
@@ -69,9 +69,9 @@ const SignUp = () => {
               <div className="w-8 h-8 bg-primary rounded-full animate-sparkle"></div>
             </div>
           </div>
-          <CardTitle className="font-serif text-2xl font-light">Join Koenigskristall</CardTitle>
+          <CardTitle className="font-serif text-2xl font-light">Melde dich an</CardTitle>
           <CardDescription className="text-muted-foreground">
-            Begin your mystical journey with us
+            Beginne deine Kristallreise mit mir 
           </CardDescription>
         </CardHeader>
 
@@ -80,12 +80,12 @@ const SignUp = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName" className="text-sm font-medium">
-                  First Name
+                  Vorname
                 </Label>
                 <Input
                   id="firstName"
                   type="text"
-                  placeholder="First name"
+                  placeholder="Vorname"
                   value={formData.firstName}
                   onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                   className="bg-background/50 border-border/60 focus:border-primary"
@@ -94,12 +94,12 @@ const SignUp = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName" className="text-sm font-medium">
-                  Last Name
+                  Nachname
                 </Label>
                 <Input
                   id="lastName"
                   type="text"
-                  placeholder="Last name"
+                  placeholder="Nachname"
                   value={formData.lastName}
                   onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                   className="bg-background/50 border-border/60 focus:border-primary"
@@ -115,7 +115,7 @@ const SignUp = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="bg-background/50 border-border/60 focus:border-primary"
@@ -125,13 +125,13 @@ const SignUp = () => {
 
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium">
-                Password
+                Passwort
               </Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Create a password"
+                  placeholder="Passwort erstellen"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="bg-background/50 border-border/60 focus:border-primary pr-10"
@@ -153,7 +153,7 @@ const SignUp = () => {
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground">
-                Password must be at least 8 characters long
+                Passwort muss mindestens 8 Zeichen lang sein
               </p>
             </div>
 
@@ -166,14 +166,15 @@ const SignUp = () => {
                 }
               />
               <Label htmlFor="terms" className="text-sm text-muted-foreground">
-                I agree to the{" "}
-                <Link to="/terms" className="text-primary hover:underline">
-                  Terms of Service
+                Ich stimme den {" "}
+                <Link to="/AGB" className="text-primary hover:underline">
+                  Nutzungs-
                 </Link>{" "}
-                and{" "}
-                <Link to="/privacy" className="text-primary hover:underline">
-                  Privacy Policy
+                und{" "}
+                <Link to="/Datenschutz" className="text-primary hover:underline">
+                  Datenschutzbestimmungen
                 </Link>
+                 {" "} zu
               </Label>
             </div>
 
@@ -182,15 +183,15 @@ const SignUp = () => {
               disabled={!formData.acceptTerms || isLoading}
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg font-medium tracking-wide shadow-crystal disabled:opacity-50"
             >
-              {isLoading ? "Creating Account..." : "Create Account"}
+              {isLoading ? "Account wird erstellt..." : "Account erstellen"}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              Already have an account?{" "}
+              Du hast bereits ein Konto?{" "}
               <Link to="/signin" className="text-primary hover:underline font-medium">
-                Sign in
+                Anmelden
               </Link>
             </p>
           </div>

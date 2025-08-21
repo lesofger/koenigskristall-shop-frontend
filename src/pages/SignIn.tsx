@@ -60,9 +60,9 @@ const SignIn = () => {
               <div className="w-8 h-8 bg-primary rounded-full animate-sparkle"></div>
             </div>
           </div>
-          <CardTitle className="font-serif text-2xl font-light">Welcome Back</CardTitle>
+          <CardTitle className="font-serif text-2xl font-light">Wilkommen zurück</CardTitle>
           <CardDescription className="text-muted-foreground">
-            Sign in to your crystal journey
+            Melde dich an, um deine Kristallreise fortzusetzen
           </CardDescription>
         </CardHeader>
 
@@ -75,7 +75,7 @@ const SignIn = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="trag deine email ein"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="bg-background/50 border-border/60 focus:border-primary"
@@ -85,7 +85,7 @@ const SignIn = () => {
 
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium">
-                Password
+                Passwort
               </Label>
               <div className="relative">
                 <Input
@@ -118,7 +118,7 @@ const SignIn = () => {
                 to="/forgot-password"
                 className="text-sm text-primary hover:underline"
               >
-                Forgot password?
+                Passwort vergessen ?
               </Link>
             </div>
 
@@ -127,15 +127,15 @@ const SignIn = () => {
               disabled={isLoading}
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg font-medium tracking-wide shadow-crystal"
             >
-              {isLoading ? "Signing In..." : "Sign In"}
+              {isLoading ? "Anmeldung läuft..." : "Anmelden"}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
+              Dun hast noch kein Konto?{" "}
               <Link to="/signup" className="text-primary hover:underline font-medium">
-                Sign up
+                Meld dich an 
               </Link>
             </p>
           </div>
