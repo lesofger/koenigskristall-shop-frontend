@@ -51,7 +51,7 @@ const Collections = () => {
     { value: "Pyrit", label: "Pyrit" },
     { value: "Tigerauge", label: "Tigerauge" },
     { value: "Schwarzer Turmalin", label: "Schwarzer Turmalin" },
-    { value: "Achatscheibe", label: "Achatscheibe" }
+    { value: "Achatscheibe mit Bergkristall", label: "Achatscheibe mit Bergkristall" }
   ];
 
   // Kategorie-Beschreibungen
@@ -75,7 +75,7 @@ const Collections = () => {
       "Pyrit": "Pyrit - der Glückskristall, er zieht Fülle, Wohlstand und positive Lebensenergie an. Er stärkt das Selbstvertrauen und öffnet den Blick für neue Chancen. Als Glückskristall bergleitet er dich auf deinem Weg mit innerer Stärke und Optimismus.",
       "Tigerauge": "Tigerauge verleiht Mut und Schutz. Es stärkt die Willenskraft und hilft bei der Verwirklichung von Zielen.",
       "Schwarzer Turmalin": "Schwarzer Turmalin ist ein kraftvoller Schutzstein. Er absorbiert negative Energien und schützt vor elektromagnetischen Feldern.",
-      "Achatscheibe": "Achatscheiben bringen Balance und Harmonie. Sie stabilisieren die Aura und fördern inneren Frieden."
+      "Achatscheibe mit Bergkristall": "Achatscheiben bringen Balance und Harmonie. Sie stabilisieren die Aura und fördern inneren Frieden."
   };
 
   // Fetch products from API
