@@ -328,7 +328,95 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            {/* Bezahlmethode */}
+            
+
+          {/* Rechte Seite: Bestellübersicht */}
+          <div className="xl:col-span-1">
+            <div className="sticky top-8">
+              <Card className="bg-white/60 backdrop-blur-sm border-0 shadow-2xl">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center text-2xl text-primary">
+                    <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mr-3">
+                      <ShoppingBag className="h-4 w-4 text-primary" />
+                    </div>
+                    Bestellübersicht
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  
+                  {/* Artikel */}
+                  <div className="space-y-3 max-h-96 overflow-y-auto">
+                    {items.map((item) => (
+                      <div key={item.id} className="bg-gradient-to-r from-white/80 to-white/60 rounded-xl p-4 border border-white/50">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-primary text-lg">{item.name}</h3>
+                            <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+                          </div>
+                          <div className="flex items-center space-x-1 ml-4">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                              className="h-8 w-8 p-0 rounded-full"
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="w-8 text-center font-bold text-primary">{item.quantity}</span>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                              className="h-8 w-8 p-0 rounded-full"
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => removeItem(item.id)}
+                              className="h-8 w-8 p-0 rounded-full text-red-500 hover:text-red-700 ml-2"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-muted-foreground">€{item.price.toFixed(2)} pro Stück</span>
+                          <span className="text-xl font-bold text-secondary">€{(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Preisaufschlüsselung */}
+                  <div className="border-t border-primary/20 pt-6 space-y-4">
+                    <div className="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4 space-y-3">
+                      <div className="flex justify-between items-center text-lg">
+                        <span className="text-muted-foreground">Zwischensumme</span>
+                        <span className="font-semibold">€{getTotalPrice().toFixed(2)}</span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center text-lg">
+                        <div className="flex items-center">
+                          <span className="text-muted-foreground">Versand</span>
+                          <Badge variant="secondary" className="ml-2 text-xs">Standard</Badge>
+                        </div>
+                        <span className="font-semibold">€{SHIPPING_COST.toFixed(2)}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gradient-to-r from-primary to-secondary rounded-xl p-4">
+                      <div className="flex justify-between items-center text-white">
+                        <span className="text-xl font-bold">Gesamtsumme</span>
+                        <span className="text-2xl font-bold">€{getTotalWithShipping().toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Bezahlmethode */}
             <Card className="bg-white/60 backdrop-blur-sm border-0 shadow-xl">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center text-2xl text-primary">
@@ -464,92 +552,6 @@ const Checkout = () => {
               </CardContent>
             </Card>
           </div>
-
-          {/* Rechte Seite: Bestellübersicht */}
-          <div className="xl:col-span-1">
-            <div className="sticky top-8">
-              <Card className="bg-white/60 backdrop-blur-sm border-0 shadow-2xl">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center text-2xl text-primary">
-                    <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mr-3">
-                      <ShoppingBag className="h-4 w-4 text-primary" />
-                    </div>
-                    Bestellübersicht
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  
-                  {/* Artikel */}
-                  <div className="space-y-3 max-h-96 overflow-y-auto">
-                    {items.map((item) => (
-                      <div key={item.id} className="bg-gradient-to-r from-white/80 to-white/60 rounded-xl p-4 border border-white/50">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-primary text-lg">{item.name}</h3>
-                            <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
-                          </div>
-                          <div className="flex items-center space-x-1 ml-4">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                              className="h-8 w-8 p-0 rounded-full"
-                            >
-                              <Minus className="h-3 w-3" />
-                            </Button>
-                            <span className="w-8 text-center font-bold text-primary">{item.quantity}</span>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                              className="h-8 w-8 p-0 rounded-full"
-                            >
-                              <Plus className="h-3 w-3" />
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => removeItem(item.id)}
-                              className="h-8 w-8 p-0 rounded-full text-red-500 hover:text-red-700 ml-2"
-                            >
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground">€{item.price.toFixed(2)} pro Stück</span>
-                          <span className="text-xl font-bold text-secondary">€{(item.price * item.quantity).toFixed(2)}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Preisaufschlüsselung */}
-                  <div className="border-t border-primary/20 pt-6 space-y-4">
-                    <div className="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4 space-y-3">
-                      <div className="flex justify-between items-center text-lg">
-                        <span className="text-muted-foreground">Zwischensumme</span>
-                        <span className="font-semibold">€{getTotalPrice().toFixed(2)}</span>
-                      </div>
-                      
-                      <div className="flex justify-between items-center text-lg">
-                        <div className="flex items-center">
-                          <span className="text-muted-foreground">Versand</span>
-                          <Badge variant="secondary" className="ml-2 text-xs">Standard</Badge>
-                        </div>
-                        <span className="font-semibold">€{SHIPPING_COST.toFixed(2)}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-gradient-to-r from-primary to-secondary rounded-xl p-4">
-                      <div className="flex justify-between items-center text-white">
-                        <span className="text-xl font-bold">Gesamtsumme</span>
-                        <span className="text-2xl font-bold">€{getTotalWithShipping().toFixed(2)}</span>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
               {/* Garantien */}
               <Card className="mt-6 bg-gradient-to-br from-primary/10 to-secondary/10 border-0 shadow-xl">
