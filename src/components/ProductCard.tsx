@@ -14,8 +14,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const handleAddToCart = () => {
     addItem(product);
     toast({
-      title: "Added to Cart",
-      description: `${product.name} has been added to your cart.`,
+      title: "dem Warenkorb hinzugefügt",
+      description: `${product.name} wurde dem Warenkorb hinzugefügt.`,
     });
   };
 
