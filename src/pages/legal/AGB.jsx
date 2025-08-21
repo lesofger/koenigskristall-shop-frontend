@@ -23,11 +23,10 @@ const AGB = () => {
         <div>
           <p className="font-semibold">2. Vertragspartner</p>
           <p>
-            Der Kaufvertrag kommt zustande mit:<br />
-            Georg Mustermann<br />
-            Diamant Glanz Krefeld<br />
-            Musterstraße 1<br />
-            47800 Krefeld
+             Maja Charlotte Bremer<br />
+            KOENIGSKRISTALL<br />
+            Lessingstaße 20<br />
+            39108 Magdeburg<br />
           </p>
         </div>
 

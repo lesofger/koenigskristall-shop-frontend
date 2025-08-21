@@ -68,11 +68,11 @@ const Datenschutz = () => {
             Bei Fragen zur Verarbeitung Ihrer personenbezogenen Daten wenden Sie sich bitte an:
           </p>
           <p>
-            Georg Mustermann<br />
-            Diamant Glanz Krefeld<br />
-            Musterstraße 1<br />
-            47800 Krefeld<br />
-            E-Mail: info@diamantkristall.de majaaaa
+             Maja Charlotte Bremer<br />
+            KOENIGSKRISTALL<br />
+            Lessingstaße 20<br />
+            39108 Magdeburg<br />
+            E-Mail: shop@koenigskristall.de
           </p>
         </div>
       </div>
