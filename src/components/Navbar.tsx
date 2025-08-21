@@ -169,9 +169,7 @@ const Navbar = () => {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" className="hidden sm:flex">
-                <Search className="h-5 w-5" />
-              </Button>
+              {/* Search Button war hier mal */}
               
               {isAuthenticated ? (
                 <DropdownMenu>
@@ -193,7 +191,7 @@ const Navbar = () => {
                     {user?.role === 'admin' ? (
                       <>
                         <DropdownMenuItem asChild>
-                          <Link to="/admin/orders">Admin Orders</Link>
+                          <Link to="/admin/orders">Kunden Bestellungen</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link to="/admin/users">Benutzerverwaltung</Link>
@@ -201,7 +199,7 @@ const Navbar = () => {
                       </>
                     ) : (
                       <DropdownMenuItem asChild>
-                        <Link to="/orders">Orders</Link>
+                        <Link to="/orders">Bestellungen</Link>
                       </DropdownMenuItem>
                     )}
                     <DropdownMenuSeparator />
@@ -215,7 +213,7 @@ const Navbar = () => {
                       }}
                     >
                       <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
+                      <span>Abmelden</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -264,12 +262,7 @@ const Navbar = () => {
                     {item.name}
                   </Link>
                 ))}
-                <div className="pt-2 border-t border-border">
-                  <Button variant="ghost" className="w-full justify-start px-2">
-                    <Search className="h-4 w-4 mr-2" />
-                    Search
-                  </Button>
-                </div>
+                {/* Such button war hier mal */}
               </div>
             </div>
           )}

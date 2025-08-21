@@ -57,14 +57,14 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
       await navigator.clipboard.writeText(text);
       setCopiedField(fieldName);
       toast({
-        title: "Copied!",
-        description: `${fieldName} copied to clipboard`,
+        title: "Kopiert!",
+        description: `${fieldName} in die Zwischenablage kopiert`,
       });
       setTimeout(() => setCopiedField(null), 2000);
     } catch (error) {
       toast({
-        title: "Copy failed",
-        description: "Please copy manually",
+        title: "Kopieren fehlgeschlagen",
+        description: "Bitte manuell kopieren",
         variant: "destructive",
       });
     }
@@ -78,12 +78,12 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
     };
 
     if (!validateShippingAddress()) {
-      onError('Please fill in all shipping address fields before proceeding.');
+      onError('Bitte fülle alle Felder der Lieferadresse aus, bevor du fortfährst.');
       return;
     }
 
     if (!stripe || !elements) {
-      onError('Stripe is not loaded. Please refresh the page.');
+      onError('Stripe ist nicht geladen. Bitte lade die Seite neu.');
       return;
     }
 
@@ -112,7 +112,7 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
       if (error) {
         console.error('Payment error:', error);
         setPaymentStatus('failed');
-        onError(error.message || 'Payment failed');
+        onError(error.message || 'Zahlung fehlgeschlagen');
       } else if (paymentIntent) {
         setPaymentIntent(paymentIntent);
         
@@ -125,34 +125,34 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
             setPaymentStatus('requires_action');
             // For Sofort, this means redirect to bank authentication
             toast({
-              title: "Redirecting to Bank",
-              description: "You will be redirected to your bank's authentication page.",
+              title: "Weiterleitung zur Bank",
+              description: "Sie werden zur Authentifizierungsseite Ihrer Bank weitergeleitet.",
             });
             // The redirect will happen automatically
             break;
           case 'requires_payment_method':
             setPaymentStatus('failed');
-            onError('Payment method failed. Please try again.');
+            onError('Zahlungsmethode erforderlich. Bitte versuchen Sie es erneut.');
             break;
           case 'processing':
             setPaymentStatus('processing');
             toast({
-              title: "Payment Processing",
-              description: "Your payment is being processed. This may take a few minutes.",
+              title: "Zahlung wird bearbeitet",
+              description: "Ihre Zahlung wird bearbeitet. Dies kann einige Minuten dauern.",
             });
             break;
           default:
             setPaymentStatus('pending');
             toast({
-              title: "Payment Pending",
-              description: "Your payment is pending. Please wait for confirmation.",
+              title: "Zahlung ausstehend",
+              description: "Ihre Zahlung ist ausstehend. Bitte warten Sie auf die Bestätigung.",
             });
         }
       }
     } catch (error) {
       console.error('Payment error:', error);
       setPaymentStatus('failed');
-      onError('Payment failed. Please try again.');
+      onError('Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut.');
     } finally {
       setIsProcessing(false);
     }
@@ -204,13 +204,13 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
   const getStatusText = () => {
     switch (paymentStatus) {
       case 'processing':
-        return 'Processing Payment...';
+        return 'Zahlung wird verarbeitet...';
       case 'succeeded':
-        return 'Payment Successful!';
+        return 'Zahlung erfolgreich!';
       case 'failed':
-        return 'Payment Failed';
+        return 'Zahlung fehlgeschlagen';
       case 'requires_action':
-        return 'Additional Action Required';
+        return 'Zusätzliche Aktion erforderlich';
       default:
         return '';
     }
@@ -256,13 +256,13 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center text-xl">
               <Landmark className="mr-2 h-6 w-6 text-green-600" />
-              SEPA Direct Debit
+              SEPA Lastschrift
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="p-4 border rounded-lg bg-green-50">
               <p className="text-sm text-green-700">
-                We support SEPA Direct Debit for easy and secure payments across Germany and the EU.
+                Wir akzeptieren SEPA-Lastschrift als Zahlungsmethode.
               </p>
             </div>
           </CardContent>
@@ -273,7 +273,7 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center text-xl">
               <CreditCard className="mr-2 h-6 w-6 text-blue-600" />
-              Payment Method
+              Zahlungsmethode
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -295,12 +295,12 @@ const BankTransferForm = ({ clientSecret, amount, onSuccess, onError, shippingAd
           {isProcessing ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Processing Payment...
+              Zahlung wird verarbeitet...
             </>
           ) : (
             <>
               <Euro className="mr-2 h-4 w-4" />
-              Confirm Bank Transfer Payment
+              Banküberweisung jetzt bestätigen
             </>
           )}
         </Button>
