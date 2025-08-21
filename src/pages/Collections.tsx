@@ -45,7 +45,7 @@ const Collections = () => {
     { value: "Grüner Fluorit", label: "Grüner Fluorit" },
     { value: "Aventurin", label: "Aventurin" },
     { value: "Malachit", label: "Malachit" },
-    { value: "Jaspis Rot / Algen Jaspis", label: "Jaspis Rot / Algen Jaspis" },
+    { value: "Jaspis", label: "Jaspis Rot / Algen Jaspis" },
     { value: "Labradorit", label: "Labradorit" },
     { value: "Rauchquarz", label: "Rauchquarz" },
     { value: "Pyrit", label: "Pyrit" },
