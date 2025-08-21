@@ -43,7 +43,7 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Your Cart</h2>
+          <h2 className="text-xl font-bold">Warenkorb</h2>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X className="h-5 w-5" />
           </Button>
@@ -52,7 +52,7 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
         {items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground">
             <ShoppingBag className="h-12 w-12 mb-2" />
-            <p>Your cart is empty.</p>
+            <p>Dein Warenkorb ist leer.</p>
           </div>
         ) : (
           <>
@@ -110,7 +110,7 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
                 className="w-full" 
                 onClick={handleCheckout}
               >
-                {isAuthenticated ? 'Proceed to Checkout' : 'Sign in to Checkout'}
+                {isAuthenticated ? 'Zur Kasse gehen' : 'Anmelden, um zur Kasse zu gehen'}
               </Button>
             </div>
           </>
