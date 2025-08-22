@@ -136,6 +136,7 @@ const Checkout = () => {
   };
 
   const handlePaymentMethodChange = (method: 'card' | 'bank_transfer' | 'paypal') => {
+    if( method === paymentMethod) return;
     setPaymentMethod(method);
     setIsLoading(true);
     setError('');
