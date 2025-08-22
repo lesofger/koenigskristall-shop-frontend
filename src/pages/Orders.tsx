@@ -126,16 +126,16 @@ const Orders = () => {
         setPagination(responseData.pagination);
       } else {
         toast({
-          title: "Error",
-          description: response.message || "Failed to fetch orders",
+          title: "Fehler",
+          description: response.message || "Bestellung konnte nicht geladen werden",
           variant: "destructive",
         });
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
       toast({
-        title: "Error",
-        description: "Failed to fetch orders",
+        title: "Fehler",
+        description: "Bestellungen konnten nicht geladen werden",
         variant: "destructive",
       });
     } finally {
@@ -230,7 +230,7 @@ const Orders = () => {
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
               <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-600" />
-              <p className="text-gray-600">Loading your orders...</p>
+              <p className="text-gray-600">Deine Bestellungen werden geladen...</p>
             </div>
           </div>
         </div>
@@ -265,7 +265,7 @@ const Orders = () => {
             </label>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Filter by status" />
+                <SelectValue placeholder="Nach Status Filtern" />
               </SelectTrigger>
               <SelectContent>
                 {statusOptions.map(option => (

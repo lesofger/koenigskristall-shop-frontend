@@ -39,7 +39,7 @@ const CardPayment = ({ clientSecret, onSuccess, onError, shippingAddress, user }
 
     // Validate shipping address before payment
     if (!validateShippingAddress()) {
-      onError('Please fill in all shipping address fields before proceeding.');
+      onError('Bitte füllen Sie alle Felder der Lieferadresse aus, bevor Sie fortfahren.');
       return;
     }
 
@@ -65,17 +65,17 @@ const CardPayment = ({ clientSecret, onSuccess, onError, shippingAddress, user }
 
       if (error) {
         console.log('Payment error:', error);
-        onError(error.message || 'Payment failed');
+        onError(error.message || 'Zahlung fehlgeschlagen');
       } else if (paymentIntent && paymentIntent.status === 'succeeded') {
         console.log('Payment successful===========>', paymentIntent);
         onSuccess();
       } else {
         console.log('Payment intent status:', paymentIntent?.status);
-        onError('Payment processing failed. Please try again.');
+        onError('Die Zahlung konnte nicht verarbeitet werden. Bitte versuchen Sie es erneut.');
       }
     } catch (error) {
       console.error('Payment error:', error);
-      onError('Payment failed. Please try again.');
+      onError('Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut.');
     } finally {
       setIsProcessing(false);
     }
@@ -85,7 +85,7 @@ const CardPayment = ({ clientSecret, onSuccess, onError, shippingAddress, user }
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
         <div>
-          <Label htmlFor="card-element" className="text-sm font-medium">Card Information</Label>
+          <Label htmlFor="card-element" className="text-sm font-medium">Karteninformationen</Label>
           <div className="mt-2 p-4 border rounded-lg bg-white">
             <CardElement
               id="card-element"
@@ -119,12 +119,12 @@ const CardPayment = ({ clientSecret, onSuccess, onError, shippingAddress, user }
         {isProcessing ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Processing Payment...
+            Zahlung wird verarbeitet...
           </>
         ) : (
           <>
             <CreditCard className="mr-2 h-4 w-4" />
-            Pay Now
+            Jetzt bezahlen
           </>
         )}
       </Button>

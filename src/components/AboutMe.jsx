@@ -35,22 +35,22 @@ function AboutMe() {
   return (
   <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative py-20 px-4">
+      <section className="relative py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6">
             Schön, dass Du hier bist!
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Hier möchte ich dir kurz etwas über mich und meine Liebe zu Kristallen erzählen.
+            
           </p>
         </div>
       </section>
 
       {/* About Content */}
-      <section className="pt-0.1 pb-16 px-4">
+      <section className="pt-0.1 pb-16 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
-            <div className="flex justify-center -mt-8 pb-8">
+            <div className="flex justify-center -mt-8 pb-16">
               <img
                 className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover object-top shadow-xl border-4 border-white"
                 src={Maja2}
@@ -80,7 +80,7 @@ function AboutMe() {
       </section>
 
       {/* Markets Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
+      <section className="py-16 px-4 ">
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
             <div className="space-y-4">
@@ -98,7 +98,7 @@ function AboutMe() {
                 </p>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-16">
               <img
                 className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover shadow-xl transition-transform duration-300 hover:scale-110"
                 src={MajaShop}
@@ -110,16 +110,18 @@ function AboutMe() {
       </section>
 
       {/* Consultation Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-primary/5 to-secondary/5">
+      <section className="py-16 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
-            <div className="flex justify-center order-2 md:order-1">
+            
+            <div className="flex justify-center order-2 md:order-1 mt-16 md:mt-0">
               <img
                 className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover object-top shadow-xl transition-transform duration-300 hover:scale-110"
                 src={MajaCrystal}
                 alt="Kristallberatung"
               />
             </div>
+            
             <div className="space-y-4 order-1 md:order-2">
               <h2 className="text-3xl md:text-4xl font-bold text-primary">
                 Meine große Leidenschaft: Die Kristallberatung
@@ -162,7 +164,7 @@ function AboutMe() {
                 </p>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-16">
               <img
                 className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover shadow-xl transition-transform duration-300 hover:scale-110"
                 src={MajaRaja}
@@ -174,7 +176,7 @@ function AboutMe() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary/15 via-secondary/10 to-primary/5">
+      <section className="py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <div className="space-y-6">

@@ -43,7 +43,7 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Your Cart</h2>
+          <h2 className="text-xl font-bold">Warenkorb</h2>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X className="h-5 w-5" />
           </Button>
@@ -52,7 +52,7 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
         {items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground">
             <ShoppingBag className="h-12 w-12 mb-2" />
-            <p>Your cart is empty.</p>
+            <p>Dein Warenkorb ist leer.</p>
           </div>
         ) : (
           <>
@@ -110,7 +110,7 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
                 className="w-full" 
                 onClick={handleCheckout}
               >
-                {isAuthenticated ? 'Proceed to Checkout' : 'Sign in to Checkout'}
+                {isAuthenticated ? 'Zur Kasse gehen' : 'Anmelden, um zur Kasse zu gehen'}
               </Button>
             </div>
           </>
@@ -131,8 +131,8 @@ const Navbar = () => {
   const navItems = [
     { name: "SHOP", href: "/shop" },
     { name: "ÜBER MICH", href: "/about" },
-    { name: "BIBLIOTHEK", href: "/inspired" },
-    { name: "BERATUNG", href: "/consulting" }
+    { name: "BERATUNG", href: "/consulting" },
+    { name: "BIBLIOTHEK", href: "/inspired" }
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -145,7 +145,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-background-crystal flex items-center justify-center">
-                <div className="w-8 h-8 mr-2" style={{backgroundImage: "url('/src/assets/crystalLogo.png')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+                <div className="w-8 h-8 mr-2" style={{backgroundImage: "url('/crystalLogo.png')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
               </div>
               <span className="font-serif text-2xl font-light tracking-wider text-foreground">
                 Koenigskristall
@@ -169,9 +169,7 @@ const Navbar = () => {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" className="hidden sm:flex">
-                <Search className="h-5 w-5" />
-              </Button>
+              {/* Search Button war hier mal */}
               
               {isAuthenticated ? (
                 <DropdownMenu>
@@ -193,7 +191,7 @@ const Navbar = () => {
                     {user?.role === 'admin' ? (
                       <>
                         <DropdownMenuItem asChild>
-                          <Link to="/admin/orders">Admin Orders</Link>
+                          <Link to="/admin/orders">Kunden Bestellungen</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link to="/admin/users">Benutzerverwaltung</Link>
@@ -201,7 +199,7 @@ const Navbar = () => {
                       </>
                     ) : (
                       <DropdownMenuItem asChild>
-                        <Link to="/orders">Orders</Link>
+                        <Link to="/orders">Bestellungen</Link>
                       </DropdownMenuItem>
                     )}
                     <DropdownMenuSeparator />
@@ -215,7 +213,7 @@ const Navbar = () => {
                       }}
                     >
                       <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
+                      <span>Abmelden</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -264,12 +262,7 @@ const Navbar = () => {
                     {item.name}
                   </Link>
                 ))}
-                <div className="pt-2 border-t border-border">
-                  <Button variant="ghost" className="w-full justify-start px-2">
-                    <Search className="h-4 w-4 mr-2" />
-                    Search
-                  </Button>
-                </div>
+                {/* Such button war hier mal */}
               </div>
             </div>
           )}

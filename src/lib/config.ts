@@ -14,26 +14,6 @@ export interface AppConfig {
   appName: string;
   appVersion: string;
   appEnv: 'development' | 'staging' | 'production';
-  
-  // Feature Flags
-  enableAnalytics: boolean;
-  enableDebugMode: boolean;
-  enableMaintenanceMode: boolean;
-  
-  // Development Tools
-  enableDevTools: boolean;
-  useMockApi: boolean;
-  enableBundleAnalyzer: boolean;
-  
-  // Performance
-  enableServiceWorker: boolean;
-  
-  // External Services
-  gaTrackingId?: string;
-  sentryDsn?: string;
-  
-  // Security
-  cspNonce?: string;
 }
 
 // Environment validation
@@ -88,7 +68,7 @@ export const isStripeTestMode = isDevelopment;
 
 // Debug logging (only in development)
 export const debugLog = (...args: any[]) => {
-  if (config.enableDebugMode) {
+  if (isDevelopment) {
     console.log(`[${config.appName}]`, ...args);
   }
 };

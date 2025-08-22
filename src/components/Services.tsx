@@ -9,7 +9,7 @@ import image3 from "@/assets/bibliothek.png";
 const services = [
   {
     title: "Persönliche Kristallberatung",
-    description: "Lass dich von mir bei der Auswahl deiner perfekten Kristalle beraten.",
+    description: "Ich biete dir eine persönliche und individuelle Kristallberatung.",
     image: image1,
     alt: "Beratung",
     icon: <Sparkles className="w-6 h-6" />,
@@ -25,7 +25,7 @@ const services = [
   },
   {
     title: "Kristallbibliothek",
-    description: "Erweitere dein Wissen über die Welt der Kristalle und ihrer Eigenschaften.",
+    description: "Erweitere dein Wissen über die Welt der Kristalle",
     image: image3,
     alt: "Bibliothek",
     icon: <BookOpen className="w-6 h-6" />,
@@ -35,12 +35,12 @@ const services = [
 
 const ServiceSection = () => {
   return (
-    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
+    <section className="py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide">
-            Deine Kristall Erfahrung
+            Was dich Erwartet
         </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Entdecke die verschiedenen Wege, wie ich dich auf deiner spirituellen Reise begleiten kann.
@@ -92,19 +92,6 @@ const ServiceSection = () => {
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <Link to="/shop">
-            <Button 
-               size="lg"
-               className="bg-primary text-background hover:bg-primary/90 px-8 py-6 text-lg font-medium tracking-wide shadow-crystal"
-                    >
-                 Starte deine Kristallreise
-                 <Sparkles className="w-5 h-5 ml-2" />
-             </Button>
-          </Link>
         </div>
       </div>
     </section>

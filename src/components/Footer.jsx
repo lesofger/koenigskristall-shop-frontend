@@ -9,9 +9,9 @@ const Footer = () => {
           {/* Brand & Social - links */}
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex items-center gap-3">
-              <Gem className="w-7 h-7 text-primary" />
-              <span className="font-serif text-xl font-light text-primary tracking-wide">
-                Königskristall
+              <div className="w-8 h-8 mr-2" style={{backgroundImage: "url('/crystalLogo.png')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+              <span className="font-serif text-xl font-light text-black tracking-wide">
+                KOENIGSKRISTALL
               </span>
             </div>
             <div className="flex gap-3 mt-2">
@@ -36,15 +36,17 @@ const Footer = () => {
           {/* Navigation - mittig */}
           <nav className="flex flex-col gap-2 items-center">
             <Link to="/shop" className="text-sm text-muted-foreground hover:text-primary transition">Shop</Link>
-            <Link to="/inspired" className="text-sm text-muted-foreground hover:text-primary transition">Bibliothek</Link>
-            <Link to="/consulting" className="text-sm text-muted-foreground hover:text-primary transition">Beratung</Link>
             <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition">Über mich</Link>
+            <Link to="/consulting" className="text-sm text-muted-foreground hover:text-primary transition">Beratung</Link>
+            <Link to="/inspired" className="text-sm text-muted-foreground hover:text-primary transition">Bibliothek</Link>
+            
+            
           </nav>
 
           {/* Copyright - rechts */}
           <div className="flex flex-col gap-2 items-center md:items-end">
             <span className="text-xs text-muted-foreground">
-              Made with <span className="text-primary">♥</span> für deine spirituelle Reise
+              Mit <span className="text-primary">♥</span> für dich gemacht.
             </span>
           </div>
         </div>

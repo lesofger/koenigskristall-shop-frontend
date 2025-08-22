@@ -166,7 +166,7 @@ const CrystalGrid = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground mb-6">
-            Die Kraft Der Kristalle
+            Die Kraft der Kristalle
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Jeder Kristall hat seine ganz eigenen Fähigkeiten und Kräfte, um dich individuell auf deinem Weg zu unterstützen.
@@ -189,7 +189,7 @@ const CrystalGrid = () => {
             {[...crystalCategories, ...crystalCategories].map((crystal, index) => (
               <div key={`${crystal.name}-${index}`} className="flex-shrink-0 w-80">
                 <Link 
-                  to={`/category/${crystal.name.toLowerCase().replace(' ', '-')}`}
+                  to={`/shop`}
                   className="group block"
                   onClick={(e) => {
                     // Prevent navigation when dragging (desktop or mobile)

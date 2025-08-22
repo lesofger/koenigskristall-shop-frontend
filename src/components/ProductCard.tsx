@@ -14,8 +14,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const handleAddToCart = () => {
     addItem(product);
     toast({
-      title: "Added to Cart",
-      description: `${product.name} has been added to your cart.`,
+      title: "In den Warenkorb hinzugefügt",
+      description: `${product.name} wurde dem Warenkorb hinzugefügt.`,
     });
   };
 
@@ -33,9 +33,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <h3 className="font-serif text-xl font-medium text-foreground mb-2">
             {product.name}
           </h3>
-          <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-            {product.description}
-          </p>
+          {/* {product.description} */}
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold text-primary">
               €{product.price}
@@ -50,7 +48,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-crystal"
           size="lg"
         >
-          Add to Cart
+          hinzufügen
         </Button>
       </CardFooter>
     </Card>

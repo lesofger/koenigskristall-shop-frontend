@@ -19,14 +19,12 @@ const PaymentSuccess = () => {
           <div className="mx-auto mb-4">
             <CheckCircle className="h-16 w-16 text-green-500" />
           </div>
-          <CardTitle className="text-2xl">Payment Successful!</CardTitle>
+          <CardTitle className="text-2xl">Bezahlung erfolgreich!</CardTitle>
         </CardHeader>
         <CardContent className="text-center space-y-6">
           <div className="space-y-2">
-            <p className="text-lg font-medium">Thank you for your purchase!</p>
-            <p className="text-muted-foreground">
-              Your order has been placed successfully. You will receive a confirmation email shortly.
-            </p>
+            <p className="text-lg font-medium">Vielen Dank für dein Vertrauen !</p>
+            <p className="text-muted-foreground"> Deine Bestellung wurde erfolgreich aufgegeben. Ich werde mich liebevoll um deine Kristalle kümmern und mich um alles Weitere kümmern.</p>
           </div>
           
           <div className="space-y-3">
@@ -35,7 +33,7 @@ const PaymentSuccess = () => {
               onClick={() => navigate('/orders')}
             >
               <Package className="mr-2 h-4 w-4" />
-              View My Orders
+              Meine Bestellungen ansehen
             </Button>
             
             <Button 
@@ -44,7 +42,7 @@ const PaymentSuccess = () => {
               onClick={() => navigate('/')}
             >
               <Home className="mr-2 h-4 w-4" />
-              Back to Home
+              Startseite
             </Button>
             
             <Button 
@@ -53,7 +51,7 @@ const PaymentSuccess = () => {
               onClick={() => navigate('/shop')}
             >
               <ShoppingBag className="mr-2 h-4 w-4" />
-              Continue Shopping
+              schau dich weiter um
             </Button>
           </div>
         </CardContent>

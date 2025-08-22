@@ -7,7 +7,7 @@ const CrystalProgramming = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-4xl font-light text-primary mb-6 tracking-wide">
-            Kristalle Programmieren
+            KRISTALLE PROGRAMMIEREN
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Das Programmieren verbindet dich energetisch mit deinem Kristall und setzt klare Absichten für seine Arbeit.

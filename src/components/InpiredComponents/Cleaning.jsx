@@ -8,7 +8,7 @@ const Cleaning = ({ cleansingMethods }) => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-4xl font-light text-primary mb-6 tracking-wide">
-            Kristalle Reinigen
+            KRISTALLE REINIGEN
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Kristalle nehmen Energien aus ihrer Umgebung auf. Regelmäßige Reinigung ist essentiell, 

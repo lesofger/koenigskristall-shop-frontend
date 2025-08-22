@@ -31,11 +31,12 @@ const Widerruf = () => {
         <div>
           <p className="font-semibold">Um Ihr Widerrufsrecht auszuüben, müssen Sie uns:</p>
           <p>
-            Georg Mustermann<br />
-            Diamant Glanz Krefeld<br />
-            Musterstraße 1<br />
-            47800 Krefeld<br />
-            E-Mail: info@diamantkristall.de
+            Maja Charlotte Bremer<br />
+            KOENIGSKRISTALL<br />
+            Lessingstaße 20<br />
+            39108 Magdeburg<br />
+            Deutschland
+            E-Mail: shop@koenigskristall.de
           </p>
           <p>
             mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief
@@ -89,11 +90,12 @@ const Widerruf = () => {
           </p>
 
           <p>
-            Georg Mustermann<br />
-            Diamant Glanz Krefeld<br />
-            Musterstraße 1<br />
-            47800 Krefeld<br />
-            E-Mail: info@diamantkristall.de
+             Maja Charlotte Bremer<br />
+            KOENIGSKRISTALL<br />
+            Lessingstaße 20<br />
+            39108 Magdeburg<br />
+            Deutschland<br />
+            E-Mail: shop@koenigskristall.de
           </p>
 
           <p>
@@ -102,7 +104,10 @@ const Widerruf = () => {
             – Erhalten am: ____________<br />
             – Name des Verbrauchers: ____________<br />
             – Anschrift des Verbrauchers: ____________<br />
+            – Email des Verbrauchers: ____________<br />
+            – Grund:____________<br />
             – Datum: ____________<br />
+            – Unterschrift:________________
           </p>
         </div>
       </div>

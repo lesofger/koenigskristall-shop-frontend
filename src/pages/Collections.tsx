@@ -45,13 +45,13 @@ const Collections = () => {
     { value: "Grüner Fluorit", label: "Grüner Fluorit" },
     { value: "Aventurin", label: "Aventurin" },
     { value: "Malachit", label: "Malachit" },
-    { value: "Jaspis Rot / Algen Jaspis", label: "Jaspis Rot / Algen Jaspis" },
+    { value: "Jaspis", label: "Jaspis Rot / Algen Jaspis" },
     { value: "Labradorit", label: "Labradorit" },
     { value: "Rauchquarz", label: "Rauchquarz" },
     { value: "Pyrit", label: "Pyrit" },
     { value: "Tigerauge", label: "Tigerauge" },
     { value: "Schwarzer Turmalin", label: "Schwarzer Turmalin" },
-    { value: "Achatscheibe", label: "Achatscheibe" }
+    { value: "Achatscheibe mit Bergkristall", label: "Achatscheibe mit Bergkristall" }
   ];
 
   // Kategorie-Beschreibungen
@@ -69,13 +69,13 @@ const Collections = () => {
       "Grüner Fluorit": "Grüner Fluorit wirkt ausgleichend und stabilisierend auf deine Energie, hilft deinen Geist zu fokussieren und emotionale Blockaden zu lösen. Mit seiner kraftvollen Energie öffnet er das Herzchakra und befreit es von altem Ballast. Ein Kristall für tiefe Regeneration und geistige Frische. Er wird oft als Lernhilfe verwendet.",
       "Aventurin": "Der Aventurin steht für Optimismus und Lebensfreude, stärkt bedingungslose Liebe und Mitgefühl. Er wirkt beruhigend auf unsere Seele, löst Ängste und innere Unruhe. Aventurin schenkt Vertrauen in sich selbst und ermutigt, das Leben mit Offenheit und Freude zu getsalten.Seine sanfte Energie bringt Harmonie in unser Gefühlsleben.",
       "Malachit": "Kristall des Herzens und der Heilung. Seine Energie fördert nicht nur tiefgreifende Veränderungen, sondern auch seelischen Wachstum. Der Malachit bringt unterdrückte Gefühle an die Oberfläche, fördert innere Heilung und unterstützt dabei, alte Verletzungen zu verarbeiten. Er schenkt Mut und öffnet das Herz für Liebe und Mitgeffühl.",
-      "Jaspis Rot / Algen Jaspis": " Der Jaspis ist ein toller Begeliter für alle , die in ihrer inneren Mitte ankommen möchte.Mit seiner kraftvollen Energie schenkt der Jaspis dir Durchsetzungsvermögen und Ausdauer.Besonders in Zeiten von Stress und Überförderung wirkt er erdend. Ein verlässlicher Stein, um seelisch wieder ins Gleichgewicht zu finden.",
+      "Jaspis": " Der Jaspis ist ein toller Begeliter für alle , die in ihrer inneren Mitte ankommen möchte.Mit seiner kraftvollen Energie schenkt der Jaspis dir Durchsetzungsvermögen und Ausdauer.Besonders in Zeiten von Stress und Überförderung wirkt er erdend. Ein verlässlicher Stein, um seelisch wieder ins Gleichgewicht zu finden.",
       "Labradorit": "Ein Kristall der Transformation, der dich sanft durch Veränderungen trägt. Labradorit ist ein kraftvoller Schutzstein, der das spirituelle Bewusstsein unterstützt. Er stärkt das Bauchgefühl und fördert das Erkennen von Zeichen, Träumen und tiefen Zusammenhängen. Ob seelischer Wandel, spirituelle Entwicklung oder große Lebensveränderung - Labradorit untertsützt dich dabei.",
       "Rauchquarz": "Der Rauchquarz hilft dabei, negative Energien abzubauen, wirkt gleichzeitig erdend und ausgleichend auf unsere Seele. Er hat die Fähigkeit negative Energie, in Positive umzuwandeln. Zudem vermittelt er dir Sicherheit und Stärke.",
       "Pyrit": "Pyrit - der Glückskristall, er zieht Fülle, Wohlstand und positive Lebensenergie an. Er stärkt das Selbstvertrauen und öffnet den Blick für neue Chancen. Als Glückskristall bergleitet er dich auf deinem Weg mit innerer Stärke und Optimismus.",
       "Tigerauge": "Tigerauge verleiht Mut und Schutz. Es stärkt die Willenskraft und hilft bei der Verwirklichung von Zielen.",
       "Schwarzer Turmalin": "Schwarzer Turmalin ist ein kraftvoller Schutzstein. Er absorbiert negative Energien und schützt vor elektromagnetischen Feldern.",
-      "Achatscheibe": "Achatscheiben bringen Balance und Harmonie. Sie stabilisieren die Aura und fördern inneren Frieden."
+      "Achatscheibe mit Bergkristall": "Achatscheiben bringen Balance und Harmonie. Sie stabilisieren die Aura und fördern inneren Frieden."
   };
 
   // Fetch products from API

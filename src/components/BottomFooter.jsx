@@ -11,10 +11,9 @@ const BottomFooter = () => {
           {/* Copyright */}
           <div className="flex items-center gap-2">
             <p className="text-xs text-muted-foreground">
-              © 2025 Königskristall. Alle Rechte vorbehalten.
+              © 2025 Koenigskristall. Alle Rechte vorbehalten.
             </p>
-            <Heart className="w-3 h-3 text-primary" />
-          </div>
+            </div>
 
           {/* Legal Links */}
           <div className="flex flex-wrap items-center gap-4 md:gap-6">

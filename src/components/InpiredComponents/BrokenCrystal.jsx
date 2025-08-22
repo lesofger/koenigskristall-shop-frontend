@@ -7,7 +7,7 @@ const BrokenCrystal = ({ brokenCrystalMeanings }) => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-4xl font-light text-primary mb-6 tracking-wide">
-            Wenn Kristalle zerbrechen
+            WENN KRISTALLE ZERBRECHEN
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Ein zerbrochener Kristall ist kein Unglück, sondern trägt eine spirituelle Botschaft. 

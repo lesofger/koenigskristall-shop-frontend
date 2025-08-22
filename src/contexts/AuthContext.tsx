@@ -68,12 +68,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (response.status === 'success' && response.data) {
         setUser(response.data.user);
         setIsAuthenticated(true);
-        return { success: true, message: 'Login successful' };
+        return { success: true, message: 'Anmeldung erfolgreich' };
       } else {
-        return { success: false, message: response.message || 'Login failed' };
+        return { success: false, message: response.message || 'Anmeldung fehlgeschlagen' };
       }
     } catch (error) {
-      return { success: false, message: 'Login failed. Please try again.' };
+      return { success: false, message: 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.' };
     }
   };
 
@@ -84,12 +84,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (response.status === 'success' && response.data) {
         setUser(response.data.user);
         setIsAuthenticated(true);
-        return { success: true, message: 'Registration successful' };
+        return { success: true, message: 'Registrierung erfolgreich' };
       } else {
-        return { success: false, message: response.message || 'Registration failed' };
+        return { success: false, message: response.message || 'Registrierung fehlgeschlagen' };
       }
     } catch (error) {
-      return { success: false, message: 'Registration failed. Please try again.' };
+      return { success: false, message: 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.' };
     }
   };
 

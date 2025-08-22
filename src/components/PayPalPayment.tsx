@@ -92,20 +92,23 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
           label: 'pay'
         },
         createOrder: (data: any, actions: any) => {
-          return paypalOrder.orderId;
+          // Validate shipping address before payment
+          return new Promise((resolve, reject) => {
+            const validateShippingAddress = (): boolean => {
+              const { street, city, state, zipCode, country } = shippingAddress;
+              return !!(street && city && state && zipCode && country);
+            };
+        
+            if (!validateShippingAddress()) {
+              onError('Please fill in all shipping address fields before proceeding.');
+              reject(new Error('Invalid shipping address'));
+              return;
+            }
+        
+            resolve(paypalOrder.orderId);
+          });
         },
         onApprove: async (data: any, actions: any) => {
-          // Validate shipping address before payment
-          const validateShippingAddress = (): boolean => {
-            const { street, city, state, zipCode, country } = shippingAddress;
-            return !!(street && city && state && zipCode && country);
-          };
-
-          if (!validateShippingAddress()) {
-            onError('Please fill in all shipping address fields before proceeding.');
-            return;
-          }
-
           setIsProcessing(true);
           setPaymentStatus('processing');
           
