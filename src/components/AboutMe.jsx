@@ -5,7 +5,7 @@ import MajaShop from "@/assets/MajaShop.jpeg";
 import MajaCrystal from "@/assets/MajaCrystal.jpeg";
 import MajaRaja from "@/assets/MajaRaja.jpeg";
 import { Calendar, MapPin, Clock } from "lucide-react";
-import kkschild from "@/assets/kkschild.jpeg";
+import majakristallhand from "@/assets/majakristallhand.jpeg";
 import BottomFooter from "./BottomFooter";
 
 const upcomingMarkets = [
@@ -36,34 +36,54 @@ function AboutMe() {
   return (
     <div className="min-h-screen bg-background">
       {/* Moderne Hero Section mit gleichem Gradient und Textstil wie im Hero */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Hintergrundbild */}
-        <div 
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url(${kkschild})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
+      <section className="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
+          {/* Hintergrundbild mit individuellem Ausschnitt und Zoom auf Desktop */}
+          <img
+            src={majakristallhand}
+            alt="Hero"
+            className="absolute inset-0 w-full h-full object-cover object-[0_30%] transition-transform duration-700 md:scale-105  lg:scale-110 "
+          />
           {/* Gradient nach unten */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-background/100 pointer-events-none"></div>
+          <div className="absolute  inset-0 bg-gradient-hero pointer-events-none"></div>
           {/* Gradient nach oben */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <div className="animate-float">
-            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-light text-background mb-6 tracking-wide">
-              Hier kannst du
-              <span className="block text-accent font-normal">etwas über mich erfahren</span>
+          {/* Hero Content */}
+          <div className="relative z-10 text-center mt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center">
+            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl">
+              KOENIGSKRISTALL
+              <span className="block text-accent font-thin italic">&</span>
+              <span className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl">Maja</span>
             </h1>
-            
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* About Maja */}
+        <section className="py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
+  <div className="max-w-4xl mx-auto rounded-3xl shadow-xl backdrop-blur-lg border border-primary/10 p-8 md:p-14 flex flex-col md:flex-row items-center gap-12">
+    {/* Profilbild */}
+    <div className="flex-shrink-0">
+      <img
+        src={Maja2}
+        alt="Maja Profilbild"
+        className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-2xl border-4 border-primary/20"
+      />
+    </div>
+    {/* Vorstellungstext */}
+    <div className="flex-1">
+      <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">
+        Ich bin Maja
+      </h2>
+      <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mb-4">
+        Mein Herzensprojekt <span className="font-semibold text-primary">Koenigskristall</span> ist aus Liebe und Leidenschaft entstanden.
+        Ich möchte dich mitnehmen auf eine wundervolle Reise in die Spiritualität und Magie.
+      </p>
+      <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
+        Die Kraft der Kristalle begleitet mich schon lange. Mein Wissen und meine Erfahrungen teile ich gerne mit dir – für mehr positive Energie in deinem Leben.
+        Lass dich inspirieren und entdecke, wie Kristalle dein Leben bereichern können!
+      </p>
+    </div>
+  </div>
+</section>
 
       {/* Markets Section */}
       <section className="py-16 px-4 ">
@@ -71,7 +91,7 @@ function AboutMe() {
           <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-primary">
-                Unterwegs auf kleinen Märkten
+                Unterwegs auf magischen Märkten
               </h2>
               <div className="text-lg text-muted-foreground space-y-4">
                 <p>

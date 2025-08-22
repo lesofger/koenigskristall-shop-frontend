@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Product, useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
+import valentinstagShopping from "@/assets/valentinstag-shopping.png";
 
 interface ProductCardProps {
   product: Product;
@@ -44,12 +45,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
       
       <CardFooter className="p-6 pt-0">
         <Button 
-          onClick={handleAddToCart}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-crystal"
-          size="lg"
-        >
-          hinzufügen
-        </Button>
+            onClick={handleAddToCart}
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-crystal flex items-center justify-center"
+            size="lg"
+          >
+            <img
+              src={valentinstagShopping}
+              alt="Valentinstag Shopping"
+              className="h-8 w-8 mr-2"
+            />
+           
+          </Button>
       </CardFooter>
     </Card>
   );
