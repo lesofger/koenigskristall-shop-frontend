@@ -48,9 +48,9 @@ function AboutMe() {
           {/* Hero Content */}
           <div className="relative z-10 text-center mt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center animate-float">
             <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl">
-              KOENIGSKRISTALL
-              <span className="block text-accent font-thin italic">&</span>
-              <span className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl">Maja</span>
+              Hey,
+              <span className="block text-accent font-thin ">Ich bin Maja</span>
+              <span className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl"></span>
             </h1>
           </div>
         </section>
@@ -65,32 +65,29 @@ function AboutMe() {
 
         {/* About Maja */}
         <section className="py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-  <div className="max-w-4xl mx-auto rounded-3xl shadow-xl backdrop-blur-lg border border-primary/10 p-8 md:p-14 flex flex-col md:flex-row items-center gap-12">
-    {/* Profilbild */}
-    <div className="flex-shrink-0">
+  <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    {/* Profilbild modern, ohne Kasten */}
+    <div className="flex justify-center">
       <img
         src={Maja2}
         alt="Maja Profilbild"
-        className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-2xl border-4 border-primary/20"
+        className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-xl border-4 border-primary/20 transition-transform duration-300 hover:scale-105"
       />
     </div>
-    {/* Vorstellungstext */}
-    <div className="flex-1">
-      <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">
-        Ich bin Maja
+    {/* Moderner Vorstellungstext */}
+    <div>
+      <h2 className="font-serif text-4xl md:text-5xl font-bold text-primary mb-6">
+        Ich bin <span className="text-primary ">Maja</span>
       </h2>
-      <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mb-4">
-        Mein Herzensprojekt <span className="font-semibold text-primary">Koenigskristall</span> ist aus Liebe und Leidenschaft entstanden.
-        Ich möchte dich mitnehmen auf eine wundervolle Reise in die Spiritualität und Magie.
+      <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-4">
+        Mit <span className="font-semibold text-primary">Koenigskristall</span> habe ich mein Herzensprojekt verwirklicht. Kristalle begleiten mich schon lange und ihre Magie fasziniert mich jeden Tag aufs Neue.
       </p>
-      <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
-        Die Kraft der Kristalle begleitet mich schon lange. Mein Wissen und meine Erfahrungen teile ich gerne mit dir – für mehr positive Energie in deinem Leben.
-        Lass dich inspirieren und entdecke, wie Kristalle dein Leben bereichern können!
+      <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-4">
+        Ich teile mein Wissen und meine Erfahrungen gerne mit dir – für mehr positive Energie und Inspiration in deinem Leben. Lass dich von der Kraft der Kristalle begeistern und finde deinen persönlichen Begleiter!
       </p>
-    </div>
+     </div>
   </div>
 </section>
-
       {/* Markets Section */}
       <section className="py-16 px-4 ">
         <div className="max-w-4xl mx-auto">
