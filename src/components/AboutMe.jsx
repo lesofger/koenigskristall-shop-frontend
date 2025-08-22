@@ -45,10 +45,8 @@ function AboutMe() {
           />
           {/* Gradient nach unten */}
           <div className="absolute  inset-0 bg-gradient-hero pointer-events-none"></div>
-          {/* Gradient nach oben */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
           {/* Hero Content */}
-          <div className="relative z-10 text-center mt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center">
+          <div className="relative z-10 text-center mt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center animate-float">
             <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl">
               KOENIGSKRISTALL
               <span className="block text-accent font-thin italic">&</span>
