@@ -41,13 +41,13 @@ function AboutMe() {
           <img
             src={majakristallhand}
             alt="Hero"
-            className="absolute inset-0 w-full h-full object-cover object-[36%_30%] transition-transform duration-700 md:scale-105  lg:scale-110 "
+            className="absolute inset-0 w-full h-full object-cover object-[45%_30%] transition-transform duration-700 md:scale-105  lg:scale-110 "
           />
           {/* Gradient nach unten */}
           <div className="absolute  inset-0 bg-gradient-hero pointer-events-none"></div>
           {/* Hero Content */}
           <div className="relative z-10 text-center mt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center animate-float">
-            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl">
+            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl animate-fadeInDown">
               Hey,
               <span className="block text-accent font-thin ">Ich bin Maja</span>
               <span className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl"></span>
@@ -76,9 +76,7 @@ function AboutMe() {
     </div>
     {/* Moderner Vorstellungstext */}
     <div>
-      <h2 className="font-serif text-4xl md:text-5xl font-bold text-primary mb-6">
-        Ich bin <span className="text-primary ">Maja</span>
-      </h2>
+      
       <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-4">
         Mit <span className="font-semibold text-primary">Koenigskristall</span> habe ich mein Herzensprojekt verwirklicht. Kristalle begleiten mich schon lange und ihre Magie fasziniert mich jeden Tag aufs Neue.
       </p>
