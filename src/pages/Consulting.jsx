@@ -118,8 +118,7 @@ function Consulting() {
             Kristallheilkunde helfe ich dir dabei, die perfekten energetischen Begleiter für dein Leben zu finden.
           </p>
           <div className="flex items-center justify-center gap-4 text-primary">
-            <span className="text-sm font-medium">Individuelle Beratung mit</span>
-            <Heart className="w-5 h-5" />
+            
             </div>
         </div>
       </section>
