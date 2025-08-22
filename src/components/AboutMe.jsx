@@ -36,12 +36,12 @@ function AboutMe() {
   return (
     <div className="min-h-screen bg-background">
       {/* Moderne Hero Section mit gleichem Gradient und Textstil wie im Hero */}
-      <section className="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full h-[93vh] md:h-[93vh] flex items-center justify-center overflow-hidden">
           {/* Hintergrundbild mit individuellem Ausschnitt und Zoom auf Desktop */}
           <img
             src={majakristallhand}
             alt="Hero"
-            className="absolute inset-0 w-full h-full object-cover object-[0_30%] transition-transform duration-700 md:scale-105  lg:scale-110 "
+            className="absolute inset-0 w-full h-full object-cover object-[36%_30%] transition-transform duration-700 md:scale-105  lg:scale-110 "
           />
           {/* Gradient nach unten */}
           <div className="absolute  inset-0 bg-gradient-hero pointer-events-none"></div>
@@ -56,6 +56,14 @@ function AboutMe() {
             </h1>
           </div>
         </section>
+         {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-background/70">
+        <div className="flex flex-col items-center">
+          <span className="text-sm tracking-widest mb-2">SCROLL</span>
+          <div className="w-px h-12 bg-background/40"></div>
+        </div>
+      </div>
+    
 
         {/* About Maja */}
         <section className="py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
