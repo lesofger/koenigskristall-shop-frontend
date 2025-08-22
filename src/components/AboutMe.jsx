@@ -1,10 +1,11 @@
 import React from "react";
-import handLogo from "@/assets/überMichLogoHand.png";
+
 import Maja2 from "@/assets/Maja2.jpeg";
 import MajaShop from "@/assets/MajaShop.jpeg";
 import MajaCrystal from "@/assets/MajaCrystal.jpeg";
 import MajaRaja from "@/assets/MajaRaja.jpeg";
 import { Calendar, MapPin, Clock } from "lucide-react";
+import kkschild from "@/assets/kkschild.jpeg";
 import BottomFooter from "./BottomFooter";
 
 const upcomingMarkets = [
@@ -33,48 +34,33 @@ const upcomingMarkets = [
 
 function AboutMe() {
   return (
-  <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6">
-            Schön, dass Du hier bist!
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            
-          </p>
+    <div className="min-h-screen bg-background">
+      {/* Moderne Hero Section mit gleichem Gradient und Textstil wie im Hero */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Hintergrundbild */}
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url(${kkschild})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Gradient nach unten */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-background/100 pointer-events-none"></div>
+          {/* Gradient nach oben */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
         </div>
-      </section>
 
-      {/* About Content */}
-      <section className="pt-0.1 pb-16 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
-            <div className="flex justify-center -mt-8 pb-16">
-              <img
-                className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover object-top shadow-xl border-4 border-white"
-                src={Maja2}
-                alt="Maja"
-              />
-            </div>
-            <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary">
-                Ich bin Maja
-              </h2>
-              <div className="text-lg text-muted-foreground space-y-4">
-                <p>
-                  Ich habe vor einiger Zeit mein Herzensprojekt Koenigskristall zum Leben erweckt.
-                  Mit unglaublich viel Liebe und Leidenschaft habe ich meinen eigenen Shop eröffnet.
-                </p>
-                <p>
-                  Ich möchte Euch mitnehmen auf eine wundervolle Reise in die Spiritualität und Magie.
-                  Schon seit langer Zeit beschäftige ich mich mit der Kraft der Kristalle und möchte mein Wissen gerne mit euch teilen.
-                </p>
-                <p>
-                  Ich möchte euch zeigen, wie sich euer Leben zum positiven verändert wird, sobald ihr die richtigen Kristalle in eurem Leben habt.
-                </p>
-              </div>
-            </div>
+        {/* Hero Content */}
+        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          <div className="animate-float">
+            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-light text-background mb-6 tracking-wide">
+              Hier kannst du
+              <span className="block text-accent font-normal">etwas über mich erfahren</span>
+            </h1>
+            
           </div>
         </div>
       </section>

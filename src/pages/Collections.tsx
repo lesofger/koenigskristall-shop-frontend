@@ -45,7 +45,7 @@ const Collections = () => {
     { value: "Grüner Fluorit", label: "Grüner Fluorit" },
     { value: "Aventurin", label: "Aventurin" },
     { value: "Malachit", label: "Malachit" },
-    { value: "Jaspis", label: "Jaspis Rot / Algen Jaspis" },
+    { value: "Jaspis", label: "Algen Jaspis / Roter Jaspis" },
     { value: "Labradorit", label: "Labradorit" },
     { value: "Rauchquarz", label: "Rauchquarz" },
     { value: "Pyrit", label: "Pyrit" },
@@ -75,7 +75,7 @@ const Collections = () => {
       "Pyrit": "Pyrit - der Glückskristall, er zieht Fülle, Wohlstand und positive Lebensenergie an. Er stärkt das Selbstvertrauen und öffnet den Blick für neue Chancen. Als Glückskristall bergleitet er dich auf deinem Weg mit innerer Stärke und Optimismus.",
       "Tigerauge": "Tigerauge verleiht Mut und Schutz. Es stärkt die Willenskraft und hilft bei der Verwirklichung von Zielen.",
       "Schwarzer Turmalin": "Schwarzer Turmalin ist ein kraftvoller Schutzstein. Er absorbiert negative Energien und schützt vor elektromagnetischen Feldern.",
-      "Achatscheibe mit Bergkristall": "Achatscheiben bringen Balance und Harmonie. Sie stabilisieren die Aura und fördern inneren Frieden."
+      "Achatscheibe mit Bergkristall": "Blauer Achat mit Bergkristall: Sanfte Ruhe trifft klares Licht, gemeinsam helfen sie, sich selbst mit Mitgefühl zu begegnen, die Gedanken zu ordnen und in harmonischer Verbindung mit sich selbst und dem Leben zu stehen." 
   };
 
   // Fetch products from API
