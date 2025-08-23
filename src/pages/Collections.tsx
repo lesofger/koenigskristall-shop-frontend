@@ -107,11 +107,11 @@ const Collections = () => {
         setProducts(cartProducts);
         setPagination(response.data.pagination);
       } else {
-        setError(response.message || 'Failed to fetch products');
+        setError(response.message || 'Produkte konnten nicht geladen werden.');
       }
     } catch (error) {
       console.error('Error fetching products:', error);
-      setError('Failed to fetch products. Please try again.');
+      setError('Produkte konnten nicht geladen werden. Bitte versuche es erneut.');
     } finally {
       setLoading(false);
     }
@@ -191,8 +191,8 @@ const Collections = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="name">Name</SelectItem>
-                  <SelectItem value="price">Price</SelectItem>
-                  <SelectItem value="createdAt">Date Added</SelectItem>
+                  <SelectItem value="price">Preis</SelectItem>
+                  <SelectItem value="createdAt">Hinzugefügt am</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -206,8 +206,8 @@ const Collections = () => {
                   <SelectValue placeholder="Sort order" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="asc">Ascending</SelectItem>
-                  <SelectItem value="desc">Descending</SelectItem>
+                  <SelectItem value="asc">Aufsteigend</SelectItem>
+                  <SelectItem value="desc">Absteigend</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -223,7 +223,7 @@ const Collections = () => {
                 size="sm" 
                 className="mt-2"
               >
-                Try Again
+                Erneut versuchen
               </Button>
             </div>
           )}
@@ -244,7 +244,7 @@ const Collections = () => {
           {loading && (
             <div className="flex justify-center items-center py-12">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <span className="ml-2 text-muted-foreground">Loading products...</span>
+              <span className="ml-2 text-muted-foreground">Produkte werden geladen...</span>
             </div>
           )}
 
@@ -260,13 +260,13 @@ const Collections = () => {
               {/* No Products Message */}
               {products.length === 0 && !loading && (
                 <div className="text-center py-12">
-                  <p className="text-muted-foreground">No products found in this category.</p>
+                  <p className="text-muted-foreground">Keine Produkte in dieser Kategorie gefunden.</p>
                   <Button
                     onClick={() => handleFilterChange("all")}
                     variant="outline"
                     className="mt-4"
                   >
-                    Show All Products
+                    Alle Produkte anzeigen.
                   </Button>
                 </div>
               )}
@@ -281,7 +281,7 @@ const Collections = () => {
                     disabled={currentPage === 1}
                   >
                     <ChevronLeft className="h-4 w-4" />
-                    Previous
+                    Vorherige
                   </Button>
 
                   <div className="flex items-center gap-1">
@@ -317,7 +317,7 @@ const Collections = () => {
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === pagination.totalPages}
                   >
-                    Next
+                    Nächste
                     <ChevronRight className="h-4 w-4" />
                   </Button>
                 </div>
@@ -326,7 +326,7 @@ const Collections = () => {
               {/* Results Info */}
               {pagination && (
                 <div className="text-center mt-4 text-sm text-muted-foreground">
-                  Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, pagination.total)} of {pagination.total} products
+                  Zeige{((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, pagination.total)} of {pagination.total} products
                 </div>
               )}
             </>

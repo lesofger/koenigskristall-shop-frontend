@@ -75,7 +75,7 @@ const SignIn = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="trag deine email ein"
+                placeholder="Email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="bg-background/50 border-border/60 focus:border-primary"
@@ -91,7 +91,7 @@ const SignIn = () => {
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
+                  placeholder="Passwort"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="bg-background/50 border-border/60 focus:border-primary pr-10"
