@@ -16,17 +16,17 @@ const QualityPromise = () => {
     {
       icon: <Heart className="w-8 h-8" />,
       title: "Mit Liebe behandelt",
-      description: "Alle Kristalle werden liebevoll gereinigt, energetisiert und mit positiven Absichten aufgeladen."
+      description: "Alle Kristalle werden liebevoll gereinigt, mit Energie und positiven Absichten aufgeladen."
     },
     {
       icon: <Package className="w-8 h-8" />,
       title: "Individuelle Verpackung",
-      description: "Jeder Kristall wird individuell und sicher verpackt, damit er geschützt bei dir ankommt."
+      description: "Jeder Kristall wird individuell verpackt und erhält eine persönliche Nachricht von mir."
     },
     {
       icon: <Sparkles className="w-8 h-8" />,
       title: "Einzigartige Energie",
-      description: "Du erhältst nicht nur einen Kristall, sondern ein energetisches Geschenk für deine spirituelle Reise."
+      description: "Du erhältst nicht nur einen Kristall, sondern ein energetisches Geschenk für deine Reise."
     }
   ];
 

@@ -11,7 +11,7 @@ const crystalCategories = [
   },
   {
     name: "Amethyst",
-    description: "Spiritualität und Intuition",
+    description: "Spiritualität und Innere Ruhe",
     image: "💜",
     color: "from-purple-100 to-violet-200",
   },
@@ -22,8 +22,8 @@ const crystalCategories = [
     color: "from-slate-50 to-gray-100",
   },
   {
-    name: "Citrine",
-    description: "Fülle und Manifestation",
+    name: "Citrin",
+    description: "Fülle und Wohlstand",
     image: "🟡",
     color: "from-yellow-100 to-amber-200",
   },
@@ -35,19 +35,19 @@ const crystalCategories = [
   },
   {
     name: "Selenit",
-    description: "Reinigung und Klarheit",
+    description: "Reinigung und Intuition",
     image: "🤍",
     color: "from-white to-gray-50",
   },
   {
     name: "Labradorit",
-    description: "Transformation & Magie",
+    description: "Transformation & Entwicklung",
     image: "🔮",
     color: "from-blue-100 to-indigo-200",
   },
   {
     name: "Grüner Aventurin",
-    description: "Glück & Herzensruhe",
+    description: "Glück & Lebensfreude",
     image: "💚",
     color: "from-green-100 to-emerald-200",
   },
@@ -165,7 +165,7 @@ const CrystalGrid = () => {
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-crystal">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground mb-6">
+          <h2 className="font-serif text-4xl text-primary md:text-5xl font-light text-foreground mb-6">
             Die Kraft der Kristalle
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -227,7 +227,7 @@ const CrystalGrid = () => {
         <div className="text-center mt-12">
           <Link to="/shop">
             <button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-lg font-medium tracking-wide transition-colors shadow-crystal">
-              Entdecke Noch Weitere Eigenschaften
+              Entdecke noch weitere Kristalle
             </button>
           </Link>
         </div>

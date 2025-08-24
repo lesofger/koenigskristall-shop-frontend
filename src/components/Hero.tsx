@@ -27,10 +27,11 @@ const Hero = () => {
             <span className="block text-accent font-normal">bei Koenigskristall</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-background/90 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-            Ich freue mich, dass du hier bist, schau dich gerne ein wenig um und entdecke die Welt der Kristalle.
+          <p className="text-xl md:text-2xl text-background/90 mb-0 max-w-2xl mx-auto font-light leading-relaxed">
+            Hier findest du alles was dein Kristallherz begehrt.
           </p>
-          
+          <p className="text-xl md:text-2xl text-background/90 mb-8 max-w-2xl mx-auto font-light leading-relaxed">Schau dich gerne um.</p>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/shop">
               <Button 
