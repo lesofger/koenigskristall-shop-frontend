@@ -14,7 +14,7 @@ const Footer = () => {
                 KOENIGSKRISTALL
               </span>
             </div>
-            <div className="flex gap-3 ml-12 mt-2">
+            <div className="flex gap-3 ml-6 sm:ml-12 mt-2">
               <a href="mailto:shop@koenigskristall.de" aria-label="E-Mail" className="text-muted-foreground hover:text-primary transition">
                 <div className="w-5 h-5 mr-2" style={{backgroundImage: "url('/email.png')", backgroundSize: "cover", backgroundPosition: "center"}}></div>
               </a>
