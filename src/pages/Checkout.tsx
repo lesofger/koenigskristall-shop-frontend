@@ -257,7 +257,7 @@ const Checkout = () => {
                   id="street"
                   value={shippingAddress.street}
                   onChange={(e) => setShippingAddress(prev => ({ ...prev, street: e.target.value }))}
-                  placeholder="z.B. Musterstraße 123"
+                  placeholder="z.B. Wasserkunststraße 123"
                   className="h-12 bg-white/80 border-primary/20 focus:border-primary text-lg"
                   required
                 />
@@ -270,7 +270,7 @@ const Checkout = () => {
                   id="city"
                   value={shippingAddress.city}
                   onChange={(e) => setShippingAddress(prev => ({ ...prev, city: e.target.value }))}
-                  placeholder="z.B. München"
+                  placeholder="z.B. Magdeburg"
                   className="h-12 bg-white/80 border-primary/20 focus:border-primary text-lg"
                   required
                 />
@@ -283,7 +283,7 @@ const Checkout = () => {
                   id="zipCode"
                   value={shippingAddress.zipCode}
                   onChange={(e) => setShippingAddress(prev => ({ ...prev, zipCode: e.target.value }))}
-                  placeholder="z.B. 80331"
+                  placeholder="z.B. 39108"
                   className="h-12 bg-white/80 border-primary/20 focus:border-primary text-lg"
                   required
                 />
@@ -296,7 +296,7 @@ const Checkout = () => {
                   id="state"
                   value={shippingAddress.state}
                   onChange={(e) => setShippingAddress(prev => ({ ...prev, state: e.target.value }))}
-                  placeholder="z.B. Bayern"
+                  placeholder="z.B. Sachsen-Anhalt"
                   className="h-12 bg-white/80 border-primary/20 focus:border-primary text-lg"
                 />
               </div>
@@ -336,6 +336,13 @@ const Checkout = () => {
                       <h3 className="font-semibold text-primary text-lg">{item.name}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
                     </div>
+                        <div className="ml-4 w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden border border-primary/20 bg-background flex items-center justify-center">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                     <div className="flex items-center space-x-1 ml-4">
                       <Button
                         variant="outline"
