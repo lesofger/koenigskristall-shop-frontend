@@ -4,32 +4,36 @@ import Maja2 from "@/assets/Maja2.jpeg";
 import MajaShop from "@/assets/MajaShop.jpeg";
 import MajaCrystal from "@/assets/MajaCrystal.jpeg";
 import MajaRaja from "@/assets/MajaRaja.jpeg";
+import majaspiegel2 from "@/assets/majaspiegel2.jpeg";
 import { Calendar, MapPin, Clock } from "lucide-react";
 import majakristallhand from "@/assets/majakristallhand.jpeg";
 import BottomFooter from "./BottomFooter";
 
 const upcomingMarkets = [
     {
-      name: "Weihnachtsmarkt Oldenburg",
-      date: "15. - 17. Dezember 2024",
+      name: "Gesundheitstag Ummendorf",
+      date: "06. September 2025",
       time: "10:00 - 18:00 Uhr",
-      location: "Schlossplatz Oldenburg",
-      description: "Gemütlicher Weihnachtsmarkt mit handgefertigten Produkten und spirituellen Schätzen"
+      location: "Wormsdorferstr. 6",
+      plz: "39365 Ummendorf",
+      description: "Alles rund um das Thema Gesundheit und Wohlbefinden."
     },
     {
-      name: "Neujahrsmarkt Bremen",
-      date: "6. - 8. Januar 2025",
-      time: "11:00 - 17:00 Uhr", 
-      location: "Marktplatz Bremen",
-      description: "Starte das neue Jahr mit positiver Energie und kraftvollen Kristallen"
+      name: "Landeserntedankfest Magdeburg",
+      date: "20. - 21. September 2025",
+      time: "10:00 - 18:00 Uhr", 
+      location: "Elbauenpark Magdeburg",
+      plz:"im Ökodorf",
+      description: "Erlebe das 29. Landeserntedankfest im malerischen Elbauenpark Magdeburg."
     },
-    {
-      name: "Frühlingserwachen Hannover",
-      date: "22. - 24. März 2025",
-      time: "9:00 - 16:00 Uhr",
-      location: "Stadtpark Hannover",
-      description: "Erwecke deine Sinne und entdecke neue spirituelle Begleiter für das Frühjahr"
-    }
+     {
+      name: "Kaiser-Otto-Fest Magdeburg",
+      date: "02. - 05. Oktober 2025",
+      time: "11:00 - 24:00 Uhr", 
+      location: "Domviertel Magdeburg",
+      plz:"",
+      description: "Viertägige mittelalterliche Erlebniswelt mit historischen Märkten, authentischem Handwerk, Tanz und Musik lassen wir die Zeit des Mittelalters aufleben."
+    },
   ];
 
 function AboutMe() {
@@ -49,7 +53,7 @@ function AboutMe() {
           <div className="relative z-10 text-center mt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center animate-float">
             <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl animate-fadeInDown">
               Hey,
-              <span className="block text-accent font-thin ">Ich bin Maja</span>
+              <span className="block text-accent font-thin ">Ich bin Maja.</span>
               <span className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl"></span>
             </h1>
           </div>
@@ -69,19 +73,19 @@ function AboutMe() {
     {/* Profilbild modern, ohne Kasten */}
     <div className="flex justify-center">
       <img
-        src={Maja2}
+        src={majaspiegel2}
         alt="Maja Profilbild"
-        className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-xl border-4 border-primary/20 transition-transform duration-300 hover:scale-105"
+        className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover object-[center_80%] shadow-xl transition-transform duration-300 hover:scale-110"
       />
     </div>
     {/* Moderner Vorstellungstext */}
     <div>
       
-      <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-4">
-        Mit <span className="font-semibold text-primary">Koenigskristall</span> habe ich mein Herzensprojekt verwirklicht. Kristalle begleiten mich schon lange und ihre Magie fasziniert mich jeden Tag aufs Neue.
+      <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-8">
+        Mit <span className="font-semibold text-primary">Koenigskristall</span> habe ich mein Herzensprojekt verwirklicht. Ich habe mit unglaublich viel Liebe und Leidenschaft meinen eigenen Shop eröffnet. Kristalle und Heilsteine begleiten mich schon eine lange Zeit und ihre Magie fasziniert mich jeden Tag aufs Neue.
       </p>
       <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-4">
-        Ich teile mein Wissen und meine Erfahrungen gerne mit dir – für mehr positive Energie und Inspiration in deinem Leben. Lass dich von der Kraft der Kristalle begeistern und finde deinen persönlichen Begleiter!
+       Ich möchte dich mitnehmen auf eine wundervolle Reise in die Spiritualität. Mein Wissen und meine Erfahrungen möchte ich gerne mit dir teilen. Lass dich von der Kraft der Kristalle begeistern und finde deinen persönlichen Begleiter!
       </p>
      </div>
   </div>
@@ -94,12 +98,12 @@ function AboutMe() {
               <h2 className="text-3xl md:text-4xl font-bold text-primary">
                 Unterwegs auf magischen Märkten
               </h2>
-              <div className="text-lg text-muted-foreground space-y-4">
+              <div className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-8">
                 <p>
                   Mit meinem Kristallstand bin ich regelmäßig auf kleinen, lokalen Märkten unterwegs. 
                   Dort teile ich meine Leidenschaft direkt mit Menschen, die sich für die faszinierende Welt der Kristalle interessieren.
                 </p>
-                <p>
+                <p className="mt-4">
                   Diese persönlichen Begegnungen sind für mich etwas ganz Besonderes - hier kann ich die Energie der Kristalle 
                   hautnah vermitteln und gemeinsam mit euch den perfekten Begleiter für euren Weg finden.
                 </p>
@@ -133,12 +137,12 @@ function AboutMe() {
               <h2 className="text-3xl md:text-4xl font-bold text-primary">
                 Meine große Leidenschaft: Die Kristallberatung
               </h2>
-              <div className="text-lg text-muted-foreground space-y-4">
+              <div className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-8">
                 <p>
                   Was mich besonders erfüllt, ist die Kommunikation mit anderen Kristall-Interessierten. 
                   In persönlichen Beratungen helfe ich dabei, den Kristall zu finden, der genau zu euch und eurer aktuellen Lebenssituation passt.
                 </p>
-                <p>
+                <p className="mt-4">
                   Jeder Mensch ist einzigartig, und so ist auch jede Beratung individuell. Gemeinsam entdecken wir, 
                   welche Kristalle euch auf eurem spirituellen Weg unterstützen und positive Veränderungen in euer Leben bringen können.
                 </p>
@@ -148,39 +152,9 @@ function AboutMe() {
         </div>
       </section>
 
-      {/* Integration Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 md:gap-12 items-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary">
-                Kristalle ganz einfach in den Alltag integrieren
-              </h2>
-              <div className="text-lg text-muted-foreground space-y-4">
-                <p>
-                  Viele Menschen fragen mich, wie sie Kristalle am besten in ihren Alltag einbauen können. 
-                  Die Antwort ist einfacher als gedacht: Es braucht keine komplizierten Rituale oder stundenlange Meditationen.
-                </p>
-                <p>
-                  Ich zeige euch praktische und alltagstaugliche Wege, wie ihr die kraftvolle Energie der Kristalle 
-                  nutzen könnt - sei es am Arbeitsplatz, zu Hause oder unterwegs. Kleine Veränderungen können große Wirkung haben.
-                </p>
-                <p>
-                  Ob bei Stress, Unsicherheit oder anderen Herausforderungen des Lebens - 
-                  die richtigen Kristalle werden zu euren treuen Begleitern und helfen euch dabei, euer inneres Gleichgewicht zu finden.
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-center mt-16">
-              <img
-                className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover shadow-xl transition-transform duration-300 hover:scale-110"
-                src={MajaRaja}
-                alt="Kristalle im Alltag"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <div>
+        <hr className="border-t border-muted-foreground/20 my-16 mx-auto max-w-3xl" />
+      </div>
 
       {/* Call to Action */}
       <section className="py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
@@ -211,7 +185,7 @@ function AboutMe() {
               >
                 <div className="space-y-6">
                   {/* Market Name */}
-                  <h4 className="text-xl font-bold text-primary group-hover:text-primary/90 transition-colors">
+                  <h4 className=" text-xl font-bold text-primary group-hover:text-primary/90 transition-colors">
                     {market.name}
                   </h4>
                   
@@ -226,8 +200,11 @@ function AboutMe() {
                       <span className="text-sm">{market.time}</span>
                     </div>
                     <div className="flex items-start space-x-3 text-muted-foreground">
-                      <MapPin className="w-5 h-5 text-primary/70 mt-0.5" />
+                      <MapPin className="w-5 h-5 text-primary/70 mt-0.5 mb-0.1" />
                       <span className="text-sm">{market.location}</span>
+                    </div>
+                    <div className="flex items-start space-x-3 text-muted-foreground ml-8 pt-0">
+                      <span className="text-sm">{market.plz}</span>
                     </div>
                   </div>
 
@@ -248,7 +225,7 @@ function AboutMe() {
                   <h4 className="text-2xl md:text-3xl font-bold text-primary">
                     Ich freue mich auf dich!
                   </h4>
-                  <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-4">
                     Komm einfach vorbei und lass dich von der magischen Atmosphäre verzaubern. 
                     Gemeinsam finden wir den Kristall, der perfekt zu dir und deiner Energie passt.
                   </p>

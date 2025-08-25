@@ -54,8 +54,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               alt="Valentinstag Shopping"
               className="h-8 w-8 mr-2"
             />
-           
-          </Button>
+           </Button>
       </CardFooter>
     </Card>
   );
