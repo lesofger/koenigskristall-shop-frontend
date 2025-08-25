@@ -52,6 +52,7 @@ const Checkout = () => {
 
     if (items.length === 0) {
       console.log('No items in cart===========>');
+      navigate('/shop');
       return;
     }
 
