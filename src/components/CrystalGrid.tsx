@@ -201,11 +201,11 @@ const CrystalGrid = () => {
                 >
                   <Card className="overflow-hidden bg-card border-border/50 hover:shadow-hover transition-all duration-500 group-hover:scale-105 h-full select-none">
                     <CardContent className="p-0">
-                      <div className="h-48 flex items-center justify-center relative overflow-hidden bg-transparent">
+                      <div className="h-48 w-full relative overflow-hidden bg-transparent">
                         <img
                           src={crystal.image}
                           alt={crystal.name}
-                          className="w-32 h-32 object-cover rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-500"
+                          className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-background/10 group-hover:bg-background/5 transition-colors duration-500 pointer-events-none"></div>
                       </div>
