@@ -199,19 +199,16 @@ const CrystalGrid = () => {
                     }
                   }}
                 >
-                  <Card className="overflow-hidden bg-gradient-card border-border/50 hover:shadow-hover transition-all duration-500 group-hover:scale-105 h-full select-none">
+                  <Card className="overflow-hidden bg-card border-border/50 hover:shadow-hover transition-all duration-500 group-hover:scale-105 h-full select-none">
                     <CardContent className="p-0">
-                      <div className={`h-48 bg-gradient-to-br ${crystal.color} flex items-center justify-center relative overflow-hidden`}>
-                        <div className="text-6xl transform group-hover:scale-110 transition-transform duration-500">
-                           <img
-                              src={crystal.image}
-                              alt={crystal.name}
-                              className="w-32 h-32 object-cover rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-500"
-                            />
-                        </div>
-                        <div className="absolute inset-0 bg-background/10 group-hover:bg-background/5 transition-colors duration-500"></div>
+                      <div className="h-48 flex items-center justify-center relative overflow-hidden bg-transparent">
+                        <img
+                          src={crystal.image}
+                          alt={crystal.name}
+                          className="w-32 h-32 object-cover rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-background/10 group-hover:bg-background/5 transition-colors duration-500 pointer-events-none"></div>
                       </div>
-                      
                       <div className="p-6 text-center">
                         <h3 className="font-serif text-xl font-medium text-foreground mb-2">
                           {crystal.name}
