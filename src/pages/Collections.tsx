@@ -169,7 +169,7 @@ const Collections = () => {
               </label>
               <Select value={filter} onValueChange={handleFilterChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
+                  <SelectValue placeholder="wähle Kategorie" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map(category => (

@@ -49,11 +49,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-crystal flex items-center justify-center"
             size="lg"
           >
-            <img
-              src={valentinstagShopping}
-              alt="Valentinstag Shopping"
-              className="h-8 w-8 mr-2"
-            />
+            In den Warenkorb
            </Button>
       </CardFooter>
     </Card>
