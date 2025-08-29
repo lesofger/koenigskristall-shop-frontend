@@ -11,7 +11,7 @@ const HeroLibrary = ({ careTopics, scrollToSection }) => {
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Entdecke die Geheimnisse der spirituellen Kristallpflege. Von der Reinigung bis zur Programmierung - 
-            hier findest du alles für den liebevollen Umgang mit deinen energetischen Begleitern.
+            hier findest du alles für den liebevollen Umgang mit deinen magischen Begleitern.
           </p>
         </div>
 

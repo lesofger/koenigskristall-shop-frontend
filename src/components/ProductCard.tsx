@@ -35,6 +35,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.name}
           </h3>
           {/* {product.description} */}
+          <p className="text-sm text-foreground/70 mb-4">
+            {product.description}
+          </p>
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold text-primary">
               €{product.price}
