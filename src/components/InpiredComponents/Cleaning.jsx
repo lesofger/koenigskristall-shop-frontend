@@ -52,23 +52,7 @@ const Cleaning = ({ cleansingMethods }) => {
           ))}
         </div>
 
-        {/* Warning Box */}
-        <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-serif text-lg font-light text-amber-800 mb-2">
-                  Wichtiger Hinweis
-                </h4>
-                <p className="text-amber-700 text-sm leading-relaxed">
-                  <strong>Vorsicht bei Salzwasser:</strong> Weiche Mineralien wie Selenit, Malachit oder Pyrit können durch Salzwasser beschädigt werden. 
-                  <strong>Sonnenlicht:</strong> Amethyst, Rosenquarz und andere können ausbleichen. Informiere dich vorher über deinen spezifischen Kristall.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+       
       </div>
     </section>
   );

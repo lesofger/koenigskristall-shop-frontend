@@ -2,7 +2,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Product, useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
-import valentinstagShopping from "@/assets/valentinstag-shopping.png";
+
 
 interface ProductCardProps {
   product: Product;

@@ -6,8 +6,8 @@ const HeroLibrary = ({ careTopics, scrollToSection }) => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide">
-            Kristall
-            <span className="block text-primary font-normal">Bibliothek</span>
+            Kristallbibliothek
+            
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
             Entdecke die Geheimnisse der spirituellen Kristallpflege. Von der Reinigung bis zur Programmierung - 
