@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import BottomFooter from "../components/BottomFooter";
 import emailjs from "emailjs-com";
+import majaBeratung from "../assets/majaBeratung.jpg";
 
 function Consulting() {
   useEffect(() => {
@@ -80,58 +81,69 @@ function Consulting() {
   const consultingServices = [
     {
       title: "Persönliche Kristallauswahl",
-      description: "Gemeinsam finden wir den perfekten Kristall für deine individuelle Lebenssituation",
+      description: "Gemeinsam finden wir den perfekten Kristall für deine aktuelle Lebenssituation.",
       icon: <Gem className="w-6 h-6" />,
-      duration: "30-45 Minuten"
+      duration: "30 - 45 Minuten"
     },
     {
       title: "Spirituelle Lebensberatung",
-      description: "Unterstützung bei wichtigen Lebensentscheidungen mit kristalliner Weisheit",
+      description: "Unterstützung bei wichtigen Lebensentscheidungen mit kristalliner Weisheit.",
       icon: <Heart className="w-6 h-6" />,
-      duration: "60 Minuten"
+      duration: "30 - 60 Minuten"
     },
     {
-      title: "Kristall-Rituale & Anwendung",
-      description: "Lerne, wie du deine Kristalle optimal für Meditation und Heilung einsetzt",
+      title: "Rituale & Anwendung",
+      description: "Lerne, Kristalle in kraftvolle Rituale einzubinden.",
       icon: <Sparkles className="w-6 h-6" />,
-      duration: "45 Minuten"
+      duration: "30 Minuten"
     },
     {
-      title: "Energetische Hausreinigung",
-      description: "Beratung für die optimale Platzierung von Kristallen in deinem Zuhause",
+      title: "Energetische Reinigung und Schutz",
+      description: "Beratung für die optimale Platzierung von Kristallen in deinem Zuhause.",
       icon: <Star className="w-6 h-6" />,
-      duration: "60-90 Minuten"
+      duration: "60 - 90 Minuten"
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary/5 to-secondary/5">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-primary mb-6 tracking-wide">
-            Persönliche
-            <span className="block text-primary font-normal">Kristallberatung</span>
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed mb-8">
-            Lass dich auf deiner spirituellen Reise begleiten. Mit über 4 Jahren Erfahrung in der 
-            Kristallheilkunde helfe ich dir dabei, die perfekten energetischen Begleiter für dein Leben zu finden.
-          </p>
-          <div className="flex items-center justify-center gap-4 text-primary">
-            
+       {/* Moderne Hero Section mit gleichem Gradient und Textstil wie im Hero */}
+            <section className="relative w-full h-[93vh] md:h-[93vh] flex items-center justify-center overflow-hidden">
+                {/* Hintergrundbild mit individuellem Ausschnitt und Zoom auf Desktop */}
+                <img
+                  src={majaBeratung}
+                  alt="Hero"
+                  className="absolute inset-0 w-full h-full object-cover object-[45%_30%] transition-transform duration-700 md:scale-105  lg:scale-110 "
+                />
+                {/* Gradient nach unten */}
+                <div className="absolute  inset-0 bg-gradient-hero pointer-events-none"></div>
+                {/* Hero Content */}
+                <div className="relative z-10 text-center mt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center animate-float">
+                  <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl animate-fadeInDown">
+                    Persönliche 
+                    <span className="block text-accent font-thin ">Kristallberatung</span>
+                    <span className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl"></span>
+                  </h1>
+                </div>
+              </section>
+               {/* Scroll Indicator */}
+            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-background/70">
+              <div className="flex flex-col items-center">
+                <span className="text-sm tracking-widest mb-2">SCROLL</span>
+                <div className="w-px h-12 bg-background/40"></div>
+              </div>
             </div>
-        </div>
-      </section>
+      
 
       {/* Services Overview */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-primary mb-4 tracking-wide">
+            <h2 className="font-serif text-4xl md:text-5xl font-light text-primary mb-4 tracking-wide">
               Meine Beratungsleistungen
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Jede Beratung ist einzigartig und wird individuell auf deine Bedürfnisse abgestimmt
+               Jede Beratung ist einzigartig und wird individuell auf deine Bedürfnisse abgestimmt.
             </p>
           </div>
 
@@ -173,7 +185,7 @@ function Consulting() {
               Erzähle mir von deinem Anliegen
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Teile deine Geschichte mit mir und lass uns gemeinsam den perfekten Weg für deine spirituelle Reise finden
+              Teile deine Geschichte mit mir und lass uns gemeinsam den perfekten Weg für deine spirituelle Reise finden.
             </p>
           </div>
 
@@ -318,146 +330,98 @@ function Consulting() {
 
       {/* Contact Information & Social Media */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-primary mb-4 tracking-wide">
-              Weitere Kontaktmöglichkeiten
-            </h2>
-            <p className="text-muted-foreground">
-              Folge mir auf meinen sozialen Kanälen oder ruf mich direkt an
-            </p>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-primary mb-4 tracking-wide">
+                Weitere Kontaktmöglichkeiten
+              </h2>
+              <p className="text-muted-foreground">
+                Folge mir auf meinen sozialen Kanälen, um nichts zu verpassen.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-8">
+              {/* Email */}
+              <Card className="bg-card border border-border hover:shadow-crystal transition-all duration-300 group w-72">
+                <CardContent className="p-6 text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16  text-white mb-4  transition-colors duration-300">
+                    <img src="email.png" alt="E-Mail" className="w-10 h-10" />
+                  </div>
+                  <h3 className="font-serif text-lg font-light text-black mb-2">
+                    E-Mail
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Antwort innerhalb 24h
+                  </p>
+                  <a 
+                    href="mailto:shop@koenigskristall.de"
+                    className="text-primary font-medium hover:underline"
+                  >
+                    shop@koenigskristall.de
+                  </a>
+                </CardContent>
+              </Card>
+
+              {/* Instagram */}
+              <Card className="bg-card border border-border hover:shadow-crystal transition-all duration-300 group w-72">
+                <CardContent className="p-6 text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16  mb-4  transition-colors duration-300">
+                    <img src="instagram.png" alt="Instagram" className="w-10 h-10" />
+                  </div>
+                  <h3 className="font-serif text-lg font-light text-black mb-2">
+                    Instagram
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Tägliche Kristall-Inspiration
+                  </p>
+                  <a 
+                    href="https://instagram.com/koenigskristall"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary font-medium hover:underline"
+                  >
+                    @koenigskristall
+                  </a>
+                </CardContent>
+              </Card>
+
+              {/* TikTok */}
+              <Card className="bg-card border border-border hover:shadow-crystal transition-all duration-300 group w-72">
+                <CardContent className="p-6 text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16  text-white mb-4  transition-colors duration-300">
+                    <img src="tick-tack.png" alt="TikTok" className="w-10 h-10" />
+                  </div>
+                  <h3 className="font-serif text-lg font-light text-black mb-2">
+                    TikTok
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Kurze Kristall-Videos & Trends
+                  </p>
+                  <a 
+                    href="https://tiktok.com/@koenigskristall"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary font-medium hover:underline"
+                  >
+                    @koenigskristall
+                  </a>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Telefon */}
-            <Card className="bg-card border border-border hover:shadow-crystal transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4 group-hover:bg-primary/20 transition-colors duration-300">
-                  <Phone className="w-8 h-8" />
-                </div>
-                <h3 className="font-serif text-lg font-light text-black mb-2">
-                  Direkter Kontakt
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Mo-Fr: 9:00-18:00 Uhr
-                </p>
-                <a 
-                  href="tel:+4912345678900"
-                  className="text-primary font-medium hover:underline"
-                >
-                  +49 123 456 78 900
-                </a>
-              </CardContent>
-            </Card>
-
-            {/* Email */}
-            <Card className="bg-card border border-border hover:shadow-crystal transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4 group-hover:bg-primary/20 transition-colors duration-300">
-                  <Mail className="w-8 h-8" />
-                </div>
-                <h3 className="font-serif text-lg font-light text-black mb-2">
-                  E-Mail
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Antwort innerhalb 24h
-                </p>
-                <a 
-                  href="mailto:beratung@koenigskristall.de"
-                  className="text-primary font-medium hover:underline"
-                >
-                  beratung@koenigskristall.de
-                </a>
-              </CardContent>
-            </Card>
-
-            {/* YouTube */}
-            <Card className="bg-card border border-border hover:shadow-crystal transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-red-600 mb-4 group-hover:bg-red-200 transition-colors duration-300">
-                  <Youtube className="w-8 h-8" />
-                </div>
-                <h3 className="font-serif text-lg font-light text-black mb-2">
-                  YouTube
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Kristall-Tutorials & Tipps
-                </p>
-                <a 
-                  href="https://youtube.com/@koenigskristall"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-red-600 font-medium hover:underline"
-                >
-                  @koenigskristall
-                </a>
-              </CardContent>
-            </Card>
-
-            {/* Instagram */}
-            <Card className="bg-card border border-border hover:shadow-crystal transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-pink-100 text-pink-600 mb-4 group-hover:bg-pink-200 transition-colors duration-300">
-                  <Instagram className="w-8 h-8" />
-                </div>
-                <h3 className="font-serif text-lg font-light text-black mb-2">
-                  Instagram
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Tägliche Kristall-Inspiration
-                </p>
-                <a 
-                  href="https://instagram.com/koenigskristall"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-pink-600 font-medium hover:underline"
-                >
-                  @koenigskristall
-                </a>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* TikTok als separate Zeile */}
-          <div className="flex justify-center mt-8">
-            <Card className="bg-card border border-border hover:shadow-crystal transition-all duration-300 group w-full max-w-sm">
-              <CardContent className="p-6 text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-black text-white mb-4 group-hover:bg-gray-800 transition-colors duration-300">
-                  <MessageCircle className="w-8 h-8" />
-                </div>
-                <h3 className="font-serif text-lg font-light text-black mb-2">
-                  TikTok
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Kurze Kristall-Videos & Trends
-                </p>
-                <a 
-                  href="https://tiktok.com/@koenigskristall"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-black font-medium hover:underline"
-                >
-                  @koenigskristall
-                </a>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+</section>
 
       {/* Call to Action */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-serif text-3xl md:text-4xl font-light text-primary mb-6 tracking-wide">
-            Bereit für deine Kristallreise?
+            Bereit für deine Kristallreise ?
           </h2>
-          <p className="text-lg text-muted-foreground mb-8 font-light leading-relaxed">
+          <p className="text-lg text-muted-foreground mb-4 font-light leading-relaxed">
             Jede große Veränderung beginnt mit einem ersten Schritt. Lass uns gemeinsam 
             deinen Weg zu mehr spiritueller Klarheit und Wohlbefinden erkunden.
           </p>
-          <div className="flex items-center justify-center gap-4 text-primary">
-            <span className="text-sm font-medium">Deine Transformation wartet auf dich</span>
-            </div>
+          
         </div>
       </section>
       <BottomFooter />

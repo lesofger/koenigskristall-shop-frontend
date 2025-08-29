@@ -185,7 +185,7 @@ function AboutMe() {
               >
                 <div className="space-y-6">
                   {/* Market Name */}
-                  <h4 className=" text-xl font-bold text-primary group-hover:text-primary/90 transition-colors">
+                  <h4 className="text-xl font-bold text-primary group-hover:text-primary/90 transition-colors">
                     {market.name}
                   </h4>
                   
