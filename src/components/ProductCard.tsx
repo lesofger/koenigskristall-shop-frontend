@@ -30,7 +30,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             onClick={() => setShowModal(true)}
           >
             <CardContent className="p-0">
-              <div className="h-60 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center relative overflow-hidden">
+              <div className="h-76 md:h-60 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center relative overflow-hidden">
                 <img
                   src={product.image}
                   alt={product.name}
