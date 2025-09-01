@@ -465,27 +465,14 @@ const Checkout = () => {
                 </div>
               </button>
               {/* Banküberweisung */}
-              <button
-                onClick={() => handlePaymentMethodChange('bank_transfer')}
-                className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
-                  paymentMethod === 'bank_transfer' 
-                    ? 'border-primary bg-primary/10 shadow-lg scale-105' 
-                    : 'border-gray-200 bg-white/50 hover:border-primary/50 hover:shadow-md'
-                }`}
-              >
-                {paymentMethod === 'bank_transfer' && (
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                    <Check className="w-3 h-3 text-white" />
-                  </div>
-                )}
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                    <Building2 className="w-6 h-6 text-purple-600" />
-                  </div>
-                  <h3 className="font-semibold text-lg">Überweisung</h3>
-                  <p className="text-sm text-muted-foreground">Traditionell</p>
-                </div>
-              </button>
+            
+
+
+
+
+
+
+            
             </div>
             {/* Payment Form */}
             <div className="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-2xl p-6">
