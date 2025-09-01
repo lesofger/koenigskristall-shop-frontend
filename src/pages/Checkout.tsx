@@ -500,16 +500,7 @@ const Checkout = () => {
                   />
                 </Elements>
               )}
-              {paymentMethod === 'bank_transfer' && bankTransferClientSecret && (
-                <BankTransferPayment
-                  clientSecret={bankTransferClientSecret}
-                  amount={getTotalPrice()}
-                  onSuccess={handlePaymentSuccess}
-                  onError={handlePaymentError}
-                  shippingAddress={shippingAddress}
-                  user={user!}
-                />
-              )}
+           
               {paymentMethod === 'paypal' && paypalOrder && (
                 <PayPalPayment
                   amount={getTotalPrice()}
