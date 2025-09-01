@@ -7,20 +7,15 @@ import { Separator } from "@/components/ui/separator";
 import { 
   Heart, 
   Sparkles, 
-  Phone, 
-  Mail, 
   Send, 
-  Youtube, 
-  Instagram,
   Star,
   Gem,
-  MessageCircle,
   Clock,
   CheckCircle
 } from "lucide-react";
 import BottomFooter from "../components/BottomFooter";
 import emailjs from "emailjs-com";
-import majaBeratung from "../assets/majaBeratung.jpg";
+import majaBeratung from "../assets/majaBeratung.webp";
 
 function Consulting() {
   useEffect(() => {

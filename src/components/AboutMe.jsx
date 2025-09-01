@@ -1,10 +1,10 @@
 import React from "react";
 
-import Maja2 from "@/assets/Maja2.jpeg";
+import maja2 from "@/assets/maja2.webp";
 import MajaShop from "@/assets/MajaShop.jpeg";
 import MajaCrystal from "@/assets/MajaCrystal.jpeg";
-import MajaRaja from "@/assets/MajaRaja.jpeg";
-import majaspiegel2 from "@/assets/majaspiegel2.jpeg";
+
+
 import { Calendar, MapPin, Clock } from "lucide-react";
 import majakristallhand from "@/assets/majakristallhand.jpeg";
 import BottomFooter from "./BottomFooter";
@@ -73,9 +73,9 @@ function AboutMe() {
     {/* Profilbild modern, ohne Kasten */}
     <div className="flex justify-center">
       <img
-        src={majaspiegel2}
+        src={maja2}
         alt="Maja Profilbild"
-        className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover object-[center_80%] shadow-xl transition-transform duration-300 hover:scale-110"
+        className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover object-[70%_20%] shadow-xl transition-transform duration-300 hover:scale-110"
       />
     </div>
     {/* Moderner Vorstellungstext */}
