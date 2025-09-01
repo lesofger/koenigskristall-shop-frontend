@@ -204,6 +204,15 @@ const AGB = () => {
         <hr />
       </div>
 
+      <h2 className="text-xl font-semibold">11. Allgemeiner Hinweis!</h2>
+      <p>
+        Die Wirkung von Edelsteinen basiert auf der Steinheilkunde und ist nicht wissenschaftlich belegt. Sie sollte als ergänzende Unterstützung betrachtet werden.  Sie ersetzt nicht die
+        professionelle medizinische Behandlung.
+      </p>
+      <div className="mt--6 mb-6">
+        <hr />
+      </div>
+
       <p><em>Stand: 24. August 2025</em></p>
 
       <hr />

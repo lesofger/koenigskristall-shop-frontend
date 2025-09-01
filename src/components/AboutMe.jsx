@@ -2,7 +2,7 @@ import React from "react";
 
 import maja2 from "@/assets/maja2.webp";
 import MajaShop from "@/assets/MajaShop.jpeg";
-import MajaCrystal from "@/assets/MajaCrystal.jpeg";
+import majaBeratungAbout from "@/assets/majaBeratungAbout.webp";
 
 
 import { Calendar, MapPin, Clock } from "lucide-react";
@@ -53,7 +53,7 @@ function AboutMe() {
           <div className="relative z-10 text-center mt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center animate-float">
             <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl animate-fadeInDown">
               Hey,
-              <span className="block text-accent font-thin ">Ich bin Maja.</span>
+              <span className="block text-accent font-thin ">ich bin Maja.</span>
               <span className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-6 tracking-wide drop-shadow-2xl"></span>
             </h1>
           </div>
@@ -127,8 +127,8 @@ function AboutMe() {
             
             <div className="flex justify-center order-2 md:order-1 mt-16 md:mt-0">
               <img
-                className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover object-top shadow-xl transition-transform duration-300 hover:scale-110"
-                src={MajaCrystal}
+                className="w-64 h-64 md:w-80 md:h-80 rounded-lg object-cover object-[30%_70%] shadow-xl transition-transform duration-300 hover:scale-110"
+                src={majaBeratungAbout}
                 alt="Kristallberatung"
               />
             </div>
@@ -137,14 +137,15 @@ function AboutMe() {
               <h2 className="text-3xl md:text-4xl font-bold text-primary">
                 Meine große Leidenschaft: Die Kristallberatung
               </h2>
+             
               <div className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-8">
                 <p>
                   Was mich besonders erfüllt, ist die Kommunikation mit anderen Kristall-Interessierten. 
-                  In persönlichen Beratungen helfe ich dabei, den Kristall zu finden, der genau zu euch und eurer aktuellen Lebenssituation passt.
+                  In persönlichen Beratungen helfe ich dabei, den Kristall zu finden, der genau zu dir und deiner aktuellen Lebenssituation passt.
                 </p>
                 <p className="mt-4">
                   Jeder Mensch ist einzigartig, und so ist auch jede Beratung individuell. Gemeinsam entdecken wir, 
-                  welche Kristalle euch auf eurem spirituellen Weg unterstützen und positive Veränderungen in euer Leben bringen können.
+                  welche Kristalle dich auf deinem spirituellen Weg unterstützen und positive Veränderungen in dein Leben bringen können.
                 </p>
               </div>
             </div>

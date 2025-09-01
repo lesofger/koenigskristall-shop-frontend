@@ -92,7 +92,7 @@ const CrystalCare = () => {
     {
       method: "Mondlicht",
       icon: <Moon className="w-6 h-6" />,
-      description: "Lege deine Kristalle über Nacht bei Vollmond ins Mondlicht. Dies ist die sanfteste und universellste Reinigungsmethode.",
+      description: "Lege deine Kristalle über Nacht bei Vollmond ins Mondlicht. Dies ist die universellste Reinigungsmethode.",
       duration: "Eine ganze Nacht",
       suitableFor: "Alle Kristalle",
       energy: "Weiblich, intuitiv, beruhigend"
@@ -108,12 +108,12 @@ const CrystalCare = () => {
     },
    
     {
-      method: "Bergkristall",
+      method: "Selenit",
       icon: <Gem className="w-6 h-6" />,
-      description: "Andere Kristalle auf einer Bergkristall-Druse platzieren für sanfte Energiereinigung.",
-      duration: "4-24 Stunden",
+      description: "Andere Kristalle, auf oder neben eine Selenit-Stange legen für eine sanfte Reinigung.",
+      duration: "Eine ganze Nacht",
       suitableFor: "Alle empfindlichen Kristalle",
-      energy: "Neutral, verstärkend, harmonisierend"
+      energy: "Neutral, sanft, harmonisierend"
     },
    
   ];
@@ -131,6 +131,12 @@ const CrystalCare = () => {
       timing: "30 Minuten vor, bis 1 Stunde nach Sonnenauf- oder Untergang",
       effect: "Bringt Klarheit und neue Perspektiven"
     },
+    {
+      method: "Bergkristall",
+      description: "Andere Kristalle übernehmen seine Klarheit und verstärken dadurch ihre eigenen Kräfte.",
+      timing: "Eine ganze Nacht",
+      effect: "Fördert Harmonie und Klarheit"
+    }
   
   ];
 
@@ -160,30 +166,20 @@ const CrystalCare = () => {
   const crystalCombinations = [
     {
       purpose: "Liebe & Beziehungen",
-      crystals: ["Rosenquarz", "Rhodonit", "Morganit"],
+      crystals: ["Rosenquarz", "Mondstein"],
       effect: "Öffnet das Herz, heilt emotionale Wunden, zieht Liebe an"
     },
     {
       purpose: "Schutz & Erdung",
-      crystals: ["Schwarzer Turmalin", "Hämatit", "Obsidian"],
+      crystals: ["Schwarzer Turmalin", "Rauchquarz"],
       effect: "Starker energetischer Schutz, Erdung, Abwehr negativer Energien"
     },
-    {
-      purpose: "Spirituelle Entwicklung",
-      crystals: ["Amethyst", "Bergkristall", "Selenit"],
-      effect: "Verstärkt Intuition, Meditation, Verbindung zu höheren Dimensionen"
-    },
-    {
+   {
       purpose: "Manifestation & Erfolg",
       crystals: ["Citrin", "Pyrit", "Grüner Aventurin"],
       effect: "Zieht Wohlstand an, verstärkt Willenskraft, bringt Glück"
     },
-    {
-      purpose: "Emotional Healing",
-      crystals: ["Lepidolith", "Mondstein", "Aquamarin"],
-      effect: "Beruhigt Emotionen, bringt Frieden, fördert emotionale Balance"
-    }
-  ];
+   ];
 
   return (
     <div className="min-h-screen bg-background">

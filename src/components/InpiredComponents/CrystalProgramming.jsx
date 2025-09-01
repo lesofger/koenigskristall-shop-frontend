@@ -67,24 +67,25 @@ const CrystalProgramming = () => {
                   </h3>
                 </div>
                 <div className="space-y-4">
-                  <div className="bg-background/80 rounded-lg p-4">
-                    <h4 className="font-medium text-primary text-sm mb-2">Für Schutz:</h4>
+                 
+                     <div className="bg-background/80 rounded-lg p-4">
+                    <h4 className="font-medium text-primary text-sm mb-2">Für Klarheit:</h4>
                     <p className="text-xs text-muted-foreground italic">
-                      "Ich programmiere dich, mich vor negativen Energien zu schützen und mir Sicherheit zu geben."
+                      "Meine Gedanken sind klar und fokussiert."
                     </p>
                   </div>
                   <div className="bg-background/80 rounded-lg p-4">
                     <h4 className="font-medium text-primary text-sm mb-2">Für Liebe:</h4>
                     <p className="text-xs text-muted-foreground italic">
-                      "Hilf mir dabei, mein Herz zu öffnen und mehr Selbstliebe und Mitgefühl zu entwickeln."
+                      "Ich öffne mein Herz für Liebe und Mitgefühl."
                     </p>
                   </div>
                   <div className="bg-background/80 rounded-lg p-4">
-                    <h4 className="font-medium text-primary text-sm mb-2">Für Klarheit:</h4>
+                    <h4 className="font-medium text-primary text-sm mb-2">Für Schutz:</h4>
                     <p className="text-xs text-muted-foreground italic">
-                      "Unterstütze mich dabei, klare Entscheidungen zu treffen und meinen Weg zu erkennen."
+                      "Ich bin sicher, geerdet und frei von negativen Energien."
                     </p>
-                  </div>
+                    </div>
                 </div>
               </CardContent>
             </Card>
