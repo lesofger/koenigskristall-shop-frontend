@@ -202,7 +202,7 @@ Diese Kombination fördert Mitgefühl, geistiges Wachstum und schenkt dir Leicht
 
             <div className="flex-1">
               <label className="block text-sm font-medium text-foreground mb-2">
-                Order
+                Reihenfolge
               </label>
               <Select value={sortOrder} onValueChange={(value: 'asc' | 'desc') => setSortOrder(value)}>
                 <SelectTrigger>
