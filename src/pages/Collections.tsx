@@ -76,9 +76,9 @@ const Collections = () => {
       "Tigerauge": "Kristall der Freiheit - Tigerauge steht für die innere Freiheit. Er schenkt dir Klarheit im Denken und Mut im Handeln, sodass du deinen eigenen Weg selbstbestimmt gehen kannst. Als schützender Begleiter hilft er dir, deiner inneren Wahrheit zu folgen - frei, stark und zentriert. ",
       "Schwarzer Turmalin": "Der mächtigste Schutzstein, ein kraftvoller Begleiter, wenn es darum geht, sich zu schützen. Schwarzer Turmalin leitet negative Energien ab und bietet dir seelischen Schutz. Er reinigt das energetische Feld und wirkt somit auch erdend. Ideal für Menschen , die viel spüren und sich schützen möchten.",
       "Achatscheibe mit Bergkristall": `Die Achatscheibe mit Bergkristall vereint die harmonisierenden und klärenden Eigenschaften beider Steine. 
-Achat bringt Ruhe, Erdung und emotionale Ausgeglichenheit, während Bergkristall für Klarheit, Licht und innere Balance sorgt. 
-Gemeinsam unterstützen sie dich dabei, dein Herz zu öffnen, Vertrauen aufzubauen und in Verbindung mit dir selbst und dem Leben zu stehen. 
-Diese Kombination fördert Mitgefühl, geistiges Wachstum und schenkt dir Leichtigkeit sowie innere Stärke.`
+        Achat bringt Ruhe, Erdung und emotionale Ausgeglichenheit, während Bergkristall für Klarheit, Licht und innere Balance sorgt. 
+        Gemeinsam unterstützen sie dich dabei, dein Herz zu öffnen, Vertrauen aufzubauen und in Verbindung mit dir selbst und dem Leben zu stehen. 
+        Diese Kombination fördert Mitgefühl, geistiges Wachstum und schenkt dir Leichtigkeit sowie innere Stärke.`
 
   };
 

@@ -22,7 +22,6 @@ const StoringCrystals = () => {
                 Schutz vor Beschädigungen
               </h3>
               <ul className="text-muted-foreground text-sm space-y-2 text-left">
-                <li>• Weiche Unterlagen verwenden</li>
                 <li>• Harte und weiche Kristalle getrennt lagern</li>
                 <li>• Vor direkten Stößen schützen</li>
                 <li>• Seidenbeutel oder Samtkästen nutzen</li>
@@ -40,7 +39,6 @@ const StoringCrystals = () => {
                 <li>• Vor direkter Sonneneinstrahlung schützen</li>
                 <li>• Trockene Umgebung bevorzugen</li>
                 <li>• Extreme Temperaturen vermeiden</li>
-                <li>• Gute Luftzirkulation gewährleisten</li>
               </ul>
             </CardContent>
           </Card>
@@ -53,7 +51,6 @@ const StoringCrystals = () => {
               </h3>
               <ul className="text-muted-foreground text-sm space-y-2 text-left">
                 <li>• Regelmäßige Reinigung einplanen</li>
-                <li>• Mit anderen Kristallen zusammen lagern</li>
                 <li>• Positive Absichten für den Aufbewahrungsort</li>
                 <li>• Intuition bei der Platzierung folgen</li>
               </ul>

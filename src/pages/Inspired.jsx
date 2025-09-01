@@ -101,7 +101,7 @@ const CrystalCare = () => {
     {
       method: "Räucherwerk",
       icon: <Wind className="w-6 h-6" />,
-      description: "Salbei, Palo Santo oder Weihrauch entfernen aufgenommene Energien und reinigen somit den.",
+      description: "Salbei, Palo Santo oder Weihrauch entfernen aufgenommene Energien und reinigen somit den Kristall.",
       duration: "2-5 Minuten",
       suitableFor: "Alle Kristalle",
       energy: "Spirituell, transformierend, klärend"
@@ -121,7 +121,7 @@ const CrystalCare = () => {
   const chargingMethods = [
     {
       method: "Vollmond-Energie",
-      description: "Die kraftvollste Zeit zum Aufladen. Kristalle nehmen die kraftvolle Mondenergie auf.",
+      description: "Die kraftvollste Zeit zum Aufladen. Kristalle nehmen die magische Mondenergie auf.",
       timing: "3 Tage vor bis 3 Tage nach Vollmond",
       effect: "Verstärkt Intuition und emotionale Heilung"
     },
