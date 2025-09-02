@@ -100,8 +100,8 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
             };
         
             if (!validateShippingAddress()) {
-              onError('Please fill in all shipping address fields before proceeding.');
-              reject(new Error('Invalid shipping address'));
+              onError('Bitte fülle alle Felder der Lieferadresse aus, bevor du fortfährst.');
+              reject(new Error('Ungültige Lieferadresse'));
               return;
             }
         
@@ -121,18 +121,18 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
             if (captureResponse.status === 'success') {
               setPaymentStatus('succeeded');
               toast({
-                title: "Payment Successful!",
-                description: "Your PayPal payment has been processed successfully.",
+                title: "Zahlung Erfolgreich!",
+                description: "Deine PayPal-Zahlung wurde erfolgreich verarbeitet.",
               });
               onSuccess();
             } else {
               setPaymentStatus('failed');
-              onError('Payment capture failed on server');
+              onError('Zahlungsabwicklung auf dem Server fehlgeschlagen');
             }
           } catch (error) {
             console.error('PayPal capture error:', error);
             setPaymentStatus('failed');
-            onError('Payment capture failed. Please try again.');
+            onError('PayPal-Zahlung fehlgeschlagen. Bitte versuche es erneut.');
           } finally {
             setIsProcessing(false);
           }
@@ -140,13 +140,13 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
         onError: (err: any) => {
           console.error('PayPal error:', err);
           setPaymentStatus('failed');
-          onError('PayPal payment failed. Please try again.');
+          onError('PayPal-Zahlung fehlgeschlagen. Bitte versuche es erneut.');
         },
         onCancel: () => {
           setPaymentStatus('failed');
           toast({
-            title: "Payment Cancelled",
-            description: "You cancelled the PayPal payment.",
+            title: "Zahlung Abgebrochen",
+            description: "Du hast die PayPal-Zahlung abgebrochen.",
             variant: "destructive",
           });
         }
@@ -181,11 +181,11 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
   const getStatusText = () => {
     switch (paymentStatus) {
       case 'processing':
-        return 'Processing Payment...';
+        return 'Zahlung wird verarbeitet...';
       case 'succeeded':
-        return 'Payment Successful!';
+        return 'Zahlung erfolgreich!';
       case 'failed':
-        return 'Payment Failed';
+        return 'Zahlung fehlgeschlagen';
       default:
         return '';
     }
@@ -224,12 +224,12 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
           {!paypalLoaded ? (
             <div className="flex items-center justify-center p-8">
               <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-              <span className="ml-2 text-gray-600">Loading PayPal...</span>
+              <span className="ml-2 text-gray-600">PayPal wird geladen...</span>
             </div>
           ) : !paypalOrder ? (
             <div className="flex items-center justify-center p-8">
               <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-              <span className="ml-2 text-gray-600">Creating PayPal order...</span>
+              <span className="ml-2 text-gray-600">Erstelle PayPal-Bestellung...</span>
             </div>
           ) : (
             <div id="paypal-button-container" className="w-full"></div>
@@ -240,7 +240,7 @@ const PayPalPayment = ({ amount, items, paypalOrder, onSuccess, onError, shippin
         {isProcessing && (
           <div className="flex items-center justify-center p-4 bg-blue-50 rounded-lg">
             <Loader2 className="h-5 w-5 animate-spin text-blue-600 mr-2" />
-            <span className="text-blue-600">Processing PayPal payment...</span>
+            <span className="text-blue-600">Verarbeite PayPal-Zahlung...</span>
           </div>
         )}
       </div>
