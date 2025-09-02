@@ -6,32 +6,7 @@ import majaBeratungAbout from "@/assets/majaBeratungAbout.webp";
 import majakristallhand from "@/assets/majakristallhand.jpeg";
 
 
-const upcomingMarkets = [
-    {
-      name: "Gesundheitstag Ummendorf",
-      date: "06. September 2025",
-      time: "10:00 - 18:00 Uhr",
-      location: "Wormsdorferstr. 6",
-      plz: "39365 Ummendorf",
-      description: "Alles rund um das Thema Gesundheit und Wohlbefinden."
-    },
-    {
-      name: "Landeserntedankfest Magdeburg",
-      date: "20. - 21. September 2025",
-      time: "10:00 - 18:00 Uhr", 
-      location: "Elbauenpark Magdeburg",
-      plz:"im Ökodorf",
-      description: "Erlebe das 29. Landeserntedankfest im malerischen Elbauenpark Magdeburg."
-    },
-     {
-      name: "Kaiser-Otto-Fest Magdeburg",
-      date: "02. - 05. Oktober 2025",
-      time: "11:00 - 24:00 Uhr", 
-      location: "Domviertel Magdeburg",
-      plz:"",
-      description: "Viertägige mittelalterliche Erlebniswelt mit historischen Märkten, authentischem Handwerk, Tanz und Musik lassen wir die Zeit des Mittelalters aufleben."
-    },
-  ];
+
 
 function AboutMe() {
   return (
