@@ -5,6 +5,7 @@ import QualityPromise from "@/components/QualityPromise";
 import { useEffect } from "react";
 import Footer from "@/components/Footer";
 import BottomFooter from "@/components/BottomFooter";
+import MeetUps from "@/components/MeetUps";
 
 
 const Index = () => {
@@ -17,6 +18,7 @@ const Index = () => {
       <ServiceSection />
       <CrystalGrid />
       <QualityPromise />
+      <MeetUps />
       <Footer />
       <BottomFooter />
     </div>

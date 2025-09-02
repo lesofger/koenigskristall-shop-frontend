@@ -3,11 +3,8 @@ import React from "react";
 import maja2 from "@/assets/maja2.webp";
 import MajaShop from "@/assets/MajaShop.jpeg";
 import majaBeratungAbout from "@/assets/majaBeratungAbout.webp";
-
-
-import { Calendar, MapPin, Clock } from "lucide-react";
 import majakristallhand from "@/assets/majakristallhand.jpeg";
-import BottomFooter from "./BottomFooter";
+
 
 const upcomingMarkets = [
     {
@@ -157,85 +154,7 @@ function AboutMe() {
         <hr className="border-t border-muted-foreground/20 my-16 mx-auto max-w-3xl" />
       </div>
 
-      {/* Call to Action */}
-      <section className="py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="space-y-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 text-primary mb-4">
-                <Calendar className="w-8 h-8" />
-              </div>
-              <div className="space-y-4">
-                <h3 className="text-3xl md:text-4xl font-bold text-primary">
-                  Besuche mich auf kommenden Märkten
-                </h3>
-                <p className="text-xl text-muted-foreground/80 max-w-3xl mx-auto leading-relaxed">
-                  Hier findest du alle Termine, wo du mich und meine Kristalle persönlich antreffen kannst. 
-                  Ich freue mich darauf, dich kennenzulernen!
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Market Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {upcomingMarkets.map((market, idx) => (
-              <div
-                key={idx}
-                className="group bg-white/40 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 hover:shadow-2xl hover:bg-white/50 transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className="space-y-6">
-                  {/* Market Name */}
-                  <h4 className="text-xl font-bold text-primary group-hover:text-primary/90 transition-colors">
-                    {market.name}
-                  </h4>
-                  
-                  {/* Date & Time */}
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3 text-muted-foreground">
-                      <Calendar className="w-5 h-5 text-primary/70" />
-                      <span className="text-sm font-medium">{market.date}</span>
-                    </div>
-                    <div className="flex items-center space-x-3 text-muted-foreground">
-                      <Clock className="w-5 h-5 text-primary/70" />
-                      <span className="text-sm">{market.time}</span>
-                    </div>
-                    <div className="flex items-start space-x-3 text-muted-foreground">
-                      <MapPin className="w-5 h-5 text-primary/70 mt-0.5 mb-0.1" />
-                      <span className="text-sm">{market.location}</span>
-                    </div>
-                    <div className="flex items-start space-x-3 text-muted-foreground ml-8 pt-0">
-                      <span className="text-sm">{market.plz}</span>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {market.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom Message */}
-          <div className="text-center">
-            <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-white/20">
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <h4 className="text-2xl md:text-3xl font-bold text-primary">
-                    Ich freue mich auf dich!
-                  </h4>
-                  <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-4">
-                    Komm einfach vorbei und lass dich von der magischen Atmosphäre verzaubern. 
-                    Gemeinsam finden wir den Kristall, der perfekt zu dir und deiner Energie passt.
-                  </p>
-                </div>
-               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
       </div>
     );
 }
