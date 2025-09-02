@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
+import pentagram from "../assets/pentagram.png";
+
 
 const BottomFooter = () => {
   return (
@@ -13,8 +15,9 @@ const BottomFooter = () => {
             <p className="text-xs text-muted-foreground">
               © 2025 Koenigskristall. Alle Rechte vorbehalten.
             </p>
+            
             </div>
-
+              <img src={pentagram} alt="Pentagram" className="w-4 h-4 opacity-[0.01] pl-25" />
           {/* Legal Links */}
           <div className="flex flex-wrap items-center gap-4 md:gap-6">
             <Link 
