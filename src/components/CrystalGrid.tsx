@@ -1,51 +1,60 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { useRef, useEffect } from "react";
+import { id } from "date-fns/locale";
 
 const crystalCategories = [
   {
+    id: "rosenquarz",
     name: "Rosenquarz",
     description: "Selbstliebe & Herzchakra",
     image: "https://api.koenigskristall.de/public/RosenRsGroß.webp",
     color: "from-pink-100 to-rose-200",
   },
   {
+    id: "amethyst",
     name: "Amethyst",
     description: "Spiritualität und Innere Ruhe",
     image: "https://api.koenigskristall.de/public/AmethDruGr.webp",
     color: "from-purple-100 to-violet-200",
   },
   {
+    id: "bergkristall",
     name: "Bergkristall",
     description: "Klarheit und Verstärkung",
     image: "https://api.koenigskristall.de/public/BergkristallKett.webp",
     color: "from-slate-50 to-gray-100",
   },
   {
+    id: "citrin",
     name: "Citrin",
     description: "Fülle und Wohlstand",
     image: "https://api.koenigskristall.de/public/CitrinTS.webp",
     color: "from-yellow-100 to-amber-200",
   },
   {
+    id: "schwarzer-turmalin",
     name: "Schwarzer Turmalin",
     description: "Schutz und Erdung",
     image: "https://api.koenigskristall.de/public/SchwarzArm.webp",
     color: "from-gray-200 to-slate-300",
   },
   {
+    id: "selenit",
     name: "Selenit",
     description: "Reinigung und Intuition",
     image: "https://api.koenigskristall.de/public/SeleKugel.webp",
     color: "from-white to-gray-50",
   },
   {
+    id: "labradorit",
     name: "Labradorit",
     description: "Transformation & Entwicklung",
     image: "https://api.koenigskristall.de/public/LabraTS.webp",
     color: "from-blue-100 to-indigo-200",
   },
   {
+    id: "aventurin",
     name: "Grüner Aventurin",
     description: "Glück & Lebensfreude",
     image: "https://api.koenigskristall.de/public/AvenArm.webp",
@@ -189,7 +198,7 @@ const CrystalGrid = () => {
             {[...crystalCategories, ...crystalCategories].map((crystal, index) => (
               <div key={`${crystal.name}-${index}`} className="flex-shrink-0 w-80">
                 <Link 
-                  to={`/shop`}
+                  to={`/shop/${crystal.id}`}
                   className="group block"
                   onClick={(e) => {
                     // Prevent navigation when dragging (desktop or mobile)

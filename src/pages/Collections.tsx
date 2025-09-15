@@ -7,8 +7,10 @@ import { Product as CartProduct } from "@/hooks/useCart";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { useParams } from "react-router-dom";
 
 const Collections = () => {
+  const { id } = useParams<{ id?: string }>();
   const [filter, setFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("name");
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -31,27 +33,27 @@ const Collections = () => {
   };
 
   const categories = [
-    { value: "all", label: "Alle Kristalle" },
-    { value: "Bergkristall", label: "Bergkristall" },
-    { value: "Rosenquarz", label: "Rosenquarz" },
-    { value: "Amethyst", label: "Amethyst" },
-    { value: "Citrin", label: "Citrin" },
-    { value: "Orangencalcit", label: "Orangencalcit" },
-    { value: "Karneol", label: "Karneol" },
-    { value: "Mondstein", label: "Mondstein" },
-    { value: "Selenit", label: "Selenit" },
-    { value: "Aquamarin", label: "Aquamarin" },
-    { value: "Regenbogenfluorit", label: "Regenbogenfluorit" },
-    { value: "Grüner Fluorit", label: "Grüner Fluorit" },
-    { value: "Aventurin", label: "Aventurin" },
-    { value: "Malachit", label: "Malachit" },
-    { value: "Jaspis", label: "Algen Jaspis / Roter Jaspis" },
-    { value: "Labradorit", label: "Labradorit" },
-    { value: "Rauchquarz", label: "Rauchquarz" },
-    { value: "Pyrit", label: "Pyrit" },
-    { value: "Tigerauge", label: "Tigerauge" },
-    { value: "Schwarzer Turmalin", label: "Schwarzer Turmalin" },
-    { value: "Achatscheibe mit Bergkristall", label: "Achatscheibe mit Bergkristall" }
+    { value: "all", label: "Alle Kristalle", id: "allCrystal" },
+    { value: "Bergkristall", label: "Bergkristall", id: "bergkristall" },
+    { value: "Rosenquarz", label: "Rosenquarz", id: "rosenquarz" },
+    { value: "Amethyst", label: "Amethyst", id: "amethyst" },
+    { value: "Citrin", label: "Citrin", id: "citrin" },
+    { value: "Orangencalcit", label: "Orangencalcit", id: "orangencalcit" },
+    { value: "Karneol", label: "Karneol", id: "karneol" },
+    { value: "Mondstein", label: "Mondstein", id: "mondstein" },
+    { value: "Selenit", label: "Selenit", id: "selenit" },
+    { value: "Aquamarin", label: "Aquamarin", id: "aquamarin" },
+    { value: "Regenbogenfluorit", label: "Regenbogenfluorit", id: "regenbogenfluorit" },
+    { value: "Grüner Fluorit", label: "Grüner Fluorit", id: "gruener-fluorit" },
+    { value: "Aventurin", label: "Aventurin", id: "aventurin" },
+    { value: "Malachit", label: "Malachit", id: "malachit" },
+    { value: "Jaspis", label: "Algen Jaspis / Roter Jaspis", id: "jaspis" },
+    { value: "Labradorit", label: "Labradorit", id: "labradorit" },
+    { value: "Rauchquarz", label: "Rauchquarz", id: "rauchquarz" },
+    { value: "Pyrit", label: "Pyrit", id: "pyrit" },
+    { value: "Tigerauge", label: "Tigerauge", id: "tigerauge" },
+    { value: "Schwarzer Turmalin", label: "Schwarzer Turmalin", id: "schwarzer-turmalin" },
+    { value: "Achatscheibe mit Bergkristall", label: "Achatscheibe mit Bergkristall", id: "achatscheibe-mit-bergkristall" }
   ];
 
   // Kategorie-Beschreibungen
@@ -151,6 +153,24 @@ const Collections = () => {
   const selectedCategory = categories.find(cat => cat.value === filter);
   const categoryDescription = filter !== "all" ? categoryDescriptions[filter as keyof typeof categoryDescriptions] : null;
 
+  useEffect(() => {
+  if (id) {
+    // Finde die Kategorie, die zur ID passt
+    const found = categories.find(cat => cat.id === id);
+    if (found) {
+      setFilter(found.value);
+      // Nach kurzem Delay scrollen (damit das Element existiert)
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 300);
+    }
+  }
+  // eslint-disable-next-line
+}, [id]);
+
   return (
     <div className="min-h-screen bg-gradient-mystical">
       <main className="pt-24 pb-16">
@@ -233,15 +253,18 @@ const Collections = () => {
 
           {/* Category Description */}
           {categoryDescription && (
-            <div className="mb-8 bg-gradient-to-r from-primary/10 to-secondary/10 backdrop-blur-sm p-6 rounded-lg border border-border/50">
+            <div
+              id={selectedCategory?.id}
+              className="mb-8 bg-gradient-to-r from-primary/10 to-secondary/10 backdrop-blur-sm p-6 rounded-lg border border-border/50"
+            >
               <h2 className="font-serif text-2xl font-medium text-foreground mb-3">
                 {selectedCategory?.label}
               </h2>
               <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                {categoryDescription} 
+                {categoryDescription}
               </p>
             </div>
-          )}
+            )}
 
           {/* Loading State */}
           {loading && (
