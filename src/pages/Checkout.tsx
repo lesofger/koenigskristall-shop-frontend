@@ -39,7 +39,7 @@ const Checkout = () => {
     country: ''
   });
 
-  const SHIPPING_COST = 5.00;
+  const SHIPPING_COST = 4.99;
   const getTotalWithShipping = () => {
     return getTotalPrice() + SHIPPING_COST;
   };
