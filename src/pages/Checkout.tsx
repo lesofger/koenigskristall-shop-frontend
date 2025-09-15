@@ -8,12 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2, MapPin, Check, Star} from 'lucide-react';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2, MapPin, Check, Star, Banknote} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { api } from '@/lib/api';
 import { type ShippingAddress } from '@/lib/types';
-import BankTransferPayment from '@/components/BankTransferPayment';
+import BankTransfer from '@/components/BankTransferPayment';
 import PayPalPayment from '@/components/PayPalPayment';
 import CardPayment from '@/components/CardPayment';
 
@@ -465,14 +465,27 @@ const Checkout = () => {
                 </div>
               </button>
               {/* Banküberweisung */}
-            
-
-
-
-
-
-
-            
+              <button
+                onClick={() => handlePaymentMethodChange('bank_transfer')}
+                className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
+                  paymentMethod === 'bank_transfer' 
+                    ? 'border-primary bg-primary/10 shadow-lg scale-105' 
+                    : 'border-gray-200 bg-white/50 hover:border-primary/50 hover:shadow-md'
+                }`}
+              >
+                {paymentMethod === 'bank_transfer' && (
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                )}
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
+                    <Banknote className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <h3 className="font-semibold text-lg">Banküberweisung</h3>
+                  <p className="text-sm text-muted-foreground">Sofortige Zahlung</p>
+                </div>
+              </button>
             </div>
             {/* Payment Form */}
             <div className="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-2xl p-6">
@@ -499,6 +512,17 @@ const Checkout = () => {
                   user={user!}
                 />
               )}
+
+              {paymentMethod === 'bank_transfer' && bankTransferClientSecret && (
+                <BankTransfer
+                  clientSecret={bankTransferClientSecret}
+                  amount={getTotalPrice()}
+                  onSuccess={handlePaymentSuccess}
+                  onError={handlePaymentError}
+                  shippingAddress={shippingAddress}
+                  user={user!}
+                />
+              )}  
             </div>
             {/* Security Notice */}
             <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200/50">
