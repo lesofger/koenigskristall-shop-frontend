@@ -54,7 +54,6 @@ const CrystalCombination = ({ crystalCombinations }) => {
                 <ul className="text-amber-700 text-sm space-y-1">
                   <li>• Beginne mit 2-3 Kristallen und spüre ihre Energie</li>
                   <li>• Vermeide zu viele verschiedene Energien auf einmal</li>
-                  <li>• Vertraue deiner Intuition bei der Auswahl</li>
                   <li>• Bergkristall verstärkt die Wirkung anderer Kristalle</li>
                   <li>• Teste Kombinationen einzeln, bevor du sie dauerhaft nutzt</li>
                 </ul>

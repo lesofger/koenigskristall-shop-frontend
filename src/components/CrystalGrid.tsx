@@ -1,54 +1,63 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { useRef, useEffect } from "react";
+import { id } from "date-fns/locale";
 
 const crystalCategories = [
   {
+    id: "rosenquarz",
     name: "Rosenquarz",
     description: "Selbstliebe & Herzchakra",
-    image: "🌸",
+    image: "https://api.koenigskristall.de/public/RosenRsGroß.webp",
     color: "from-pink-100 to-rose-200",
   },
   {
+    id: "amethyst",
     name: "Amethyst",
-    description: "Spiritualität und Intuition",
-    image: "💜",
+    description: "Spiritualität und Innere Ruhe",
+    image: "https://api.koenigskristall.de/public/AmethDruGr.webp",
     color: "from-purple-100 to-violet-200",
   },
   {
+    id: "bergkristall",
     name: "Bergkristall",
     description: "Klarheit und Verstärkung",
-    image: "💎",
+    image: "https://api.koenigskristall.de/public/BergkristallKett.webp",
     color: "from-slate-50 to-gray-100",
   },
   {
-    name: "Citrine",
-    description: "Fülle und Manifestation",
-    image: "🟡",
+    id: "citrin",
+    name: "Citrin",
+    description: "Fülle und Wohlstand",
+    image: "https://api.koenigskristall.de/public/CitrinTS.webp",
     color: "from-yellow-100 to-amber-200",
   },
   {
+    id: "schwarzer-turmalin",
     name: "Schwarzer Turmalin",
     description: "Schutz und Erdung",
-    image: "⚫",
+    image: "https://api.koenigskristall.de/public/SchwarzArm.webp",
     color: "from-gray-200 to-slate-300",
   },
   {
+    id: "selenit",
     name: "Selenit",
-    description: "Reinigung und Klarheit",
-    image: "🤍",
+    description: "Reinigung und Intuition",
+    image: "https://api.koenigskristall.de/public/SeleKugel.webp",
     color: "from-white to-gray-50",
   },
   {
+    id: "labradorit",
     name: "Labradorit",
-    description: "Transformation & Magie",
-    image: "🔮",
+    description: "Transformation & Entwicklung",
+    image: "https://api.koenigskristall.de/public/LabraTS.webp",
     color: "from-blue-100 to-indigo-200",
   },
   {
+    id: "aventurin",
     name: "Grüner Aventurin",
-    description: "Glück & Herzensruhe",
-    image: "💚",
+    description: "Glück & Lebensfreude",
+    image: "https://api.koenigskristall.de/public/AvenArm.webp",
     color: "from-green-100 to-emerald-200",
   },
 ];
@@ -165,7 +174,7 @@ const CrystalGrid = () => {
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-crystal">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground mb-6">
+          <h2 className="font-serif text-4xl text-primary md:text-5xl font-light text-foreground mb-6">
             Die Kraft der Kristalle
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -189,7 +198,7 @@ const CrystalGrid = () => {
             {[...crystalCategories, ...crystalCategories].map((crystal, index) => (
               <div key={`${crystal.name}-${index}`} className="flex-shrink-0 w-80">
                 <Link 
-                  to={`/shop`}
+                  to={`/shop/${crystal.id}`}
                   className="group block"
                   onClick={(e) => {
                     // Prevent navigation when dragging (desktop or mobile)
@@ -199,15 +208,16 @@ const CrystalGrid = () => {
                     }
                   }}
                 >
-                  <Card className="overflow-hidden bg-gradient-card border-border/50 hover:shadow-hover transition-all duration-500 group-hover:scale-105 h-full select-none">
+                  <Card className="overflow-hidden bg-card border-border/50 hover:shadow-hover transition-all duration-500 group-hover:scale-105 h-full select-none">
                     <CardContent className="p-0">
-                      <div className={`h-48 bg-gradient-to-br ${crystal.color} flex items-center justify-center relative overflow-hidden`}>
-                        <div className="text-6xl transform group-hover:scale-110 transition-transform duration-500">
-                          {crystal.image}
-                        </div>
-                        <div className="absolute inset-0 bg-background/10 group-hover:bg-background/5 transition-colors duration-500"></div>
+                      <div className="h-56 w-full relative overflow-hidden bg-transparent ">
+                        <img
+                          src={crystal.image}
+                          alt={crystal.name}
+                          className="absolute inset-0 w-full h-full object-cover object-[10%_60%]"
+                        />
+                        <div className="absolute inset-0 bg-background/10 group-hover:bg-background/5 transition-colors duration-500 pointer-events-none"></div>
                       </div>
-                      
                       <div className="p-6 text-center">
                         <h3 className="font-serif text-xl font-medium text-foreground mb-2">
                           {crystal.name}
@@ -227,7 +237,7 @@ const CrystalGrid = () => {
         <div className="text-center mt-12">
           <Link to="/shop">
             <button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-lg font-medium tracking-wide transition-colors shadow-crystal">
-              Entdecke Noch Weitere Eigenschaften
+              Entdecke noch weitere Kristalle
             </button>
           </Link>
         </div>

@@ -43,7 +43,7 @@ const BrokenCrystal = ({ brokenCrystalMeanings }) => {
             </h3>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Nimm dir einen Moment der Stille. Halte die Stücke in deinen Händen und bedanke dich für den Dienst, 
-              den der Kristall geleistet hat. Spüre, ob die Energie noch da ist oder ob sie sich transformiert hat. 
+              den der Kristall geleistet hat. 
               Folge deiner Intuition bei der Entscheidung, was mit den Stücken geschehen soll.
             </p>
           </CardContent>

@@ -8,12 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2, MapPin, Check, Star} from 'lucide-react';
+import { Loader2, ArrowLeft, CreditCard, Shield, User, Mail, Plus, Minus, Trash2, ShoppingBag, Building2, MapPin, Check, Star, Banknote} from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { api } from '@/lib/api';
 import { type ShippingAddress } from '@/lib/types';
-import BankTransferPayment from '@/components/BankTransferPayment';
+import BankTransfer from '@/components/BankTransferPayment';
 import PayPalPayment from '@/components/PayPalPayment';
 import CardPayment from '@/components/CardPayment';
 
@@ -39,7 +39,7 @@ const Checkout = () => {
     country: ''
   });
 
-  const SHIPPING_COST = 5.00;
+  const SHIPPING_COST = 4.49;
   const getTotalWithShipping = () => {
     return getTotalPrice() + SHIPPING_COST;
   };
@@ -52,6 +52,7 @@ const Checkout = () => {
 
     if (items.length === 0) {
       console.log('No items in cart===========>');
+      navigate('/shop');
       return;
     }
 
@@ -257,7 +258,7 @@ const Checkout = () => {
                   id="street"
                   value={shippingAddress.street}
                   onChange={(e) => setShippingAddress(prev => ({ ...prev, street: e.target.value }))}
-                  placeholder="z.B. Musterstraße 123"
+                  placeholder="z.B. Wasserkunststraße 123"
                   className="h-12 bg-white/80 border-primary/20 focus:border-primary text-lg"
                   required
                 />
@@ -270,7 +271,7 @@ const Checkout = () => {
                   id="city"
                   value={shippingAddress.city}
                   onChange={(e) => setShippingAddress(prev => ({ ...prev, city: e.target.value }))}
-                  placeholder="z.B. München"
+                  placeholder="z.B. Magdeburg"
                   className="h-12 bg-white/80 border-primary/20 focus:border-primary text-lg"
                   required
                 />
@@ -283,7 +284,7 @@ const Checkout = () => {
                   id="zipCode"
                   value={shippingAddress.zipCode}
                   onChange={(e) => setShippingAddress(prev => ({ ...prev, zipCode: e.target.value }))}
-                  placeholder="z.B. 80331"
+                  placeholder="z.B. 39108"
                   className="h-12 bg-white/80 border-primary/20 focus:border-primary text-lg"
                   required
                 />
@@ -296,7 +297,7 @@ const Checkout = () => {
                   id="state"
                   value={shippingAddress.state}
                   onChange={(e) => setShippingAddress(prev => ({ ...prev, state: e.target.value }))}
-                  placeholder="z.B. Bayern"
+                  placeholder="z.B. Sachsen-Anhalt"
                   className="h-12 bg-white/80 border-primary/20 focus:border-primary text-lg"
                 />
               </div>
@@ -336,6 +337,13 @@ const Checkout = () => {
                       <h3 className="font-semibold text-primary text-lg">{item.name}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
                     </div>
+                        <div className="ml-4 w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden border border-primary/20 bg-background flex items-center justify-center">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                     <div className="flex items-center space-x-1 ml-4">
                       <Button
                         variant="outline"
@@ -472,10 +480,10 @@ const Checkout = () => {
                 )}
                 <div className="flex flex-col items-center text-center">
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                    <Building2 className="w-6 h-6 text-purple-600" />
+                    <Banknote className="w-6 h-6 text-purple-600" />
                   </div>
-                  <h3 className="font-semibold text-lg">Überweisung</h3>
-                  <p className="text-sm text-muted-foreground">Traditionell</p>
+                  <h3 className="font-semibold text-lg">Banküberweisung</h3>
+                  <p className="text-sm text-muted-foreground">Sofortige Zahlung</p>
                 </div>
               </button>
             </div>
@@ -492,16 +500,7 @@ const Checkout = () => {
                   />
                 </Elements>
               )}
-              {paymentMethod === 'bank_transfer' && bankTransferClientSecret && (
-                <BankTransferPayment
-                  clientSecret={bankTransferClientSecret}
-                  amount={getTotalPrice()}
-                  onSuccess={handlePaymentSuccess}
-                  onError={handlePaymentError}
-                  shippingAddress={shippingAddress}
-                  user={user!}
-                />
-              )}
+           
               {paymentMethod === 'paypal' && paypalOrder && (
                 <PayPalPayment
                   amount={getTotalPrice()}
@@ -513,6 +512,17 @@ const Checkout = () => {
                   user={user!}
                 />
               )}
+
+              {paymentMethod === 'bank_transfer' && bankTransferClientSecret && (
+                <BankTransfer
+                  clientSecret={bankTransferClientSecret}
+                  amount={getTotalPrice()}
+                  onSuccess={handlePaymentSuccess}
+                  onError={handlePaymentError}
+                  shippingAddress={shippingAddress}
+                  user={user!}
+                />
+              )}  
             </div>
             {/* Security Notice */}
             <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200/50">

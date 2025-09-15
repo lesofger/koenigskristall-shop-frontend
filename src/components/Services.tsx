@@ -16,8 +16,8 @@ const services = [
     link: "/consulting"
   },
   {
-    title: "Kristall Shop",
-    description: "Entdecke unsere sorgfältig ausgewählte Kollektion an Heilsteinen.",
+    title: "Kristallshop",
+    description: "Entdecke unsere sorgfältig ausgewählte Kollektion an Kristallen.",
     image: image2,
     alt: "Shop",
     icon: <ShoppingBag className="w-6 h-6" />,
@@ -25,7 +25,7 @@ const services = [
   },
   {
     title: "Kristallbibliothek",
-    description: "Erweitere dein Wissen über die Welt der Kristalle",
+    description: "Erweitere dein Wissen über die Welt der Kristalle und Heilsteine.",
     image: image3,
     alt: "Bibliothek",
     icon: <BookOpen className="w-6 h-6" />,

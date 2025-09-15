@@ -7,8 +7,10 @@ import { Product as CartProduct } from "@/hooks/useCart";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { useParams } from "react-router-dom";
 
 const Collections = () => {
+  const { id } = useParams<{ id?: string }>();
   const [filter, setFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("name");
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -31,51 +33,55 @@ const Collections = () => {
   };
 
   const categories = [
-    { value: "all", label: "Alle Kristalle" },
-    { value: "Bergkristall", label: "Bergkristall" },
-    { value: "Rosenquarz", label: "Rosenquarz" },
-    { value: "Amethyst", label: "Amethyst" },
-    { value: "Citrin", label: "Citrin" },
-    { value: "Orangencalcit", label: "Orangencalcit" },
-    { value: "Karneol", label: "Karneol" },
-    { value: "Mondstein", label: "Mondstein" },
-    { value: "Selenit", label: "Selenit" },
-    { value: "Aquamarin", label: "Aquamarin" },
-    { value: "Regenbogenfluorit", label: "Regenbogenfluorit" },
-    { value: "Grüner Fluorit", label: "Grüner Fluorit" },
-    { value: "Aventurin", label: "Aventurin" },
-    { value: "Malachit", label: "Malachit" },
-    { value: "Jaspis", label: "Jaspis Rot / Algen Jaspis" },
-    { value: "Labradorit", label: "Labradorit" },
-    { value: "Rauchquarz", label: "Rauchquarz" },
-    { value: "Pyrit", label: "Pyrit" },
-    { value: "Tigerauge", label: "Tigerauge" },
-    { value: "Schwarzer Turmalin", label: "Schwarzer Turmalin" },
-    { value: "Achatscheibe mit Bergkristall", label: "Achatscheibe mit Bergkristall" }
+    { value: "all", label: "Alle Kristalle", id: "allCrystal" },
+    { value: "Bergkristall", label: "Bergkristall", id: "bergkristall" },
+    { value: "Rosenquarz", label: "Rosenquarz", id: "rosenquarz" },
+    { value: "Amethyst", label: "Amethyst", id: "amethyst" },
+    { value: "Citrin", label: "Citrin", id: "citrin" },
+    { value: "Orangencalcit", label: "Orangencalcit", id: "orangencalcit" },
+    { value: "Karneol", label: "Karneol", id: "karneol" },
+    { value: "Mondstein", label: "Mondstein", id: "mondstein" },
+    { value: "Selenit", label: "Selenit", id: "selenit" },
+    { value: "Aquamarin", label: "Aquamarin", id: "aquamarin" },
+    { value: "Regenbogenfluorit", label: "Regenbogenfluorit", id: "regenbogenfluorit" },
+    { value: "Grüner Fluorit", label: "Grüner Fluorit", id: "gruener-fluorit" },
+    { value: "Aventurin", label: "Aventurin", id: "aventurin" },
+    { value: "Malachit", label: "Malachit", id: "malachit" },
+    { value: "Jaspis", label: "Algen Jaspis / Roter Jaspis", id: "jaspis" },
+    { value: "Labradorit", label: "Labradorit", id: "labradorit" },
+    { value: "Rauchquarz", label: "Rauchquarz", id: "rauchquarz" },
+    { value: "Pyrit", label: "Pyrit", id: "pyrit" },
+    { value: "Tigerauge", label: "Tigerauge", id: "tigerauge" },
+    { value: "Schwarzer Turmalin", label: "Schwarzer Turmalin", id: "schwarzer-turmalin" },
+    { value: "Achatscheibe mit Bergkristall", label: "Achatscheibe mit Bergkristall", id: "achatscheibe-mit-bergkristall" }
   ];
 
   // Kategorie-Beschreibungen
   const categoryDescriptions = {
-      "Bergkristall": "Der Bergkristall ist zweifellos der vielseitigste Kristall in jeder Sammlung und gleichzeitig der erste Kristall, den ich Einsteigern empfehlen würde.Bergkristall gilt als Meister der Heilsteine. Er fördert Klarheit und Ordnung in Gedanken und Gefühlen, stärkt deine Intuition. Zudem bringt Körper, Seele und Geist in Einklang. ",
-      "Rosenquarz": "Der Rosenquarz ist der Stein der bedingsungslosen Liebe. Er fördert die Selbstliebe und die Bereitschaft, Liebe zu empfangen und zu geben. Rosenquarz eignet sich hervorragend zur Selbstheilung bei Trennung oder Verlust eines geliebten Menschen.",
-      "Amethyst": "Als Stein der spirituellen Erkenntnis öffnet der Amethyst das dritte Auge und das Kronenchakra. Er lindert Stress, Ängste und Albträume. Der Amethyst wirkt beruhigend auf die Seele und fördert innere Ruhe. Ebenfalls gilt er als Schutzstein gegen negative Energie.",
+      "Bergkristall": "Der Bergkristall ist zweifellos der vielseitigste Kristall in jeder Sammlung und gleichzeitig der erste Kristall, den ich Einsteigern empfehlen würde.Bergkristall gilt als Meister der Heilsteine. Er hilft verwurzelte Blockaden zu lösen, fördert Klarheit und Ordnung in Gedanken und Gefühlen. Außerdem bringt er Körper, Seele und Geist in Einklang. Eine ganz besondere Eigenschaft ist, dass der Bergkristall die Energien aller anderen Kristalle verstärkt. ",
+      "Rosenquarz": "Der Rosenquarz ist der Stein der bedingungslosen Liebe. Er fördert die Selbstliebe und die Bereitschaft, Liebe zu empfangen und zu geben. Rosenquarz eignet sich hervorragend zur Selbstheilung bei Liebeskummer, Trennung oder Verlust eines geliebten Menschens.",
+      "Amethyst": "Als Stein der spirituellen Erkenntnis öffnet der Amethyst das dritte Auge und das Kronenchakra. Er lindert Stress, Ängste und Albträume. Der Amethyst wirkt beruhigend auf die Seele und fördert innere Ruhe. Ebenfalls gilt er als Schutzstein gegen negative Energien.",
       "Citrin": "Der Citrin strahlt so energievoll wie die Sonne. Als Stein des Reichtums, schenkt er dir Wohlstand und Fülle auf allen Ebenen des Seins. Er stärkt das Selbstbewusstsein und fördert deine Lebensfreude. Ein leuchtender Begleiter für alle, die Fülle nicht nur wünschen, sondern leben möchten.",
-      "Orangencalcit": "Der Orangencalcit bringt durch seine Energie Wärme ins Herz, hebt die Stimmung an und öffnet den Weg zu mehr Leichtigkeit und innerem Frieden. Er unterstützt dich dabei, neue Energie zu schöpfen und mit Optimismus durchs Leben zu gehen.",
-      "Karneol": "Feuer der Lebenskraft, der Karneol entfacht unser inneres Feuer. Er steht für Mut und Tapferkeit.Der Karneol stärkt unser Selbstvertrauen und hilft Zweifel und Ängste zu überwinden, bringt Stabilität in unser Leben und fördert die Leidenschaft auf allen Ebenen. Spirituell hilft er, im Hier und Jetzt anzukommen.",
-      "Mondstein": "Spiegel der Seele - Der Mondstein ist ein Begleiter der Intuition, der Weiblickeit und des inneren Gleichgewichts. Er wirkt als Schutzstein für Frauen und Kinder Ebefalls hilft er bei Entscheidungen und fördert das rationale Denken.",
-      "Selenit": "Der Selenit wirkt wie ein energetisches Schutzschild gegen negative Energien. Da er selber keine Energie aufnimmt ist er perfekt um andere Heilsteine zu reinigen. Darüber hinaus fördert er deine Intuition und geistige Klarheit.Der Selenit hilft, loszulassen - nicht aus Schwäche, sondern aus Vertrauen.",
-      "Aquamarin": "Stein der Manifestation - Aquamarin zieht deine Wünsche an. Wie klares Wasser spült er alte Ängste fort und macht Platz für Wahheit, Mut und innere Stärke. Aquamarin fördert ehrliche Kommunikation , nicht nur mit anderen, sondern vorallem mir dir selbst.",
-      "Regenbogenfluorit": "Regenbogenfluorit vereint die Energien mehrerer Farbfrequenzen und bringt Ordnung in Seele, Geist und Herz. Er fördert die Selbstreflexion, innere Stärke und unterstützt bei seelischer Heilung.Durch seine vielseitige Energie gleicht er Stimmungsschwankungen aus und wirkt harmonisierend.",
-      "Grüner Fluorit": "Grüner Fluorit wirkt ausgleichend und stabilisierend auf deine Energie, hilft deinen Geist zu fokussieren und emotionale Blockaden zu lösen. Mit seiner kraftvollen Energie öffnet er das Herzchakra und befreit es von altem Ballast. Ein Kristall für tiefe Regeneration und geistige Frische. Er wird oft als Lernhilfe verwendet.",
-      "Aventurin": "Der Aventurin steht für Optimismus und Lebensfreude, stärkt bedingungslose Liebe und Mitgefühl. Er wirkt beruhigend auf unsere Seele, löst Ängste und innere Unruhe. Aventurin schenkt Vertrauen in sich selbst und ermutigt, das Leben mit Offenheit und Freude zu getsalten.Seine sanfte Energie bringt Harmonie in unser Gefühlsleben.",
-      "Malachit": "Kristall des Herzens und der Heilung. Seine Energie fördert nicht nur tiefgreifende Veränderungen, sondern auch seelischen Wachstum. Der Malachit bringt unterdrückte Gefühle an die Oberfläche, fördert innere Heilung und unterstützt dabei, alte Verletzungen zu verarbeiten. Er schenkt Mut und öffnet das Herz für Liebe und Mitgeffühl.",
-      "Jaspis": " Der Jaspis ist ein toller Begeliter für alle , die in ihrer inneren Mitte ankommen möchte.Mit seiner kraftvollen Energie schenkt der Jaspis dir Durchsetzungsvermögen und Ausdauer.Besonders in Zeiten von Stress und Überförderung wirkt er erdend. Ein verlässlicher Stein, um seelisch wieder ins Gleichgewicht zu finden.",
-      "Labradorit": "Ein Kristall der Transformation, der dich sanft durch Veränderungen trägt. Labradorit ist ein kraftvoller Schutzstein, der das spirituelle Bewusstsein unterstützt. Er stärkt das Bauchgefühl und fördert das Erkennen von Zeichen, Träumen und tiefen Zusammenhängen. Ob seelischer Wandel, spirituelle Entwicklung oder große Lebensveränderung - Labradorit untertsützt dich dabei.",
-      "Rauchquarz": "Der Rauchquarz hilft dabei, negative Energien abzubauen, wirkt gleichzeitig erdend und ausgleichend auf unsere Seele. Er hat die Fähigkeit negative Energie, in Positive umzuwandeln. Zudem vermittelt er dir Sicherheit und Stärke.",
-      "Pyrit": "Pyrit - der Glückskristall, er zieht Fülle, Wohlstand und positive Lebensenergie an. Er stärkt das Selbstvertrauen und öffnet den Blick für neue Chancen. Als Glückskristall bergleitet er dich auf deinem Weg mit innerer Stärke und Optimismus.",
-      "Tigerauge": "Tigerauge verleiht Mut und Schutz. Es stärkt die Willenskraft und hilft bei der Verwirklichung von Zielen.",
-      "Schwarzer Turmalin": "Schwarzer Turmalin ist ein kraftvoller Schutzstein. Er absorbiert negative Energien und schützt vor elektromagnetischen Feldern.",
-      "Achatscheibe mit Bergkristall": "Achatscheiben bringen Balance und Harmonie. Sie stabilisieren die Aura und fördern inneren Frieden."
+      "Orangencalcit": "Der Orangencalcit bringt durch seine Energie Wärme ins Herz, hebt die Stimmung an und öffnet den Weg zu mehr Leichtigkeit und inneren Frieden. Er unterstützt dich dabei, neue Energie zu schöpfen und mit Optimismus durchs Leben zu gehen, was ihn zu einem nützlichen Begleiter beim Lernen macht.",
+      "Karneol": "Feuer der Leidenschaft, der Karneol entfacht unser inneres Feuer. Er steht für Mut und Tapferkeit. Der Karneol stärkt unser Selbstvertrauen und hilft Zweifel und Ängste zu überwinden, bringt Stabilität in unser Leben und fördert die Leidenschaft auf allen Ebenen. Spirituell hilft er, im Hier und Jetzt anzukommen.",
+      "Mondstein": "Spiegel der Seele - Der Mondstein ist ein Begleiter der Intuition, der Weiblichkeit und des inneren Gleichgewichts. Er wirkt als Schutzstein für Frauen und Kinder. Ebenfalls hilft er die richtigen Entscheidungen zu treffen und fördert das rationale Denken.",
+      "Selenit": "Der Selenit wirkt wie ein energetisches Schutzschild gegen negative Energien. Da er selber keine Energie aufnimmt, ist er perfekt um andere Heilsteine zu reinigen. Darüber hinaus fördert er dein spirituelles Wachstum und geistige Klarheit. Der Selenit hilft, loszulassen - nicht aus Schwäche, sondern aus Vertrauen.",
+      "Aquamarin": "Stein der Manifestation - Aquamarin zieht deine Wünsche an. Wie klares Wasser spült er alte Ängste fort und macht Platz für Wahrheit, Mut und innere Stärke. Aquamarin fördert ehrliche Kommunikation , nicht nur mit anderen, sondern vor allem mit dir selbst.",
+      "Regenbogenfluorit": "Regenbogenfluorit vereint die Energien mehrerer Farbfrequenzen und bringt Ordnung in Seele, Geist und Herz. Er fördert die Selbstreflexion, innere Stärke und unterstützt bei seelischer Heilung. Durch seine vielseitige Energie gleicht er Stimmungsschwankungen aus und wirkt harmonisierend.",
+      "Grüner Fluorit": "Grüner Fluorit wirkt ausgleichend und stabilisierend auf deine Energie, hilft deinen Geist zu fokussieren und emotionale Blockaden zu lösen. Daher eignet er sich gut für Energiearbeit. Mit seiner kraftvollen Energie öffnet er das Herzchakra und befreit es von altem Ballast. Ein Kristall für tiefe Regeneration und geistige Frische. Er wird oft als Lernhilfe verwendet.",
+      "Aventurin": "Der Aventurin steht für Optimismus und Lebensfreude, stärkt bedingungslose Liebe und Mitgefühl. Er wirkt beruhigend auf unsere Seele, löst Ängste und innere Unruhe. Aventurin schenkt Vertrauen in sich selbst und ermutigt, das Leben mit Offenheit und Freude zu gestalten. Seine sanfte Energie bringt Harmonie in unser Gefühlsleben.",
+      "Malachit": "Kristall des Herzens und der Heilung. Seine Energie fördert nicht nur tiefgreifende Veränderungen, sondern auch seelischen Wachstum. Der Malachit bringt unterdrückte Gefühle an die Oberfläche, fördert innere Heilung und unterstützt dabei, alte Verletzungen zu verarbeiten. Er schenkt Mut und öffnet das Herz für Liebe und Mitgefühl.",
+      "Jaspis": " Der Jaspis ist ein toller Begeliter für alle , die in ihrer inneren Mitte ankommen möchten. Mit seiner kraftvollen Energie schenkt der Jaspis dir Durchsetzungsvermögen und Ausdauer. Besonders in Zeiten von Stress und Überförderung wirkt er erdend. Ein verlässlicher Stein, um wieder ins Gleichgewicht zu finden.",
+      "Labradorit": "Ein Kristall der Transformation, der dich sanft durch Veränderungen trägt. Labradorit ist ein kraftvoller Schutzstein, der das spirituelle Bewusstsein stärkt. Er kräftigt das Bauchgefühl und fördert das Erkennen von Zeichen, Träumen und tieferen Zusammenhängen. Ob seelischer Wandel, geistige Entwicklung oder große Lebensveränderung - Labradorit unterstützt dich dabei.",
+      "Rauchquarz": "Der Rauchquarz hilft dabei, negative Energien abzubauen, wirkt gleichzeitig erdend und ausgleichend auf unsere Seele. Er hat die Fähigkeit negative Energie, in Positive umzuwandeln. Rauchquarz unterstützt bei der Transformation von alten Mustern und erleichtert den Umgang mit schwierigen Lebenssituationen. Zudem vermittelt er dir Sicherheit und Stärke.",
+      "Pyrit": "Pyrit - der Glückskristall, er zieht Fülle, Wohlstand und positive Lebensenergie an. Er stärkt das Selbstvertrauen und öffnet den Blick für neue Chancen. Der Pyrit erinnert uns daran, dass wahres Glück aus der Verbindung mit unserem inneren Licht entsteht. Als Glückskristall begleitet er dich auf deinem Weg mit innerer Stärke und Optimismus.",
+      "Tigerauge": "Kristall der Freiheit - Tigerauge steht für die innere Freiheit. Er schenkt dir Klarheit im Denken und Mut im Handeln, sodass du deinen eigenen Weg selbstbestimmt gehen kannst. Als schützender Begleiter hilft er dir, deiner inneren Wahrheit zu folgen - frei, stark und zentriert. ",
+      "Schwarzer Turmalin": "Der mächtigste Schutzstein, ein kraftvoller Begleiter, wenn es darum geht, sich zu schützen. Schwarzer Turmalin leitet negative Energien ab und bietet dir seelischen Schutz. Er reinigt das energetische Feld und wirkt somit auch erdend. Ideal für Menschen , die viel spüren und sich schützen möchten.",
+      "Achatscheibe mit Bergkristall": `Die Achatscheibe mit Bergkristall vereint die harmonisierenden und klärenden Eigenschaften beider Steine. 
+        Achat bringt Ruhe, Erdung und emotionale Ausgeglichenheit, während Bergkristall für Klarheit, Licht und innere Balance sorgt. 
+        Gemeinsam unterstützen sie dich dabei, dein Herz zu öffnen, Vertrauen aufzubauen und in Verbindung mit dir selbst und dem Leben zu stehen. 
+        Diese Kombination fördert Mitgefühl, geistiges Wachstum und schenkt dir Leichtigkeit sowie innere Stärke.`
+
   };
 
   // Fetch products from API
@@ -107,11 +113,11 @@ const Collections = () => {
         setProducts(cartProducts);
         setPagination(response.data.pagination);
       } else {
-        setError(response.message || 'Failed to fetch products');
+        setError(response.message || 'Produkte konnten nicht geladen werden.');
       }
     } catch (error) {
       console.error('Error fetching products:', error);
-      setError('Failed to fetch products. Please try again.');
+      setError('Produkte konnten nicht geladen werden. Bitte versuche es erneut.');
     } finally {
       setLoading(false);
     }
@@ -147,14 +153,32 @@ const Collections = () => {
   const selectedCategory = categories.find(cat => cat.value === filter);
   const categoryDescription = filter !== "all" ? categoryDescriptions[filter as keyof typeof categoryDescriptions] : null;
 
+  useEffect(() => {
+  if (id) {
+    // Finde die Kategorie, die zur ID passt
+    const found = categories.find(cat => cat.id === id);
+    if (found) {
+      setFilter(found.value);
+      // Nach kurzem Delay scrollen (damit das Element existiert)
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 300);
+    }
+  }
+  // eslint-disable-next-line
+}, [id]);
+
   return (
     <div className="min-h-screen bg-gradient-mystical">
       <main className="pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="font-serif text-4xl md:text-5xl font-light text-foreground mb-4">
-              Kristall Sammlung
+            <h1 className="font-serif text-primary text-4xl md:text-5xl font-light text-foreground mb-4">
+              Kristallkollektion
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Entdecke eine große Auswahl an Kristallen, die ich persönlich zusammengetragen habe.
@@ -169,7 +193,7 @@ const Collections = () => {
               </label>
               <Select value={filter} onValueChange={handleFilterChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
+                  <SelectValue placeholder="wähle Kategorie" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map(category => (
@@ -191,23 +215,22 @@ const Collections = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="name">Name</SelectItem>
-                  <SelectItem value="price">Price</SelectItem>
-                  <SelectItem value="createdAt">Date Added</SelectItem>
-                </SelectContent>
+                  <SelectItem value="price">Preis</SelectItem>
+                  </SelectContent>
               </Select>
             </div>
 
             <div className="flex-1">
               <label className="block text-sm font-medium text-foreground mb-2">
-                Order
+                Reihenfolge
               </label>
               <Select value={sortOrder} onValueChange={(value: 'asc' | 'desc') => setSortOrder(value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Sort order" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="asc">Ascending</SelectItem>
-                  <SelectItem value="desc">Descending</SelectItem>
+                  <SelectItem value="asc">Aufsteigend</SelectItem>
+                  <SelectItem value="desc">Absteigend</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -223,28 +246,31 @@ const Collections = () => {
                 size="sm" 
                 className="mt-2"
               >
-                Try Again
+                Erneut versuchen
               </Button>
             </div>
           )}
 
           {/* Category Description */}
           {categoryDescription && (
-            <div className="mb-8 bg-gradient-to-r from-primary/10 to-secondary/10 backdrop-blur-sm p-6 rounded-lg border border-border/50">
+            <div
+              id={selectedCategory?.id}
+              className="mb-8 bg-gradient-to-r from-primary/10 to-secondary/10 backdrop-blur-sm p-6 rounded-lg border border-border/50"
+            >
               <h2 className="font-serif text-2xl font-medium text-foreground mb-3">
                 {selectedCategory?.label}
               </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                {categoryDescription} 
+              <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                {categoryDescription}
               </p>
             </div>
-          )}
+            )}
 
           {/* Loading State */}
           {loading && (
             <div className="flex justify-center items-center py-12">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <span className="ml-2 text-muted-foreground">Loading products...</span>
+              <span className="ml-2 text-muted-foreground">Produkte werden geladen...</span>
             </div>
           )}
 
@@ -260,13 +286,13 @@ const Collections = () => {
               {/* No Products Message */}
               {products.length === 0 && !loading && (
                 <div className="text-center py-12">
-                  <p className="text-muted-foreground">No products found in this category.</p>
+                  <p className="text-muted-foreground">Keine Produkte in dieser Kategorie gefunden.</p>
                   <Button
                     onClick={() => handleFilterChange("all")}
                     variant="outline"
                     className="mt-4"
                   >
-                    Show All Products
+                    Alle Produkte anzeigen.
                   </Button>
                 </div>
               )}
@@ -281,7 +307,7 @@ const Collections = () => {
                     disabled={currentPage === 1}
                   >
                     <ChevronLeft className="h-4 w-4" />
-                    Previous
+                    Vorherige
                   </Button>
 
                   <div className="flex items-center gap-1">
@@ -317,7 +343,7 @@ const Collections = () => {
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === pagination.totalPages}
                   >
-                    Next
+                    Nächste
                     <ChevronRight className="h-4 w-4" />
                   </Button>
                 </div>
@@ -326,7 +352,7 @@ const Collections = () => {
               {/* Results Info */}
               {pagination && (
                 <div className="text-center mt-4 text-sm text-muted-foreground">
-                  Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, pagination.total)} of {pagination.total} products
+                  Zeige{((currentPage - 1) * itemsPerPage) + 1} von {Math.min(currentPage * itemsPerPage, pagination.total)} von {pagination.total} Produkten
                 </div>
               )}
             </>

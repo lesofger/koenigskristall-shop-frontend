@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import BottomFooter from "@/components/BottomFooter";
 
 
+
 const Index = () => {
    useEffect(() => {
     window.scrollTo(0, 0);

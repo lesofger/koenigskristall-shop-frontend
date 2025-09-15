@@ -49,42 +49,42 @@ const CrystalCare = () => {
       title: "Kristalle Reinigen",
       icon: <Droplets className="w-8 h-8" />,
       color: "from-blue-500/10 to-cyan-500/10",
-      description: "Entferne negative Energien und bringe deine Kristalle zurück zu ihrer ursprünglichen Schwingung"
+      description: "Entferne negative Energien und bringe deine Kristalle zurück zu ihrer ursprünglichen Schwingung."
     },
     {
       id: "charging",
       title: "Kristalle Aufladen",
       icon: <Zap className="w-8 h-8" />,
       color: "from-yellow-500/10 to-orange-500/10",
-      description: "Verstärke die natürliche Energie deiner Kristalle durch verschiedene Aufladmethoden"
+      description: "Verstärke die natürliche Energie deiner Kristalle durch verschiedene Auflademethoden."
     },
     {
       id: "programming",
       title: "Kristalle Programmieren",
       icon: <Heart className="w-8 h-8" />,
       color: "from-pink-500/10 to-rose-500/10",
-      description: "Setze klare Absichten und verbinde dich energetisch mit deinen Kristallen"
+      description: "Setze klare Absichten und verbinde dich energetisch mit deinen Kristallen."
     },
     {
       id: "combination",
       title: "Kristalle Kombinieren",
       icon: <Sparkles className="w-8 h-8" />,
       color: "from-indigo-500/10 to-blue-500/10",
-      description: "Welche Kristalle harmonieren miteinander und verstärken ihre Wirkung"
+      description: "Welche Kristalle harmonieren miteinander und verstärken ihre Wirkung."
     },
     {
       id: "storage",
       title: "Aufbewahrung & Pflege",
       icon: <Shield className="w-8 h-8" />,
       color: "from-green-500/10 to-emerald-500/10",
-      description: "Schütze deine Kristalle und bewahre ihre Energie optimal auf"
+      description: "Schütze deine Kristalle und bewahre ihre Energie optimal auf."
     },
     {
       id: "broken",
       title: "Wenn Kristalle zerbrechen",
       icon: <AlertTriangle className="w-8 h-8" />,
       color: "from-purple-500/10 to-violet-500/10",
-      description: "Die spirituelle Bedeutung und der richtige Umgang mit zerbrochenen Kristallen"
+      description: "Die spirituelle Bedeutung und der richtige Umgang mit zerbrochenen Kristallen."
     }
     ];
 
@@ -92,78 +92,52 @@ const CrystalCare = () => {
     {
       method: "Mondlicht",
       icon: <Moon className="w-6 h-6" />,
-      description: "Lege deine Kristalle über Nacht bei Vollmond ins Mondlicht. Dies ist die sanfteste und universellste Reinigungsmethode.",
+      description: "Lege deine Kristalle über Nacht bei Vollmond ins Mondlicht. Dies ist die universellste Reinigungsmethode.",
       duration: "Eine ganze Nacht",
       suitableFor: "Alle Kristalle",
       energy: "Weiblich, intuitiv, beruhigend"
     },
-    {
-      method: "Sonnenlicht",
-      icon: <Sun className="w-6 h-6" />,
-      description: "Kurze Sonnenbäder am Morgen energetisieren und reinigen. Vorsicht bei empfindlichen Steinen!",
-      duration: "30 Minuten - 2 Stunden",
-      suitableFor: "Citrin, Bergkristall, Karneol",
-      energy: "Männlich, aktivierend, kraftvoll"
-    },
+    
     {
       method: "Räucherwerk",
       icon: <Wind className="w-6 h-6" />,
-      description: "Salbei, Palo Santo oder Weihrauch reinigen die Aura der Kristalle durch heiligen Rauch.",
+      description: "Salbei, Palo Santo oder Weihrauch entfernen aufgenommene Energien und reinigen somit den Kristall.",
       duration: "2-5 Minuten",
       suitableFor: "Alle Kristalle",
       energy: "Spirituell, transformierend, klärend"
     },
+   
     {
-      method: "Salzwasser",
-      icon: <Droplets className="w-6 h-6" />,
-      description: "Meersalz mit destilliertem Wasser löst negative Energien. Nicht für alle Kristalle geeignet!",
-      duration: "2-24 Stunden",
-      suitableFor: "Harte Kristalle (Quarz-Familie)",
-      energy: "Erdend, reinigend, neutralisierend"
-    },
-    {
-      method: "Bergkristall",
+      method: "Selenit",
       icon: <Gem className="w-6 h-6" />,
-      description: "Andere Kristalle auf einer Bergkristall-Druse platzieren für sanfte Energiereinigung.",
-      duration: "4-24 Stunden",
+      description: "Andere Kristalle, auf oder neben eine Selenit-Stange legen für eine sanfte Reinigung.",
+      duration: "Eine ganze Nacht",
       suitableFor: "Alle empfindlichen Kristalle",
-      energy: "Neutral, verstärkend, harmonisierend"
+      energy: "Neutral, sanft, harmonisierend"
     },
-    {
-      method: "Erdung",
-      icon: <TreePine className="w-6 h-6" />,
-      description: "Kristalle in der Erde vergraben, um sie zu erden und zu neutralisieren.",
-      duration: "24 Stunden - 1 Woche",
-      suitableFor: "Stark belastete Kristalle",
-      energy: "Erdend, regenerierend, heilend"
-    }
+   
   ];
 
   const chargingMethods = [
     {
       method: "Vollmond-Energie",
-      description: "Die kraftvollste Zeit zum Aufladen. Kristalle absorbieren die maximale Mondenergie.",
+      description: "Die kraftvollste Zeit zum Aufladen. Kristalle nehmen die magische Mondenergie auf.",
       timing: "3 Tage vor bis 3 Tage nach Vollmond",
       effect: "Verstärkt Intuition und emotionale Heilung"
     },
     {
-      method: "Sonnenaufgang",
-      description: "Frische, neue Energie des beginnenden Tages lädt Kristalle mit Vitalität auf.",
-      timing: "30 Minuten vor bis 1 Stunde nach Sonnenaufgang",
+      method: "Sonnenauf- und Untergang",
+      description: "Nutze die magische Energie der aufgehenden und untergehenden Sonne.",
+      timing: "30 Minuten vor, bis 1 Stunde nach Sonnenauf- oder Untergang",
       effect: "Bringt Klarheit und neue Perspektiven"
     },
     {
-      method: "Heilige Geometrie",
-      description: "Kristalle in geometrischen Mustern (Blume des Lebens, Merkaba) anordnen.",
-      timing: "Mindestens 4 Stunden",
-      effect: "Harmonisiert und verstärkt die Kristallenergie"
-    },
-    {
-      method: "Meditation & Absicht",
-      description: "Persönliche Energie und klare Absichten in die Kristalle hineinmeditieren.",
-      timing: "10-30 Minuten täglich",
-      effect: "Persönliche Verbindung und spezifische Programmierung"
+      method: "Bergkristall",
+      description: "Andere Kristalle übernehmen seine Klarheit und verstärken dadurch ihre eigenen Kräfte.",
+      timing: "Eine ganze Nacht",
+      effect: "Fördert Harmonie und Klarheit"
     }
+  
   ];
 
   const brokenCrystalMeanings = [
@@ -192,55 +166,42 @@ const CrystalCare = () => {
   const crystalCombinations = [
     {
       purpose: "Liebe & Beziehungen",
-      crystals: ["Rosenquarz", "Rhodonit", "Morganit"],
+      crystals: ["Rosenquarz", "Mondstein"],
       effect: "Öffnet das Herz, heilt emotionale Wunden, zieht Liebe an"
     },
     {
       purpose: "Schutz & Erdung",
-      crystals: ["Schwarzer Turmalin", "Hämatit", "Obsidian"],
+      crystals: ["Schwarzer Turmalin", "Rauchquarz"],
       effect: "Starker energetischer Schutz, Erdung, Abwehr negativer Energien"
     },
-    {
-      purpose: "Spirituelle Entwicklung",
-      crystals: ["Amethyst", "Bergkristall", "Selenit"],
-      effect: "Verstärkt Intuition, Meditation, Verbindung zu höheren Dimensionen"
-    },
-    {
+   {
       purpose: "Manifestation & Erfolg",
       crystals: ["Citrin", "Pyrit", "Grüner Aventurin"],
       effect: "Zieht Wohlstand an, verstärkt Willenskraft, bringt Glück"
     },
-    {
-      purpose: "Emotional Healing",
-      crystals: ["Lepidolith", "Mondstein", "Aquamarin"],
-      effect: "Beruhigt Emotionen, bringt Frieden, fördert emotionale Balance"
-    }
-  ];
+   ];
 
   return (
     <div className="min-h-screen bg-background">
       <HeroLibrary careTopics={careTopics} scrollToSection={scrollToSection} />
       
       <Cleaning cleansingMethods={cleansingMethods} />
-      <Separator className="my-16" />
+      <Separator className="my-0" />
       
       <Charging chargingMethods={chargingMethods} />
-      <Separator className="my-16" />
+      <Separator className="my-0" />
       
       <CrystalProgramming />
-      <Separator className="my-16" />
+      <Separator className="my-0" />
 
       <CrystalCombination crystalCombinations={crystalCombinations} />
 
       <StoringCrystals />
       
       <BrokenCrystal brokenCrystalMeanings={brokenCrystalMeanings} />
-      <Separator className="my-16" />
-      
-      
-      
-      
-      
+      <Separator className="my-0" />
+
+
       <CTAcomponent />
       <BottomFooter />
     </div>
