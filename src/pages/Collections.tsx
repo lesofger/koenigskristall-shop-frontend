@@ -352,7 +352,7 @@ const Collections = () => {
               {/* Results Info */}
               {pagination && (
                 <div className="text-center mt-4 text-sm text-muted-foreground">
-                  Zeige{((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, pagination.total)} of {pagination.total} products
+                  Zeige{((currentPage - 1) * itemsPerPage) + 1} von {Math.min(currentPage * itemsPerPage, pagination.total)} von {pagination.total} Produkten
                 </div>
               )}
             </>

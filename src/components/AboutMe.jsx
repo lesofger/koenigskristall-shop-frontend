@@ -5,7 +5,8 @@ import MajaShop from "@/assets/MajaShop.jpeg";
 import majaBeratungAbout from "@/assets/majaBeratungAbout.webp";
 import majakristallhand from "@/assets/majakristallhand.jpeg";
 import { Calendar, MapPin, Clock } from "lucide-react";
-
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const upcomingMarkets = [
     {
@@ -38,6 +39,22 @@ const upcomingMarkets = [
 
 
 function AboutMe() {
+
+  const location = useLocation();
+
+  useEffect(() => {
+  if (location.hash) {
+    const id = location.hash.replace("#", "");
+    // Timeout, damit das Element sicher im DOM ist
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 300); // 300ms reicht meist, ggf. anpassen
+  }
+}, [location]);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Moderne Hero Section mit gleichem Gradient und Textstil wie im Hero */}
@@ -157,7 +174,7 @@ function AboutMe() {
 
 
           {/* Call to Action */}
-                        <section className="py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
+                        <section  id="markets" className="py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
                           <div className="max-w-6xl mx-auto">
                             <div className="text-center mb-16">
                               <div className="space-y-6">
