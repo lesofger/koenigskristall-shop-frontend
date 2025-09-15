@@ -131,9 +131,10 @@ const Navbar = () => {
   const navItems = [
     { name: "SHOP", href: "/shop" },
     { name: "ÜBER MICH", href: "/about" },
+    { name: "AKTUELLES", href: "/about#markets" },
     { name: "BERATUNG", href: "/consulting" },
     { name: "BIBLIOTHEK", href: "/inspired" },
-    { name: "AKTUELLES", href: "/about#markets" },
+    
   ];
 
   const isActive = (path: string) => location.pathname === path;
