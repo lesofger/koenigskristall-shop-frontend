@@ -10,12 +10,12 @@ import { useLocation } from "react-router-dom";
 
 const upcomingMarkets = [
     {
-      name: "Gesundheitstag Ummendorf",
-      date: "06. September 2025",
+      name: "Messe Cottbus",
+      date: "24. - 26. Oktober 2024",
       time: "10:00 - 18:00 Uhr",
-      location: "Wormsdorferstr. 6",
-      plz: "39365 Ummendorf",
-      description: "Alles rund um das Thema Gesundheit und Wohlbefinden."
+      location: "Vorparkstraße 3",
+      plz: "03042 Cottbus",
+      description: "Einzigartige , Selbsthergestellte und faszinierende Produkte für die Weihnachtszeit. Lass dich von der magischen Atmosphäre verzaubern."
     },
     {
       name: "Landeserntedankfest Magdeburg",
