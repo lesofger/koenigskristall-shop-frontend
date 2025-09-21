@@ -465,7 +465,7 @@ const Checkout = () => {
                 </div>
               </button>
               {/* Banküberweisung */}
-              <button
+              {/* <button
                 onClick={() => handlePaymentMethodChange('bank_transfer')}
                 className={`relative p-6 rounded-2xl border-2 transition-all duration-300 ${
                   paymentMethod === 'bank_transfer' 
@@ -485,7 +485,7 @@ const Checkout = () => {
                   <h3 className="font-semibold text-lg">Banküberweisung</h3>
                   <p className="text-sm text-muted-foreground">Sofortige Zahlung</p>
                 </div>
-              </button>
+              </button>*/}
             </div>
             {/* Payment Form */}
             <div className="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-2xl p-6">
